@@ -13,8 +13,8 @@ function UserConfigureInitialProfileSetup(){
 
 function UserUploadAbout(first_load){
     var aboutTest = $("#about").val();
-    if(aboutTest.length < 1){
-        $("#edit_about_error").html("Please fill in all of the fields...");
+    if(aboutTest.length < 100){
+        $("#edit_about_error").html("Please fill in at least 100 characters.");
     } else {
         $("#edit_about_post").hide();
         $("#edit_about_cancel").hide();
@@ -39,6 +39,8 @@ function UserUploadAbout(first_load){
                         $("#edit_about_error").hide();
                     }
 
+                    $("#edit_about_post").attr('disabled','true');
+
                     //Undo loading effects
                     $("#edit_about_post").show();
                     $("#edit_about_cancel").show();
@@ -53,8 +55,17 @@ function UserUploadAbout(first_load){
 }
 
 $(document).ready(function() {
-    if($("#user_about").attr("descriptionprovided") == 'false')
+    if($("#user_about").attr("descriptionprovided") == 'false') {
         UserConfigureInitialProfileSetup();
+    }
+
+    $("#about").on('change keydown paste input', function(){
+        $("#user_about_text").html($("#about").val().replace(/\n/g, '<br>'));
+        $("#edit_about_error").html($("#about").val().length + "/2000 Characters");
+        if($("#about").val().length > 100) {
+            $("#edit_about_post").attr('disabled', 'false');
+        }
+    });
 });
 
 

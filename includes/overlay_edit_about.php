@@ -8,7 +8,7 @@
         <textarea id="about" placeholder="Describe yourself or your auto business (at least 100 characters)" tabindex="1"></textarea>
         <br />
         <br />
-        <button id="edit_about_post" onclick = "UserUploadAbout();document.getElementById('light_edit_about').style.display='none';document.getElementById('fade').style.display='none'" tabindex="2">Post</button>
+        <button id="edit_about_post" disabled = true; onclick = "UserUploadAbout();" tabindex="2">Post</button>
         <button id="edit_about_cancel" onclick = "document.getElementById('light_edit_about').style.display='none';document.getElementById('fade').style.display='none'" tabindex="3">Cancel</button>
         <br />
         <img id="edit_about_loading" style="display:none;" src="http://www.mechlink.org/gifs/blueloader.gif" alt="Loading..." />

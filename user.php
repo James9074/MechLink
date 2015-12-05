@@ -6,7 +6,8 @@ if(isset($_POST["edit_about_data"]) && isset($_POST["u"])){
 	// CONNECT TO THE DATABASE
 	include_once("../includes/db_conx.php");
 	// GATHER THE POSTED DATA INTO LOCAL VARIABLES AND SANITIZE
-	$edit_desc = preg_replace('#[^a-z0-9]#i', '', $_POST['edit_about_data']);
+	$edit_desc = mysqli_real_escape_string($db_conx, $_POST['edit_about_data']);
+	$edit_desc = nl2br(htmlentities($edit_desc, ENT_QUOTES, 'UTF-8'));
 	$username = preg_replace('#[^a-z0-9]#i', '', $_POST['username']);
 	// GET USER IP ADDRESS
 	$ip = preg_replace('#[^0-9.]#', '', getenv('REMOTE_ADDR'));
@@ -60,7 +61,7 @@ if($u == $log_username && $user_ok == true){
 	$category_edit_btn = '<button class="category_edit_btn" style="display:inline-block; margin-top:1px;"></button>';
 	$location_edit_btn = '<button class="location_edit_btn" style="display:inline-block; margin-top:1px;" onclick = "document.getElementById(\'light_edit_location\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
 	$status_edit_btn = '<button class="status_edit_btn" style="display:inline-block; margin-top:1px;" onclick = "document.getElementById(\'light_edit_status\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
-	$about_edit_btn = '<button class="about_edit_btn" style="display:block;" onclick = "document.getElementById(\'light_edit_about\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
+	$about_edit_btn = '<button class="about_edit_btn" style="display:block;" onclick = "$(\'#about\').html($(\'#user_about_text\').html().replace(\'<br/>\', \'\n\'));document.getElementById(\'light_edit_about\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
 }
 // Fetch the user row from the query above
 while ($row = mysqli_fetch_array($user_query, MYSQLI_ASSOC)) {
@@ -317,7 +318,7 @@ else {
         <div id="contentInner2">
           <hr />
           <?php include_once("includes/prof_nav.php"); ?>
-          <div id="main_cont"> <div id="user_about" descriptionprovided="<? echo $description == "" ? "false" : "true"; ?>" ><?php echo $about_edit_btn; echo $description == "" ? "Tell others about yourself or your business." : $description ?>  </div></div>
+          <div id="main_cont"> <div id="user_about" descriptionprovided="<? echo $description == "" ? "false" : "true"; ?>" ><?php echo $about_edit_btn; echo "<span id='user_about_text'>"; echo $description == "" ? "Tell others about yourself or your business." : html_entity_decode(nl2br($description)) ?>  </span></div></div>
           <hr />
           <div align="center">
             <div id="section_header"> <span class="style2"> Friends <?php echo "(".$friend_count.")"; ?>&nbsp;&nbsp;<?php echo $friends_view_all_link; ?> </span>
