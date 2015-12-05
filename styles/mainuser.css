@@ -1,0 +1,951 @@
+@charset "UTF-8";
+img, object, embed, video {
+	max-width: 100%;
+}
+/* IE 6 does not support max-width so default to width 100% */
+.ie6 img {
+	width: 100%;
+}
+
+/* Mobile Layout: 480px and below. */
+
+/* general */
+
+button::-moz-focus-inner {
+ padding: 0;
+ border: 0
+}
+
+
+/* common styles */
+textarea#about {
+	width:100%;
+	height:200px;
+}
+textarea#specificskills {
+	width:100%;
+	height:100px;
+}
+textarea#restoration_details {
+	width:100%;
+	height:100px;
+}
+#container {
+	position: relative;
+	height: auto;
+	width: 100%;
+}
+#content {
+	position: relative;
+	height: auto;
+	max-width: 1000px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top:20px;
+}
+#contentitem3 {
+	z-index: 10000;
+	position: relative;
+	height: 100%;
+	width: auto;
+	margin-top: 10px;
+}
+div#profile_pic_box {
+	background-color:#FFF;
+	z-index: 5000;
+	float: left;
+	
+	width: 100px;
+	
+	height: 100px;
+	border-radius: 50%;
+	
+	margin: 20px 30px 0px 0px;
+	overflow: hidden;
+	display: inline-block;
+	margin-right: 3%;
+	margin-left: 3%;
+	vertical-align: middle;
+	margin-top: 10px;
+	-webkit-box-shadow: 0px 0px 10px 0px rgba(255,255,255,0.8);
+	-moz-box-shadow: 0px 0px 10px 0px rgba(255,255,255,0.8);
+	box-shadow: 0px 0px 10px 0px rgba(255,255,255,0.8);
+}
+div#profile_pic_box > img {
+	z-index: 6000;
+	min-width: 100%;
+	min-height: auto;
+	
+	
+	
+}
+.profile_pic_btn {
+	position: absolute;
+	background: url(http://www.mechlink.org/images/photo_icon_2.png) 0px 0px no-repeat;
+	height: 37px;
+	width: 37px;
+	z-index: 8000;
+	border: none;
+	margin-left: 0px;
+	margin-top: 0px;
+}
+.profile_pic_btn:hover {
+	position: absolute;
+	background: url(http://www.mechlink.org/images/photo_icon_2_hover.png) 0px 0px no-repeat;
+	height: 37px;
+	width: 37px;
+	z-index: 8000;
+	border: none;
+	margin-left: 0px;
+	margin-top: 0px;
+}
+#standardUpload {
+	display: none;
+}
+#info_box {
+	position: relative;
+	width: 100%;
+	height: auto;
+	min-height: 100px;
+	max-width: 170px;
+	max-height: 250px;
+	display: inline-block;
+	vertical-align: middle;
+	margin-top: 5px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #666;
+	overflow: visible;
+}
+.rlname_edit_btn {
+	position: absolute;
+	background: url(http://www.mechlink.org/images/edit_btn.png) 0px 0px no-repeat;
+	height: 27px;
+	width: 27px;
+	z-index: 8000;
+	border: none;
+	margin-left: 4px;
+	margin-top: 4px;
+}
+.rlname_edit_btn:hover {
+	position: absolute;
+	background: url(http://www.mechlink.org/images/edit_btn_hover.png) 0px 0px no-repeat;
+	height: 27px;
+	width: 27px;
+	z-index: 8000;
+	border: none;
+	margin-left: 4px;
+	margin-top: 4px;
+}
+.category_edit_btn {
+	position: absolute;
+	background: url(http://www.mechlink.org/images/edit_btn.png) 0px 0px no-repeat;
+	height: 27px;
+	width: 27px;
+	z-index: 8000;
+	border: none;
+	margin-left: 4px;
+	margin-top: 2px;
+}
+.category_edit_btn:hover {
+	position: absolute;
+	background: url(http://www.mechlink.org/images/edit_btn_hover.png) 0px 0px no-repeat;
+	height: 27px;
+	width: 27px;
+	z-index: 8000;
+	border: none;
+	margin-left: 4px;
+	margin-top: 2px;
+}
+.location_edit_btn {
+	position: absolute;
+	background: url(http://www.mechlink.org/images/edit_btn.png) 0px 0px no-repeat;
+	height: 27px;
+	width: 27px;
+	z-index: 8000;
+	border: none;
+	margin-left: 4px;
+}
+.location_edit_btn:hover {
+	position: absolute;
+	background: url(http://www.mechlink.org/images/edit_btn_hover.png) 0px 0px no-repeat;
+	height: 27px;
+	width: 27px;
+	z-index: 8000;
+	border: none;
+	margin-left: 4px;
+}
+.status_edit_btn {
+	position: absolute;
+	background: url(http://www.mechlink.org/images/edit_btn.png) 0px 0px no-repeat;
+	height: 27px;
+	width: 27px;
+	z-index: 8000;
+	border: none;
+	margin-left: 4px;
+}
+.status_edit_btn:hover {
+	position: absolute;
+	background: url(http://www.mechlink.org/images/edit_btn_hover.png) 0px 0px no-repeat;
+	height: 27px;
+	width: 27px;
+	z-index: 8000;
+	border: none;
+	margin-left: 4px;
+}
+#info_box2 {
+	position: relative;
+	width: auto;
+	height: auto;
+	max-width: 300px;
+	max-height: 200px;
+	margin-top: 20px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #666;
+	overflow: scroll;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 10px;
+	text-align: center;
+}
+#prof_links {
+	position: relative;
+	width: auto;
+	height: auto;
+	margin-right: 2%;
+	font-size: 14px;
+	display: inline-block;
+	margin-top: 2px;
+	vertical-align: middle;
+}
+.friendBtn2 {
+	background-color: #f3f3f3;
+	border: none;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 14px;
+	color: #ff0000;
+	padding: 0px;
+}
+.friendBtn2:hover {
+	background-color: #f3f3f3;
+	border: none;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 14px;
+	color: #d00000;
+	padding: 0px;
+}
+#contentInner2 {
+	position: relative;
+	height: 100%;
+	width: 100%;
+}
+
+
+/* prof_nav.php */
+
+#prof_nav {
+	position: relative;
+	background-color: #e5e5e5;
+	height: auto;
+	width: 100%;
+	padding: 10px;
+	margin-top: 5px;
+	border-radius: 3px;
+	border: #8f8f8f thin solid;
+}
+#prof_nav_item {
+	position: relative;
+	height: 100%;
+	width: auto;
+	display: inline-block;
+	margin-right: 4%;
+	vertical-align: middle;
+}
+
+/* END prof_nav.php */
+
+
+#main_cont {
+	background-color: #fefefe;
+	position: relative;
+	height: 100%;
+	width: auto;
+	min-height: 300px;
+	margin-top: 10px;
+	padding: 20px;
+	border-radius: 3px;
+}
+.about_edit_btn {
+	position: relative;
+	background: url(http://www.mechlink.org/images/edit_btn_lrg.png) 0px 0px no-repeat;
+	height: 37px;
+	width: 37px;
+	z-index: 8000;
+	border: none;
+	margin-bottom: 10px;
+}
+.about_edit_btn:hover {
+	position: relative;
+	background: url(http://www.mechlink.org/images/edit_btn_lrg_hover.png) 0px 0px no-repeat;
+	height: 37px;
+	width: 37px;
+	z-index: 8000;
+	border: none;
+	margin-bottom: 10px;
+}
+.skill_edit_btn {
+	position: relative;
+	background: url(http://www.mechlink.org/images/edit_btn_lrg.png) 0px 0px no-repeat;
+	height: 37px;
+	width: 37px;
+	z-index: 8000;
+	border: none;
+	margin-bottom: 10px;
+}
+.skill_edit_btn:hover {
+	position: relative;
+	background: url(http://www.mechlink.org/images/edit_btn_lrg_hover.png) 0px 0px no-repeat;
+	height: 37px;
+	width: 37px;
+	z-index: 8000;
+	border: none;
+	margin-bottom: 10px;
+}
+.project_edit_btn {
+	position: relative;
+	background: url(http://www.mechlink.org/images/edit_btn_lrg.png) 0px 0px no-repeat;
+	height: 37px;
+	width: 37px;
+	z-index: 8000;
+	border: none;
+	margin-bottom: 10px;
+}
+.project_edit_btn:hover {
+	position: relative;
+	background: url(http://www.mechlink.org/images/edit_btn_lrg_hover.png) 0px 0px no-repeat;
+	height: 37px;
+	width: 37px;
+	z-index: 8000;
+	border: none;
+	margin-bottom: 10px;
+}
+#section_header {
+	position: relative;
+	height: auto;
+	min-height: 45px;
+	width: 100%;
+	padding: 8px;
+}
+#sk_btns {
+	position: relative;
+	position: relative;
+	height: 100%;
+	width: auto;
+	display: inline-block;
+	vertical-align: top;
+	margin-left: 10px;
+}
+.friendBtn {
+	background-color: #ff0000;
+	border: none;
+	border-radius: 4px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 14px;
+	color: #FFF;
+	padding: 4px;
+}
+.friendBtn:hover {
+	background-color: #d00000;
+	border: none;
+	border-radius: 4px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 14px;
+	color: #FFF;
+	padding: 4px;
+}
+#main_cont2 {
+	background-color: #fefefe;
+	position: relative;
+	height: 100%;
+	width: auto;
+	padding: 20px;
+	border-radius: 3px;
+}
+.friendpics {
+	margin-left: 8px;
+	margin-right: 8px;
+	width: 100%;
+	height: 100%;
+	max-width: 84px;
+	max-height: 84px;
+	border-radius: 50%;
+	margin-top: 10px;
+}
+
+
+/* footer.php */
+
+#footer_container {
+	position: relative;
+	height: auto;
+	max-width: 1000px;
+	margin-right: auto;
+	margin-left: auto;
+	padding: 20px;
+}
+
+/* END footer.php */
+
+
+/* accnt.php */
+
+#contentAccnt {
+	position: relative;
+	height: auto;
+	max-width: 800px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 100px;
+	border-left: #ff0000 thin solid;
+	border-right: #ff0000 thin solid;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.editSetting {
+	min-width: 100px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #666;
+	padding-top: 7px;
+	float: left;
+	margin-bottom: 5px;
+}
+.editSettingSubject {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 11px;
+	color: #666;
+	padding-top: 7px;
+	float: left;
+	margin-left: 3%;
+	margin-bottom: 5px;
+}
+.editSettingBtn {
+	background-color: #ff0000;
+	border: #ff0000 thin solid;
+	border-radius: 4px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 11px;
+	color: #FFF;
+	padding: 4px;
+	float: right;
+	margin-bottom: 5px;
+}
+.editSettingBtn:hover {
+	background-color: #d00000;
+	border: #d00000 thin solid;
+	border-radius: 4px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 11px;
+	color: #FFF;
+	padding: 4px;
+	float: right;
+	margin-bottom: 5px;
+}
+.editSettingControlBtn {
+	min-width: 60px;
+	background-color: #e0e0e0;
+	border: #999 thin solid;
+	border-radius: 4px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 11px;
+	color: #666;
+	padding: 4px;
+	margin-bottom: 10px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.editSettingControlBtn:hover {
+	min-width: 60px;
+	background-color: #ff0000;
+	border: #ff0000 thin solid;
+	border-radius: 4px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 11px;
+	color: #FFF;
+	padding: 4px;
+	margin-bottom: 10px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.editSettingControlBtn2 {
+	min-width: 60px;
+	background-color: #e0e0e0;
+	border: #999 thin solid;
+	border-radius: 4px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 11px;
+	color: #666;
+	padding: 4px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.editSettingControlBtn2:hover {
+	min-width: 60px;
+	background-color: #ff0000;
+	border: #ff0000 thin solid;
+	border-radius: 4px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 11px;
+	color: #FFF;
+	padding: 4px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.editCont {
+	border: #ff0000 thin solid;
+	border-radius: 4px;
+	width: 250px;
+	clear: both;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 10px;
+	margin-top: 10px;
+}
+
+/* END accnt.php */
+
+
+/* notifications.php */
+
+#contentNotes {
+	position: relative;
+	height: auto;
+	max-width: 400px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 100px;
+	border-left: #CCC thin solid;
+	border-right: #CCC thin solid;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.acceptBtn {
+	background-color: #ff0000;
+	border: none;
+	border-radius: 4px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 14px;
+	color: #FFF;
+	padding: 4px;
+}
+.acceptBtn:hover {
+	background-color: #d00000;
+	border: none;
+	border-radius: 4px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 14px;
+	color: #FFF;
+	padding: 4px;
+}
+.rejectBtn {
+	background-color: #bcbcbc;
+	border: none;
+	border-radius: 4px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 14px;
+	color: #FFF;
+	padding: 4px;
+}
+.rejectBtn:hover {
+	background-color: #6e6e6e;
+	border: none;
+	border-radius: 4px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 14px;
+	color: #FFF;
+	padding: 4px;
+}
+#notesBox {
+	height: auto;
+	width: auto;
+	padding: 10px;
+	text-align: left;
+	margin-bottom: 10px;
+}
+#ReqBox {
+	height: auto;
+	width: auto;
+	padding: 10px;
+	text-align: left;
+	margin-bottom: 10px;
+}
+.friendrequests {
+	height: auto;
+	min-height: 74px;
+	border-bottom: #CCC 1px solid;
+	margin-bottom: 25px;
+}
+img.user_pic {
+	width: 68px;
+	height: 68px;
+	border-radius: 50%;
+	margin-right: 8px;
+	display: inline-block;
+	vertical-align: middle;
+}
+.user_info {
+	width: auto;
+	height: auto;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+/* END notifications.php */
+
+
+
+/* friends.php */
+/* END friends.php */
+
+
+
+/* overlays */
+
+
+
+
+
+@media only screen and (min-width: 481px) {
+
+/* common styles */
+#content {
+	position: relative;
+	height: auto;
+	max-width: 1000px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top:30px;
+}
+#info_box {
+	position: relative;
+	width: 100%;
+	height: auto;
+	max-width: 240px;
+	max-height: 200px;
+	display: inline-block;
+	vertical-align: middle;
+	margin-top: 5px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #666;
+	overflow: visible;
+}
+
+
+
+
+/* overlays */
+
+
+
+}
+
+
+@media only screen and (min-width: 550px) {
+	 
+div#profile_pic_box {
+	
+	
+	width: 180px;
+	
+	height: 180px;
+	
+	
+}
+
+.profile_pic_btn {
+	position: absolute;
+	background: url(http://www.mechlink.org/images/photo_icon_2.png) 0px 0px no-repeat;
+	height: 37px;
+	width: 37px;
+	z-index: 8000;
+	border: none;
+	margin-left: 5px;
+	margin-top: 5px;
+}
+.profile_pic_btn:hover {
+	position: absolute;
+	background: url(http://www.mechlink.org/images/photo_icon_2_hover.png) 0px 0px no-repeat;
+	height: 37px;
+	width: 37px;
+	z-index: 8000;
+	border: none;
+	margin-left: 5px;
+	margin-top: 5px;
+}
+#info_box {
+	position: relative;
+	width: 100%;
+	height: auto;
+	max-width: 300px;
+	max-height: 200px;
+	display: inline-block;
+	vertical-align: middle;
+	margin-top: 5px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #666;
+	overflow: visible;
+}
+#info_box2 {
+	position: relative;
+	width: auto;
+	height: auto;
+	max-width: 300px;
+	max-height: 200px;
+	margin-top: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #666;
+	overflow: scroll;
+	margin-left: 0;
+	margin-right: 0;
+	padding-left: 0px;
+	text-align: left;
+}
+
+}
+
+
+@media only screen and (min-width: 700px) {
+	 
+
+}
+
+ 
+@media only screen and (min-width: 769px) {
+	 
+/* accnt.php */
+
+.editSetting {
+	min-width: 100px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #666;
+	padding-top: 7px;
+	float: left;
+	margin-bottom: 5px;
+}
+.editSettingSubject {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	color: #666;
+	padding-top: 7px;
+	float: left;
+	margin-left: 10%;
+	margin-bottom: 5px;
+}
+.editSettingBtn {
+	background-color: #ff0000;
+	border: #ff0000 thin solid;
+	border-radius: 4px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	color: #FFF;
+	padding: 4px;
+	float: right;
+	margin-bottom: 5px;
+}
+.editSettingBtn:hover {
+	background-color: #d00000;
+	border: #d00000 thin solid;
+	border-radius: 4px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	color: #FFF;
+	padding: 4px;
+	float: right;
+	margin-bottom: 5px;
+}
+.editSettingControlBtn {
+	min-width: 60px;
+	background-color: #e0e0e0;
+	border: #999 thin solid;
+	border-radius: 4px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	color: #666;
+	padding: 4px;
+	margin-bottom: 10px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.editSettingControlBtn:hover {
+	min-width: 60px;
+	background-color: #ff0000;
+	border: #ff0000 thin solid;
+	border-radius: 4px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	color: #FFF;
+	padding: 4px;
+	margin-bottom: 10px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.editSettingControlBtn2 {
+	min-width: 60px;
+	background-color: #e0e0e0;
+	border: #999 thin solid;
+	border-radius: 4px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	color: #666;
+	padding: 4px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.editSettingControlBtn2:hover {
+	min-width: 60px;
+	background-color: #ff0000;
+	border: #ff0000 thin solid;
+	border-radius: 4px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	color: #FFF;
+	padding: 4px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.editCont {
+	border: #ff0000 thin solid;
+	border-radius: 4px;
+	width: 350px;
+	clear: both;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 10px;
+	margin-top: 10px;
+}
+
+/* END accnt.php */
+
+}
+
+
+@media only screen and (min-width: 1123px) {
+	 
+#contentInner {
+	height: auto;
+	margin-top: 10px;
+	position: relative;
+	max-width: 680px;
+	padding: 10px;
+	text-align: left;
+	float: left;
+}
+#contentInner2 {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	margin-left: 100px;
+}
+#main_cont {
+	background-color: #fefefe;
+	position: relative;
+	height: 100%;
+	width: auto;
+	min-height: 300px;
+	min-width: 600px;
+	margin-top: 10px;
+	padding: 20px;
+	border-radius: 3px;
+}
+#main_cont2 {
+	background-color: #fefefe;
+	position: relative;
+	height: 100%;
+	width: auto;
+	min-width: 600px;
+	padding: 20px;
+	border-radius: 3px;
+}
+.contentInnerSide {
+	height: auto;
+	position: relative;
+	margin-top: 30px;
+	width: 100%;
+	max-width: 170px;
+	float: right;
+	display: block;
+}
+.contentInnerSide_in {
+	height: auto;
+	position: relative;
+	width: 100%;
+	max-width: 170px;
+	display: block;
+}
+.sideAd {
+	height: auto;
+	position: relative;
+	width: 100%;
+	max-width: 170px;
+	display: block;
+}
+#footerbar {
+	display: none;
+}
+#footerbarcont {
+	display: none;
+}
+
+}
+
+
+@media only screen and (max-width: 1122px) {
+	
+#contentInner {
+	width: 100%;
+	height: auto;
+	position: relative;
+	margin-top: 10px;
+	max-width: 770px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 10px;
+}
+#contentInner2 {
+	position: relative;
+	height: 100%;
+	width: 100%;
+}
+.contentInnerSide {
+	display: none;
+}
+#footerbar {
+	z-index: 10000;
+	position: fixed;
+	height: auto;
+	width: 101%;
+	background-color: #efefef;
+	bottom: 0px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	box-shadow: 0px 0px 10px #888888;
+}
+#footerbarcont {
+	position: relative;
+	height: auto;
+	max-width: 1000px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+}

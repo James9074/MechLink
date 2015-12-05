@@ -1,0 +1,9 @@
+# Use PHP5.4 as default
+AddHandler application/x-httpd-php54 .php
+# 1 ---- Establish a custom 404 File not Found page ----
+
+ErrorDocument 404 /filenot.php
+
+# 2 ---- Prevent directory file listing in all of your folders ----
+
+IndexIgnore *

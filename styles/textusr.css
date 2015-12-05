@@ -1,0 +1,366 @@
+@charset "UTF-8";
+/* CSS Document */
+
+
+.style1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #CCC;
+}
+
+.style2 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #ff0000;
+	line-height: 160%;
+}
+
+.style3 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	font-weight:bold;
+	color: #666;
+}
+.style4 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight:bold;
+	color: #666;
+}
+.style5 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #009cff;
+}
+.style6 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 17px;
+	color: #666;
+	font-weight: bold;
+}
+.style7 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #ff0000;
+	font-weight: normal;
+}
+.style8 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #009cff;
+	font-weight: normal;
+}
+
+
+
+
+
+
+
+
+
+
+.a1:link {
+	text-decoration: none;
+	font-family:Tahoma, Geneva, sans-serif;
+	color: #999;
+	font-size: 16px;
+	font-weight:bold;
+}
+.a1:visited {
+	text-decoration: none;
+	font-family:Tahoma, Geneva, sans-serif;
+	color: #999;
+	font-size: 16px;
+	font-weight:bold;
+}
+.a1:hover {
+	color: #009cff;
+	text-decoration: none;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size: 16px;
+	font-weight:bold;
+}
+.a1:focus {
+	color: #009cff;
+	text-decoration: none;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size: 16px;
+	font-weight:bold;
+}
+.a1:active {
+	color: #009cff;
+	text-decoration: none;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size: 16px;
+	font-weight:bold;
+}
+
+
+
+
+
+.a2:link {
+	text-decoration: none;
+	font-family:Tahoma, Geneva, sans-serif;
+	color: #999;
+	font-size: 14px;
+}
+.a2:visited {
+	text-decoration: none;
+	font-family:Tahoma, Geneva, sans-serif;
+	color: #999;
+	font-size: 14px;
+}
+.a2:hover {
+	color: #009cff;
+	text-decoration: none;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size: 14px;
+}
+.a2:focus {
+	color: #009cff;
+	text-decoration: none;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size: 14px;
+}
+.a2:active {
+	color: #009cff;
+	text-decoration: none;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size: 14px;
+}
+
+
+
+
+.a3:link {
+	color: #666;
+	text-decoration: none;
+	font:Verdana, Geneva, sans-serif;
+	font-size:14px;
+	font-weight:bold;
+}
+.a3:visited {
+	color: #666;
+	text-decoration: none;
+	font:Verdana, Geneva, sans-serif;
+	font-size:14px;
+	font-weight:bold;
+}
+.a3:hover {
+	color: #666;
+	text-decoration: none;
+	font:Verdana, Geneva, sans-serif;
+	font-size:14px;
+	font-weight:bold;
+}
+.a3:focus {
+	color: #666;
+	text-decoration: none;
+	font:Verdana, Geneva, sans-serif;
+	font-size:14px;
+	font-weight:bold;
+}
+.a3:active {
+	color: #666;
+	text-decoration: none;
+	font:Verdana, Geneva, sans-serif;
+	font-size:14px;
+	font-weight:bold;
+}
+
+
+.a4:link {
+	color: #ff0000;
+	text-decoration: none;
+	font: Verdana, Geneva, sans-serif;
+	font-size: 15px;
+	font-weight: normal;
+}
+.a4:visited {
+	color: #ff0000;
+	text-decoration: none;
+	font: Verdana, Geneva, sans-serif;
+	font-size: 15px;
+	font-weight: normal;
+}
+.a4:hover {
+	color: #d00000;
+	text-decoration: none;
+	font: Verdana, Geneva, sans-serif;
+	font-size: 15px;
+	font-weight: normal;
+}
+.a4:focus {
+	color: #d00000;
+	text-decoration: none;
+	font: Verdana, Geneva, sans-serif;
+	font-size: 15px;
+	font-weight: normal;
+}
+.a4:active {
+	color: #d00000;
+	text-decoration: none;
+	font: Verdana, Geneva, sans-serif;
+	font-size: 15px;
+	font-weight: normal;
+}
+
+.a5:link {
+	color: #009cff;
+	text-decoration: none;
+	font: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+}
+.a5:visited {
+	color: #009cff;
+	text-decoration: none;
+	font: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+}
+.a5:hover {
+	color: #007cca;
+	text-decoration: none;
+	font: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+}
+.a5:focus {
+	color: #007cca;
+	text-decoration: none;
+	font: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+}
+.a5:active {
+	color: #007cca;
+	text-decoration: none;
+	font: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+
+
+.a6:link {
+	color: #ff0000;
+	text-decoration: none;
+	font: Verdana, Geneva, sans-serif;
+	font-size: 15px;
+	font-weight: bold;
+	line-height: 120%;
+}
+.a6:visited {
+	color: #ff0000;
+	text-decoration: none;
+	font: Verdana, Geneva, sans-serif;
+	font-size: 15px;
+	font-weight: bold;
+	line-height: 120%;
+}
+.a6:hover {
+	color: #d00000;
+	text-decoration: none;
+	font: Verdana, Geneva, sans-serif;
+	font-size: 15px;
+	font-weight: bold;
+	line-height: 120%;
+}
+.a6:focus {
+	color: #d00000;
+	text-decoration: none;
+	font: Verdana, Geneva, sans-serif;
+	font-size: 15px;
+	font-weight: bold;
+	line-height: 120%;
+}
+.a6:active {
+	color: #d00000;
+	text-decoration: none;
+	font: Verdana, Geneva, sans-serif;
+	font-size: 15px;
+	font-weight: bold;
+	line-height: 120%;
+}
+
+
+@media only screen and (min-width: 481px) {
+.style3 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	font-weight:bold;
+	color: #666;
+}
+.style4 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	font-weight:bold;
+	color: #666;
+}
+.style6 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	color: #666;
+	font-weight: bold;
+}
+.style8 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	color: #009cff;
+	font-weight: normal;
+}
+}
+
+
+
+@media only screen and (min-width: 769px) {
+.style7 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	color: #ff0000;
+	font-weight: normal;
+}
+
+
+
+.a3:link {
+	color: #666;
+	text-decoration: none;
+	font:Verdana, Geneva, sans-serif;
+	font-size:16px;
+	font-weight:bold;
+}
+.a3:visited {
+	color: #666;
+	text-decoration: none;
+	font:Verdana, Geneva, sans-serif;
+	font-size:16px;
+	font-weight:bold;
+}
+.a3:hover {
+	color: #666;
+	text-decoration: none;
+	font:Verdana, Geneva, sans-serif;
+	font-size:16px;
+	font-weight:bold;
+}
+.a3:focus {
+	color: #666;
+	text-decoration: none;
+	font:Verdana, Geneva, sans-serif;
+	font-size:16px;
+	font-weight:bold;
+}
+.a3:active {
+	color: #666;
+	text-decoration: none;
+	font:Verdana, Geneva, sans-serif;
+	font-size:16px;
+	font-weight:bold;
+}
+
+}
+

@@ -1,0 +1,289 @@
+@charset "UTF-8";
+
+img, object, embed, video {
+	max-width: 100%;
+}
+/* IE 6 does not support max-width so default to width 100% */
+.ie6 img {
+	width: 100%;
+}
+
+
+/* Mobile Layout: 480px and below. */
+
+
+.gridHeader {
+	margin-left: auto;
+	margin-right: auto;
+	width: 87.36%;
+	padding-left: 1.82%;
+	padding-right: 1.82%;
+}
+#header {
+	position: relative;
+	height: auto;
+	max-width: 700px;
+	background-color: #FFF;
+	border-bottom: #009cff medium solid;
+	padding: 7px;
+	margin: 0px auto;
+}
+#headeritem1 {
+	position: relative;
+	height: 100%;
+	width: auto;
+	display: inline-block;
+	margin-right: 1%;
+	margin-left: 1%;
+	vertical-align: middle;
+	margin-bottom: 20px;
+}
+#headeritem {
+	position: relative;
+	height: 100%;
+	width: auto;
+	display: inline-block;
+	margin-right: 1%;
+	margin-left: 1%;
+	vertical-align: middle;
+	margin-bottom: 10px;
+}
+.headerBut {
+	background: #ececec;
+	border: #999 thin solid;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border-radius: 6px;
+}
+#contentitem {
+	position: relative;
+	height: 50%;
+	width: 50%;
+	display: inline-block;
+	margin-right: 0;
+	margin-left: 0;
+	vertical-align: middle;
+	margin-top: 10px;
+}
+#container {
+	position: relative;
+	height: auto;
+	width: 100%;
+}
+.gridContainer {
+	margin-left: auto;
+	margin-right: auto;
+	width: 87.36%;
+	padding-left: 1.82%;
+	padding-right: 1.82%;
+}
+#content {
+	position: relative;
+	height: auto;
+	max-width: 1000px;
+	margin-right:auto;
+	margin-left:auto;
+}
+#footer_container {
+	position: relative;
+	height: auto;
+	max-width: 1000px;
+	margin-right: auto;
+	margin-left: auto;
+	padding: 20px;
+}
+
+
+
+
+
+
+
+@media only screen and (min-width: 481px) {
+.gridContainer {
+	width: 90.675%;
+	padding-left: 1.1625%;
+	padding-right: 1.1625%;
+}
+}
+
+
+
+
+
+@media only screen and (min-width: 1123px) {
+.gridContainer {
+	width: 88.2%;
+	max-width: 800px;
+	padding-left: 0.9%;
+	padding-right: 0.9%;
+	margin: auto;
+}
+#contentInner {
+	background-color:#FFF;
+	height: auto;
+	margin-top: 10px;
+	position: relative;
+	max-width: 680px;
+	padding: 20px;
+	text-align:left;
+	float:left;
+	
+}
+.contentInnerSide {
+	height: auto;
+	position: relative;
+	margin-top: 30px;
+	width:100%;
+	max-width: 170px;
+	margin-bottom: 20px;
+	float:right;
+	display:block;
+	
+	
+}
+.contentInnerSide_in {
+	height: auto;
+	position: relative;
+	width:100%;
+	max-width: 170px;
+	display:block;
+	border-top: #666 medium solid;
+	/*
+	border-top: #00a2ff medium solid;
+	*/
+	
+}
+
+
+.sideAd {
+	height: auto;
+	position: relative;
+	width:100%;
+	max-width: 170px;
+	display:block;
+	
+	
+}
+#footerbar {
+	display:none;
+}
+
+#footerbarcont {
+	display:none;
+	
+}
+}
+ @media only screen and (max-width: 1122px) {
+#contentInner {
+	width: 100%;
+	height: auto;
+	margin-top: 10px;
+	position: relative;
+	max-width: 770px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 20px;
+	border: #CCC thin solid;
+}
+
+.contentInnerSide {
+	display:none;
+}
+#footerbar {
+	position: fixed;
+	height: auto;
+	width:101%;
+	background-color:#efefef;
+	bottom:0px;
+	padding-top:6px;
+	padding-bottom:6px;
+	box-shadow: 0px 0px 10px #888888;
+}
+
+#footerbarcont {
+	position: relative;
+	height: auto;
+	max-width:1000px;
+	margin-left: auto ;
+    margin-right: auto ;
+}
+}
+
+
+
+
+
+
+
+
+
+
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+form > div {
+	clear: both;
+	overflow: hidden;
+	padding: 1px;
+	margin: 0 0 10px 0;
+}
+form > div > fieldset > div > div {
+	margin: 0 0 5px 0;
+}
+form > div > label, legend {
+	width: 25%;
+	float: left;
+	padding-right: 10px;
+}
+form > div > div, form > div > fieldset > div {
+	width: 75%;
+	float: right;
+}
+form > div > fieldset label {
+	font-size: 90%;
+}
+fieldset {
+	border: 0;
+	padding: 0;
+}
+input[type=text], input[type=email], input[type=url], input[type=password], textarea {
+	width: 100%;
+	border-top: 2px solid #ccc;
+	border-left: 2px solid #ccc;
+	border-right: 2px solid #ccc;
+	border-bottom: 2px solid #ccc;
+}
+input[type=text], input[type=email], input[type=url], input[type=password] {
+	width: 50%;
+}
+input[type=text]:focus, input[type=email]:focus, input[type=url]:focus, input[type=password]:focus, textarea:focus {
+	outline: 0;
+	border-color: #4697e4;
+}
+ @media (max-width: 600px) {
+form > div {
+	margin: 0 0 15px 0;
+}
+form > div > label, legend {
+	width: 100%;
+	float: none;
+	margin: 0 0 5px 0;
+}
+form > div > div, form > div > fieldset > div {
+	width: 100%;
+	float: none;
+}
+input[type=text], input[type=email], input[type=url], input[type=password], textarea, select {
+	width: 100%;
+}
+}
+@media (min-width: 1200px) {
+form > div > label, legend {
+	text-align: right;
+}
+}

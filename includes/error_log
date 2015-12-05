@@ -1,0 +1,2 @@
+[30-Sep-2015 10:38:22 America/Chicago] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'grmrlnk_audt394'@'localhost' (using password: YES) in /home1/fth3u4n3/public_html/includes/db_conx.php on line 2
+[30-Sep-2015 10:42:15 America/Chicago] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'grmrlnk_audt394'@'localhost' (using password: YES) in /home1/fth3u4n3/public_html/includes/db_conx.php on line 2

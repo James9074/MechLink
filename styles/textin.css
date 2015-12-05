@@ -1,0 +1,91 @@
+@charset "UTF-8";
+/* CSS Document */
+
+
+.style1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #CCC;
+}
+.style2 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	color: #333;
+}
+
+
+
+.a1:link {
+	text-decoration: none;
+	font-family:Tahoma, Geneva, sans-serif;
+	color: #999;
+	font-size: 16px;
+	font-weight:bold;
+}
+.a1:visited {
+	text-decoration: none;
+	font-family:Tahoma, Geneva, sans-serif;
+	color: #999;
+	font-size: 16px;
+	font-weight:bold;
+}
+.a1:hover {
+	color: #009cff;
+	text-decoration: none;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size: 16px;
+	font-weight:bold;
+}
+.a1:focus {
+	color: #009cff;
+	text-decoration: none;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size: 16px;
+	font-weight:bold;
+}
+.a1:active {
+	color: #009cff;
+	text-decoration: none;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size: 16px;
+	font-weight:bold;
+}
+
+
+
+
+
+.a2:link {
+	text-decoration: none;
+	font-family:Tahoma, Geneva, sans-serif;
+	color: #999;
+	font-size: 16px;
+}
+.a2:visited {
+	text-decoration: none;
+	font-family:Tahoma, Geneva, sans-serif;
+	color: #999;
+	font-size: 16px;
+}
+.a2:hover {
+	color: #ff0000;
+	text-decoration: none;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size: 16px;
+}
+.a2:focus {
+	color: #ff0000;
+	text-decoration: none;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size: 16px;
+}
+.a2:active {
+	color: #ff0000;
+	text-decoration: none;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size: 16px;
+}
+
+
+
+
