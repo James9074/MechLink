@@ -3,7 +3,7 @@
     <div id="boxform">
       <div id="form"> <br />
         <span id="edit_about_desc">Edit your information</span> <br />
-        <span id="edit_about_error" class="status_error">Please enter at least 100 characters.</span>
+        <span id="edit_about_message">Please enter at least 100 characters.</span>
         <br />
         <textarea id="about" placeholder="Describe yourself or your auto business (at least 100 characters)" tabindex="1"></textarea>
         <br />

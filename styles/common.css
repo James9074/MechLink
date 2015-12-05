@@ -1498,3 +1498,8 @@ form > div > label, legend {
 	font-family:Tahoma, Geneva, sans-serif;
 	font-size: 14px;
 }
+
+.status_error{
+	color:red;
+	font-weight:bold;
+}

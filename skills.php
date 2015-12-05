@@ -38,7 +38,7 @@ if($u == $log_username && $user_ok == true){
 	$category_edit_btn = '<button class="category_edit_btn" style="display:inline-block; margin-top:1px;"></button>';
 	$location_edit_btn = '<button class="location_edit_btn" style="display:inline-block; margin-top:1px;" onclick = "document.getElementById(\'light_edit_location\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
 	$status_edit_btn = '<button class="status_edit_btn" style="display:inline-block; margin-top:1px;" onclick = "document.getElementById(\'light_edit_status\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>'; 
-	$about_edit_btn = '<button class="about_edit_btn" style="display:block;" onclick = "document.getElementById(\'light_edit_about\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
+	$about_edit_btn = '<button class="about_edit_btn" style="display:block;" onclick = "$(\'#light_edit_about\').show();$(\'#fade\').show();"></button>';
 }
 // Fetch the user row from the query above
 while ($row = mysqli_fetch_array($user_query, MYSQLI_ASSOC)) {
