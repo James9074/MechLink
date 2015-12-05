@@ -19,4 +19,3 @@
 </div>
 <!--light_skills-->
 
-<div id="fade" class="black_overlay"></div>

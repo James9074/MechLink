@@ -1,3 +1,24 @@
+<?
+session_start();
+include_once("includes/check_login_status.php");
+// AJAX CALLS
+if(isset($_POST["edit_about_data"]) && isset($_POST["u"])){
+	// CONNECT TO THE DATABASE
+	include_once("../includes/db_conx.php");
+	// GATHER THE POSTED DATA INTO LOCAL VARIABLES AND SANITIZE
+	$edit_desc = preg_replace('#[^a-z0-9]#i', '', $_POST['edit_about_data']);
+	$username = preg_replace('#[^a-z0-9]#i', '', $_POST['username']);
+	// GET USER IP ADDRESS
+	$ip = preg_replace('#[^0-9.]#', '', getenv('REMOTE_ADDR'));
+
+	$sql = "UPDATE users SET description = '".$edit_desc."' WHERE username = '".$_POST["u"]."';";
+	$query = mysqli_query($db_conx, $sql);
+	echo $sql;
+	exit();
+}
+?>
+
+
 <?php
 include_once("includes/check_login_status.php");
 // Initialize any variables that the page might echo
@@ -13,12 +34,13 @@ $avatar_form = "";
 $country = "";
 $joindate = "";
 $lastsession = "";
+$description = "";
 // Make sure the _GET username is set, and sanitize it
 if(isset($_GET["u"])){
 	$u = preg_replace('#[^a-z0-9]#i', '', $_GET['u']);
 } else {
     header("location: http://www.mechlink.org");
-    exit();	
+    exit();
 }
 // Select the member from the users table
 $sql = "SELECT * FROM users WHERE username='$u' AND activated='1' LIMIT 1";
@@ -27,7 +49,7 @@ $user_query = mysqli_query($db_conx, $sql);
 $numrows = mysqli_num_rows($user_query);
 if($numrows < 1){
 	header("location: http://www.mechlink.org/404");
-    exit();	
+    exit();
 }
 // Check to see if the viewer is the account owner
 $isOwner = "no";
@@ -37,7 +59,7 @@ if($u == $log_username && $user_ok == true){
 	$rlname_edit_btn = '<button class="rlname_edit_btn" style="display:inline-block; margin-top:3px;" onclick = "document.getElementById(\'light_edit_name\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
 	$category_edit_btn = '<button class="category_edit_btn" style="display:inline-block; margin-top:1px;"></button>';
 	$location_edit_btn = '<button class="location_edit_btn" style="display:inline-block; margin-top:1px;" onclick = "document.getElementById(\'light_edit_location\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
-	$status_edit_btn = '<button class="status_edit_btn" style="display:inline-block; margin-top:1px;" onclick = "document.getElementById(\'light_edit_status\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>'; 
+	$status_edit_btn = '<button class="status_edit_btn" style="display:inline-block; margin-top:1px;" onclick = "document.getElementById(\'light_edit_status\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
 	$about_edit_btn = '<button class="about_edit_btn" style="display:block;" onclick = "document.getElementById(\'light_edit_about\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
 }
 // Fetch the user row from the query above
@@ -54,6 +76,7 @@ while ($row = mysqli_fetch_array($user_query, MYSQLI_ASSOC)) {
 	$lastlogin = $row["lastlogin"];
 	$joindate = strftime("%b %d, %Y", strtotime($signup));
 	$lastsession = strftime("%b %d, %Y", strtotime($lastlogin));
+	$description = $row["description"];
 }
 if($gender == "f"){
 		$sex = "Female";
@@ -82,7 +105,7 @@ if($u != $log_username && $user_ok == true){
     }
 }
 ?>
-<?php 
+<?php
 $friend_button = '<button class="friendBtn" disabled style="display:none;">Friend</button>';
 $block_button = '<button disabled>Block User</button>';
 // LOGIC FOR FRIEND BUTTON
@@ -98,7 +121,7 @@ if($viewerBlockOwner == true){
 	$block_button = '<button onclick="blockToggle(\'block\',\''.$u.'\',\'blockBtn\')">Block User</button>';
 }
 ?>
-<?php 
+<?php
 $friend_button2 = '<button class="friendBtn2" disabled style="display:none;">Friend</button>';
 // LOGIC FOR FRIEND BUTTON
 if($isFriend == true){
@@ -179,7 +202,9 @@ include_once("includes/headerphpcode.php");
 <link rel="icon" href="http://www.mechlink.org/images/favicon.ico" type="image/x-icon">
 <script type="text/javascript" src="https://ws.sharethis.com/button/buttons.js"></script>
 <script type="text/javascript">stLight.options({publisher: "d7ff69d9-2897-4dc9-ac03-f66f1c76496f", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
-<script src="respond.min.js"></script>
+<!--<script src="js/respond.min.js"></script>-->
+<script src="js/jquery-1.9.1.min.js"></script>
+<script src="js/user.js"></script>
 <script language="javascript" type="text/javascript">
 var dateObject=new Date();
 </script>
@@ -233,19 +258,20 @@ function blockToggle(type,blockee,elem){
 <script>
 function triggerUpload(event,elem){
 	event.preventDefault();
-	document.getElementById(elem).click();	
+	document.getElementById(elem).click();
 }
 </script>
 </head>
 
 <body>
+<div id="fade" class="black_overlay"></div>
 <?php include_once("includes/header.php"); ?>
 <?php include_once("includes/overlay_edit_name.php"); ?>
 <?php include_once("includes/overlay_edit_location.php"); ?>
 <?php include_once("includes/overlay_edit_status.php"); ?>
 <?php include_once("includes/overlaysshare.php"); ?>
 <?php include_once("includes/overlay_edit_about.php"); ?>
-<?php include_once("includes/overlay_about.php"); ?>
+<?php //include_once("includes/overlay_edit_about.php"); ?>
 <?php include_once("includes/overlay_first.php"); ?>
 <?php include_once("includes/overlay_skills.php"); ?>
 <?php include_once("includes/overlay_project.php"); ?>
@@ -291,7 +317,7 @@ else {
         <div id="contentInner2">
           <hr />
           <?php include_once("includes/prof_nav.php"); ?>
-          <div id="main_cont"> <?php echo $about_edit_btn; ?> Tell others about yourself or your business. </div>
+          <div id="main_cont"> <div id="user_about" descriptionprovided="<? echo $description == "" ? "false" : "true"; ?>" ><?php echo $about_edit_btn; echo $description == "" ? "Tell others about yourself or your business." : $description ?>  </div></div>
           <hr />
           <div align="center">
             <div id="section_header"> <span class="style2"> Friends <?php echo "(".$friend_count.")"; ?>&nbsp;&nbsp;<?php echo $friends_view_all_link; ?> </span>
@@ -305,11 +331,11 @@ else {
           <hr />
           <?php include_once("includes/footer.php"); ?>
         </div>
-        <!--contentInner2--> 
-        
+        <!--contentInner2-->
+
       </div>
       <!--contentInner-->
-      
+
       <?php include("includes/sidecont.php"); ?>
     </div>
   </div>
@@ -323,3 +349,9 @@ else {
 <?php include_once("includes/footer_over.php"); ?>
 </body>
 </html>
+
+
+
+
+
+

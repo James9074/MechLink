@@ -25,17 +25,6 @@ img, object, embed, video {
 	z-index: 20002;
 	overflow: auto;
 }
-.white_content_about {
-	
-	position: fixed;
-	top: 10%;
-	left: 10%;
-	width: 80%;
-	height: 80%;
-	padding: 15px;
-	z-index: 20002;
-	overflow: auto;
-}
 .white_content_edit_about {
 	display: none;
 	position: fixed;

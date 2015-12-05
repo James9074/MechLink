@@ -22,5 +22,4 @@
 </div>
 <!--light4-->
 
-<div id="fade" class="black_overlay"></div>
 <?php include("includes/overlay_sign_join_forms.php"); ?>

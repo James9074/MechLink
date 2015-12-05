@@ -119,7 +119,7 @@
         <br />
         <br />
         <br />
-        <button onclick = "document.getElementById('light_skills').style.display='none';document.getElementById('fade2').style.display='none'" tabindex="20">Post</button>
+        <button onclick = "document.getElementById('light_skills').style.display='none';document.getElementById('fade').style.display='none'" tabindex="20">Post</button>
         <button onclick = "document.getElementById('light_skills').style.display='none';document.getElementById('light_select').style.display='block'" tabindex="21">Cancel</button>
         <br />
         <br />

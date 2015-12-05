@@ -8,4 +8,3 @@
 </div>
 <!--light1-->
 
-<div id="fade" class="black_overlay"></div>

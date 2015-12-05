@@ -2,14 +2,16 @@
   <div align="center">
     <div id="boxform">
       <div id="form"> <br />
-        Edit your information <br />
+        <span id="edit_about_desc">Edit your information</span> <br />
+        <span id="edit_about_error" class="status_error">Please enter at least 100 characters.</span>
         <br />
-        <textarea id="about" placeholder="" tabindex="1"></textarea>
+        <textarea id="about" placeholder="Describe yourself or your auto business (at least 100 characters)" tabindex="1"></textarea>
         <br />
         <br />
-        <button onclick = "document.getElementById('light_edit_about').style.display='none';document.getElementById('fade').style.display='none'" tabindex="2">Post</button>
-        <button onclick = "document.getElementById('light_edit_about').style.display='none';document.getElementById('fade').style.display='none'" tabindex="3">Cancel</button>
+        <button id="edit_about_post" onclick = "UserUploadAbout();document.getElementById('light_edit_about').style.display='none';document.getElementById('fade').style.display='none'" tabindex="2">Post</button>
+        <button id="edit_about_cancel" onclick = "document.getElementById('light_edit_about').style.display='none';document.getElementById('fade').style.display='none'" tabindex="3">Cancel</button>
         <br />
+        <img id="edit_about_loading" style="display:none;" src="http://www.mechlink.org/gifs/blueloader.gif" alt="Loading..." />
         <br />
       </div>
     </div>
@@ -17,4 +19,3 @@
 </div>
 <!--lightabout-->
 
-<div id="fade" class="black_overlay"></div>

@@ -16,4 +16,3 @@
 </div>
 <!--light_select-->
 
-<div id="fade" class="black_overlay"></div>
