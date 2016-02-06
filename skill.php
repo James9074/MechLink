@@ -1,4 +1,71 @@
 <?php
+// AJAX CALLS
+if(isset($_POST["add_skillset"]) && isset($_POST["u"])){
+	// CONNECT TO THE DATABASE
+	include_once("../includes/db_conx.php");
+	// GATHER THE POSTED DATA INTO LOCAL VARIABLES AND SANITIZE
+	//$edit_desc = mysqli_real_escape_string($db_conx, $_POST['edit_about_data']);
+	//$edit_desc = nl2br($edit_desc);
+
+
+
+	// GET USER IP ADDRESS
+	$ip = preg_replace('#[^0-9.]#', '', getenv('REMOTE_ADDR'));
+	$id = $_POST['id'];
+	$automobiletype = $_POST['automobiletype'];
+	$location = $_POST['location'];
+	$restoredfrom = $_POST['restoredfrom'];
+	$restoredto = $_POST['restoredto'];
+	$award1 = $_POST['award1'];
+	$award2 = $_POST['award2'];
+	$award3 = $_POST['award3'];
+	$award4 = $_POST['award4'];
+	$skills = $_POST['skills'];
+	$username = preg_replace('#[^a-z0-9]#i', '', $_POST['username']);
+
+	//GET NEXT ID IF NEEDED
+	if($id == null) {
+		$result = mysqli_query($db_conx, "SHOW TABLE STATUS LIKE 'table_name'");
+		$row = mysqli_fetch_array($result);
+		$id = $row['Auto_increment'];
+	}
+	else echo "ECHO: ".$id;
+
+	$sql = $db_conx->prepare("INSERT INTO skillsets
+			(id,automobiletype, location, restoredfrom, restoredto, award1, award2, award3, award4, skills, username)
+			VALUES
+			(?,?, ?, ?, ?, ?, ?,?, ?, ?)
+			ON DUPLICATE KEY UPDATE
+			  automobiletype = VALUES(automobiletype),
+			  location = VALUES(location),
+			  restoredfrom = VALUES(restoredfrom),
+			  restoredto = VALUES(restoredto),
+			  award1 = VALUES(award1),
+			  award2 = VALUES(award2),
+			  award3 = VALUES(award3),
+			  award4 = VALUES(award4),
+			  skills = VALUES(skills),
+			  username = VALUES(username)");
+
+	$stmt->bind_param('s',$nextid);
+	$stmt->bind_param('s',$automobiletype);
+	$stmt->bind_param('s',$location);
+	$stmt->bind_param('s',$restoredfrom);
+	$stmt->bind_param('s',$restoredto);
+	$stmt->bind_param('s',$award1);
+	$stmt->bind_param('s',$award2);
+	$stmt->bind_param('s',$award3);
+	$stmt->bind_param('s',$award4);
+	$stmt->bind_param('s',$skills);
+	$stmt->bind_param('s',$username);
+
+	$stmt->execute();
+
+	//$query = mysqli_query($db_conx, $sql);
+	echo $sql;
+	exit();
+}
+?>
 include_once("includes/check_login_status.php");
 // Initialize any variables that the page might echo
 $rlname = "";

@@ -5,14 +5,14 @@
         <b>Restoration project details</b> <br />
         <br />
         <div>
-          <input id="" type="text" class="formfields" spellcheck="false" tabindex="1" onkeyup="restrict('')" maxlength="100" placeholder="Type of automobile (required)">
+          <input id="skillsetautomobiletype" type="text" class="formfields" spellcheck="false" tabindex="1" onkeyup="restrict('')" maxlength="100" placeholder="Type of automobile (required)">
         </div>
         <div>
-          <input id="" type="text" class="formfields" spellcheck="false" tabindex="2" onkeyup="restrict('')" maxlength="60" placeholder="City + state or location (optional)">
+          <input id="skillsetlocation" type="text" class="formfields" spellcheck="false" tabindex="2" onkeyup="restrict('')" maxlength="60" placeholder="City + state or location (optional)">
         </div>
         <br />
         Restored from (required): <br />
-        <select id="" class="formfields_select_short" tabindex="3">
+        <select id="skillsetrestoredfrommonth" class="formfields_select_short" tabindex="3">
           <option value="">Month</option>
           <option value="">January</option>
           <option value="">February</option>
@@ -27,9 +27,9 @@
           <option value="">November</option>
           <option value="">December</option>
         </select>
-        <input id="" type="text" class="formfields_short" spellcheck="false" tabindex="4" onkeyup="restrict('')" maxlength="4" placeholder="Year">
+        <input id="skillsetrestoredfromyear" type="text" class="formfields_short" spellcheck="false" tabindex="4" onkeyup="restrict('')" maxlength="4" placeholder="Year">
         to
-        <select id="" class="formfields_select_short" tabindex="5">
+        <select id="skillsetrestoredtomonth" class="formfields_select_short" tabindex="5">
           <option value="">Month</option>
           <option value="">January</option>
           <option value="">February</option>
@@ -44,9 +44,9 @@
           <option value="">November</option>
           <option value="">December</option>
         </select>
-        <input id="" type="text" class="formfields_short" spellcheck="false" tabindex="6" onkeyup="restrict('')" maxlength="4" placeholder="Year">
+        <input id="skillsetrestoredtoyear" type="text" class="formfields_short" spellcheck="false" tabindex="6" onkeyup="restrict('')" maxlength="4" placeholder="Year">
         <div>
-          <input id="" type="text" class="formfields" spellcheck="false" tabindex="7" onfocus="emptyElement('status')" onkeyup="restrict('')" maxlength="60" placeholder="Award received (optional)">
+          <input id="skillsetaward1" type="text" class="formfields" spellcheck="false" tabindex="7" onfocus="emptyElement('status')" onkeyup="restrict('')" maxlength="60" placeholder="Award received (optional)">
         </div>
         <br />
         <button tabindex="8"><img src="images/add_btn.png" />&nbsp;&nbsp;Add an award</button>
@@ -56,7 +56,7 @@
         <b>Specific skills</b> <br />
         <br />
         <div>
-          <textarea id="specificskills" placeholder="Describe your specific skills with this type of automobile (required)" tabindex="9"></textarea>
+          <textarea id="skillsetskills" placeholder="Describe your specific skills with this type of automobile (required)" tabindex="9"></textarea>
         </div>
         <br />
         <br />
@@ -119,7 +119,7 @@
         <br />
         <br />
         <br />
-        <button onclick = "document.getElementById('light_skills').style.display='none';document.getElementById('fade').style.display='none'" tabindex="20">Post</button>
+        <button onclick = "UserUploadNewSkillset();document.getElementById('light_skills').style.display='none';document.getElementById('fade').style.display='none'" tabindex="20">Post</button>
         <button onclick = "document.getElementById('light_skills').style.display='none';document.getElementById('light_select').style.display='block'" tabindex="21">Cancel</button>
         <br />
         <br />

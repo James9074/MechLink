@@ -11,11 +11,18 @@ function UserConfigureInitialProfileSetup(){
     $("#fade").show();
 }
 
+var originalEditText;
 function ModalOpen(type){
     switch (type){
         case 'EditAbout':
-            //$('#about').html($('#user_about_text').html().replace('<br>', '\n'));
-            $('#about').html($('#user_about_text').text());
+            var text = $('#user_about_text').html();
+            originalEditText = text;
+
+            //Replace all line breaks, then replace all <br> tags with line breaks
+            text = text.replace(/\n/g, '');
+            text = text.replace(/<br>/g, '\n');
+            $('#about').val(text);
+            $("#edit_about_cancel").attr("onclick",'UserEditRestoreText();');
             $("#light_edit_about").show();
             $("#fade").show();
             CheckAboutInput();
@@ -23,11 +30,16 @@ function ModalOpen(type){
 
     }
 }
+function UserEditRestoreText(){
+    $('#user_about_text').html(originalEditText);
+    $("#light_edit_about").hide();
+    $("#fade").hide();
+}
 function CheckAboutInput(){
-    $("#user_about_text").text($("#about").val());
-    $("#user_about_text").html($("#user_about_text").html().replace(/\n/g, '<br>'));
+    //Replace all line breaks with <br> tags
+    $('#user_about_text').html($('#about').val().replace(/\n/g, '<br>'));
     $("#edit_about_message").html($("#about").val().length + "/2000");
-    if($("#about").val().length > 100) {
+    if($("#about").val().length > 100 && $("#about").val().length <= 2000) {
         $("#edit_about_post").removeAttr('disabled');
         $("#edit_about_message").removeClass('status_error');
     }
@@ -41,7 +53,11 @@ function UserUploadAbout(first_load){
     if(aboutTest.length < 100){
         $("#edit_about_message").html("Please fill in at least 100 characters.");
         $("#edit_about_message").addClass('status_error');
-    } else {
+    } else if(aboutTest.length > 2000){
+        $("#edit_about_message").html("Please use no more than 2000 characters.");
+        $("#edit_about_message").addClass('status_error');
+    }
+    else {
         $("#edit_about_message").removeClass('status_error');
         $("#edit_about_post").hide();
         $("#edit_about_cancel").hide();
@@ -56,7 +72,56 @@ function UserUploadAbout(first_load){
                     $("#edit_about_cancel").show();
                     $("#edit_about_loading").hide();
                 } else {
-                    console.log("RESPOSE: " +ajax.responseText);
+                    //Close the window. If this is the first load type, restore it.
+                    if(first_load == true) {
+                        $("#light_select").show();
+                        $("#edit_about_cancel").show();
+                        $("#light_edit_about").hide();
+                        $("#light_edit_about").html(initialAboutPostHTML);
+                        $("#edit_about_message").hide();
+                    }
+
+                    $("#edit_about_post").attr('disabled','true');
+
+                    //Undo loading effects
+                    $("#edit_about_post").show();
+                    $("#edit_about_cancel").show();
+                    $("#edit_about_loading").hide();
+                    $("#fade").hide();
+                    $("#light_edit_about").hide();
+                }
+            }
+        }
+        //TODO: This is a bad way to do this. I really should get the username somewhere else.
+        var u = window.location.search.split("&")[0].split("?")[1].split("=")[1];
+        ajax.send("edit_about_data="+aboutTest+"&u="+u);
+    }
+}
+
+function UserUploadNewSkillset(){
+    var aboutTest = $("#about").val();
+    if(aboutTest.length < 100){
+        $("#edit_about_message").html("Please fill in at least 100 characters.");
+        $("#edit_about_message").addClass('status_error');
+    } else if(aboutTest.length > 2000){
+        $("#edit_about_message").html("Please use no more than 2000 characters.");
+        $("#edit_about_message").addClass('status_error');
+    }
+    else {
+        $("#edit_about_message").removeClass('status_error');
+        $("#edit_about_post").hide();
+        $("#edit_about_cancel").hide();
+        $("#edit_about_loading").show();
+        var ajax = ajaxObj("POST", "user.php");
+        ajax.onreadystatechange = function() {
+            if(ajaxReturn(ajax) == true) {
+                if(ajax.responseText == "error"){
+                    $("#edit_about_message").html("Something went wrong...");
+
+                    $("#edit_about_post").show();
+                    $("#edit_about_cancel").show();
+                    $("#edit_about_loading").hide();
+                } else {
                     //Close the window. If this is the first load type, restore it.
                     if(first_load == true) {
                         $("#light_select").show();
