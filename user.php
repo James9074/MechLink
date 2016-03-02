@@ -1,23 +1,54 @@
 <?
 session_start();
 include_once("includes/check_login_status.php");
-// AJAX CALLS
-if(isset($_POST["edit_about_data"]) && isset($_POST["u"])){
-	// CONNECT TO THE DATABASE
-	include_once("../includes/db_conx.php");
-	// GATHER THE POSTED DATA INTO LOCAL VARIABLES AND SANITIZE
-	$edit_desc = mysqli_real_escape_string($db_conx, $_POST['edit_about_data']);
-	$edit_desc = nl2br($edit_desc);
-	$username = preg_replace('#[^a-z0-9]#i', '', $_POST['username']);
-	// GET USER IP ADDRESS
-	$ip = preg_replace('#[^0-9.]#', '', getenv('REMOTE_ADDR'));
+include_once("includes/db_conx.php");
+include_once("includes/db_conn.php");
 
-	$sql = "UPDATE users SET description = '".$edit_desc."' WHERE username = '".$_POST["u"]."';";
-	$query = mysqli_query($db_conx, $sql);
-	echo $sql;
+// AJAX CALLS
+if(isset($_POST["oper"])) {
+	$oper = $_POST["oper"];
+
+	if ($oper == "EditAbout") {
+		// GATHER THE POSTED DATA INTO LOCAL VARIABLES AND SANITIZE
+		$edit_desc = mysqli_real_escape_string($db_conx, $_POST['edit_about_data']);
+		$edit_desc = nl2br($edit_desc);
+		$username = preg_replace('#[^a-z0-9]#i', '', $_POST['username']);
+		// GET USER IP ADDRESS
+		$ip = preg_replace('#[^0-9.]#', '', getenv('REMOTE_ADDR'));
+
+		$sql = "UPDATE users SET description = '" . $edit_desc . "' WHERE username = '" . $_POST["u"] . "';";
+		$query = mysqli_query($db_conx, $sql);
+		echo $sql;
+		exit();
+	} else if ($oper == "AddSkillset") {
+		$returnData = array();
+		$returnData["oper"] = $_POST["oper"];
+
+		$mysqltime = date ("Y-m-d H:i:s", $phptime);
+		$awards = json_decode($_POST["awards"], true);
+
+		$database = new Database();
+		$database->query('INSERT INTO skillsets (automobiletype, location, restoredfrom, restoredto, award1, award2, award3, award4, skills, username) VALUES (:automobiletype, :location, :restoredfrom, :retoredto, :award1, :award2, :award3, :award4, :skills, :username)');
+		$database->bind(':automobiletype',$_POST["automobiletype"]);
+		$database->bind(':location',$_POST["location"]);
+		$database->bind(':restoredfrom',$mysqltime);
+		$database->bind(':retoredto',$mysqltime);
+		$database->bind(':award1',$awards[0]);
+		$database->bind(':award2',$awards[1]);
+		$database->bind(':award3',$awards[2]);
+		$database->bind(':award4',$awards[3]);
+		$database->bind(':skills',$_POST["skills"]);
+		$database->bind(':username',$_POST["username"]);
+
+		echo $database->execute();
+		echo $database->lastInsertId();
+		echo json_encode($returnData);
+		exit();
+	}
 	exit();
 }
 ?>
+
 
 
 <?php
