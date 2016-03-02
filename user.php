@@ -1,33 +1,31 @@
 <?
 session_start();
 include_once("includes/check_login_status.php");
-include_once("includes/db_conx.php");
 include_once("includes/db_conn.php");
 
 // AJAX CALLS
+
 if(isset($_POST["oper"])) {
 	$oper = $_POST["oper"];
+	$returnData = array();
+	$returnData["oper"] = $_POST["oper"];
+	$returnData["postData"] = $_POST;
+	$database = new Database();
+	header('Content-Type: application/json');
 
 	if ($oper == "EditAbout") {
-		// GATHER THE POSTED DATA INTO LOCAL VARIABLES AND SANITIZE
-		$edit_desc = mysqli_real_escape_string($db_conx, $_POST['edit_about_data']);
-		$edit_desc = nl2br($edit_desc);
-		$username = preg_replace('#[^a-z0-9]#i', '', $_POST['username']);
-		// GET USER IP ADDRESS
-		$ip = preg_replace('#[^0-9.]#', '', getenv('REMOTE_ADDR'));
-
-		$sql = "UPDATE users SET description = '" . $edit_desc . "' WHERE username = '" . $_POST["u"] . "';";
-		$query = mysqli_query($db_conx, $sql);
-		echo $sql;
-		exit();
+		$database->query('UPDATE users SET description=:description WHERE username=:username');
+		$database->bind(':description',$_POST["about"]);
+		$database->bind(':username',$_SESSION["username"]);
+		try {
+			$result = $database->execute();
+			print json_encode($returnData);
+		}catch (PDOException $e) {
+			header('HTTP/1.1 500 Internal Server Error');
+			die(json_encode(array('status' => 'DB Error', 'error' => $e)));
+		}
 	} else if ($oper == "AddSkillset") {
-		$returnData = array();
-		$returnData["oper"] = $_POST["oper"];
-		$returnData["postData"] = $_POST;
-
 		$awards = json_decode($_POST["awards"], true);
-
-		$database = new Database();
 		$database->query('INSERT INTO skillsets (automobiletype, location, restoredfrom, restoredto, award1, award2, award3, award4, skills, username) VALUES (:automobiletype, :location, :restoredfrom, :restoredto, :award1, :award2, :award3, :award4, :skills, :username)');
 		$database->bind(':automobiletype',$_POST["automobiletype"]);
 		$database->bind(':location',$_POST["location"]);
@@ -39,7 +37,7 @@ if(isset($_POST["oper"])) {
 		$database->bind(':award4',$awards[3]);
 		$database->bind(':skills',$_POST["skills"]);
 		$database->bind(':username',$_POST["username"]);
-		header('Content-Type: application/json');
+
 		try {
 			$result = $database->execute();
 			print json_encode($returnData);
@@ -47,7 +45,7 @@ if(isset($_POST["oper"])) {
 			header('HTTP/1.1 500 Internal Server Error');
 			die(json_encode(array('status' => 'DB Error', 'error' => $e)));
 		}
-		exit();
+
 	}
 	exit();
 }
