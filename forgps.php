@@ -129,7 +129,7 @@ function forgotpass(){
 </head>
 
 <body>
-<?php include_once("includes/header.php"); ?>
+<?php include_once("includes/navbar.php"); ?>
 <div id="container">
   <div class="gridHeader clearfix">
     <div align="center">

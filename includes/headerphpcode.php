@@ -1,4 +1,16 @@
 <?php
+
+ini_set('display_startup_errors',1);
+ini_set('display_errors',1);
+error_reporting(-1);
+
+
+spl_autoload_register(function($className)
+{
+	$class="classes/".strtolower($className).".class.php";
+	include_once($class);
+});
+
 // It is important for any file that includes this file, to have
 // check_login_status.php included at its very top.
 $envelope = '<img src="http://www.mechlink.org/gifs/notifications.gif" style="width:0px; height:0px; display:none;" alt="Notifications" title="Sign in to see notifications">';

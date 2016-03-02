@@ -241,7 +241,7 @@ function triggerUpload(event,elem){
 </head>
 
 <body>
-<?php include_once("includes/header.php"); ?>
+<?php include_once("includes/navbar.php"); ?>
 <?php include_once("includes/overlay_edit_name.php"); ?>
 <?php include_once("includes/overlay_edit_location.php"); ?>
 <?php include_once("includes/overlay_edit_status.php"); ?>

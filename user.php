@@ -23,16 +23,16 @@ if(isset($_POST["oper"])) {
 	} else if ($oper == "AddSkillset") {
 		$returnData = array();
 		$returnData["oper"] = $_POST["oper"];
+		$returnData["postData"] = $_POST;
 
-		$mysqltime = date ("Y-m-d H:i:s", $phptime);
 		$awards = json_decode($_POST["awards"], true);
 
 		$database = new Database();
-		$database->query('INSERT INTO skillsets (automobiletype, location, restoredfrom, restoredto, award1, award2, award3, award4, skills, username) VALUES (:automobiletype, :location, :restoredfrom, :retoredto, :award1, :award2, :award3, :award4, :skills, :username)');
+		$database->query('INSERT INTO skillsets (automobiletype, location, restoredfrom, restoredto, award1, award2, award3, award4, skills, username) VALUES (:automobiletype, :location, :restoredfrom, :restoredto, :award1, :award2, :award3, :award4, :skills, :username)');
 		$database->bind(':automobiletype',$_POST["automobiletype"]);
 		$database->bind(':location',$_POST["location"]);
-		$database->bind(':restoredfrom',$_POST["restoredfrom"]);
-		$database->bind(':retoredto',$_POST["restoredto"]);
+		$database->bind(':restoredfrom',$_POST["restoredto"]);
+		$database->bind(':restoredto',$_POST["restoredto"]);
 		$database->bind(':award1',$awards[0]);
 		$database->bind(':award2',$awards[1]);
 		$database->bind(':award3',$awards[2]);
@@ -42,53 +42,18 @@ if(isset($_POST["oper"])) {
 		header('Content-Type: application/json');
 		try {
 			$result = $database->execute();
-			print json_encode($mysqltime);
+			print json_encode($returnData);
 		}catch (PDOException $e) {
 			header('HTTP/1.1 500 Internal Server Error');
 			die(json_encode(array('status' => 'DB Error', 'error' => $e)));
 		}
-
-
-		//echo $result;
-		//echo $database->lastInsertId();
-
-		/*if ($everything_is_ok)
-		{
-			header('Content-Type: application/json');
-			print json_encode($result);
-		}
-		else
-		{
-			header('HTTP/1.1 500 Internal Server Booboo');
-			header('Content-Type: application/json; charset=UTF-8');
-			die(json_encode(array('message' => 'ERROR', 'code' => 1337)));
-		}*/
-
-		//echo json_encode($returnData);
 		exit();
 	}
 	exit();
 }
-?>
 
-
-
-<?php
 include_once("includes/check_login_status.php");
-// Initialize any variables that the page might echo
-$rlname = "";
-$category = "";
-$location = "";
-$u = "";
-$sex = "Male";
-$userlevel = "";
-$profile_pic = "";
-$profile_pic_btn = "";
-$avatar_form = "";
-$country = "";
-$joindate = "";
-$lastsession = "";
-$description = "";
+
 // Make sure the _GET username is set, and sanitize it
 if(isset($_GET["u"])){
 	$u = preg_replace('#[^a-z0-9]#i', '', $_GET['u']);
@@ -96,51 +61,34 @@ if(isset($_GET["u"])){
     header("location: http://www.mechlink.org");
     exit();
 }
-// Select the member from the users table
-$sql = "SELECT * FROM users WHERE username='$u' AND activated='1' LIMIT 1";
-$user_query = mysqli_query($db_conx, $sql);
-// Now make sure that user exists in the table
-$numrows = mysqli_num_rows($user_query);
-if($numrows < 1){
+include_once("includes/headerphpcode.php");
+
+$user = User::withUsername($u);
+
+if(!(bool)$user->activated){
 	header("location: http://www.mechlink.org/404");
-    exit();
+	exit();
 }
+
+
+$log_username = $_SESSION['username'];
+
 // Check to see if the viewer is the account owner
 $isOwner = "no";
-if($u == $log_username && $user_ok == true){
+if($_SESSION['username'] == $user->username && $user_ok == true){
 	$isOwner = "yes";
 	$profile_pic_btn = '<button class="profile_pic_btn" style="display:block;" onclick="triggerUpload(event, \'FileUpload\')"></button>';
-	$rlname_edit_btn = '<button class="rlname_edit_btn" style="display:inline-block; margin-top:3px;" onclick = "document.getElementById(\'light_edit_name\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
+	$user->rlname_edit_btn = '<button class="rlname_edit_btn" style="display:inline-block; margin-top:3px;" onclick = "document.getElementById(\'light_edit_name\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
 	$category_edit_btn = '<button class="category_edit_btn" style="display:inline-block; margin-top:1px;"></button>';
 	$location_edit_btn = '<button class="location_edit_btn" style="display:inline-block; margin-top:1px;" onclick = "document.getElementById(\'light_edit_location\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
 	$status_edit_btn = '<button class="status_edit_btn" style="display:inline-block; margin-top:1px;" onclick = "document.getElementById(\'light_edit_status\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
 	$about_edit_btn = '<button class="about_edit_btn" style="display:block;" onclick = "ModalOpen(\'EditAbout\');"></button>';
 }
-// Fetch the user row from the query above
-while ($row = mysqli_fetch_array($user_query, MYSQLI_ASSOC)) {
-	$rlname = $row["rlname"];
-	$category = $row["category"];
-	$location = $row["location"];
-	$profile_id = $row["id"];
-	$gender = $row["gender"];
-	$country = $row["country"];
-	$userlevel = $row["userlevel"];
-	$avatar = $row["avatar"];
-	$signup = $row["signup"];
-	$lastlogin = $row["lastlogin"];
-	$joindate = strftime("%b %d, %Y", strtotime($signup));
-	$lastsession = strftime("%b %d, %Y", strtotime($lastlogin));
-	$description = $row["description"];
-}
-if($gender == "f"){
-		$sex = "Female";
-}
-$profile_pic = '<img src="user/'.$u.'/'.$avatar.'" alt="'.$u.'">';
-if($avatar == NULL){
-	$profile_pic = '<img src="images/avatardefault_large.png" alt="'.$user1.'">';
-}
-?>
-<?php
+
+$profile_pic = '<img src="user/'.$u.'/'.$user->avatar.'" alt="'.$u.'">';
+if($user->avatar == NULL)
+	$profile_pic = '<img src="images/avatardefault_large.png" alt="'.$user->username.'">';
+
 $isFriend = false;
 $ownerBlockViewer = false;
 $viewerBlockOwner = false;
@@ -192,7 +140,7 @@ $query = mysqli_query($db_conx, $sql);
 $query_count = mysqli_fetch_row($query);
 $friend_count = $query_count[0];
 if($friend_count < 1){
-	$friendsHTML = '<span class="style2">'.$rlname.' has no friends';
+	$friendsHTML = '<span class="style2">'.$user->rlname.' has no friends';
 } else {
 	$max = 6;
 	$all_friends = array();
@@ -231,43 +179,16 @@ if($friend_count < 1){
 		$friendsHTML .= '<a href="user.php?u='.$friend_username.'"><img class="friendpics" src="'.$friend_pic.'" alt="'.$friend_username.'" title="'.$friend_username.'"></a>';
 	}
 }
+
+include_once("includes/header.php");
 ?>
-<?php
-include_once("includes/headerphpcode.php");
-?>
-<!doctype html>
-<!--[if lt IE 7]> <html class="ie6 oldie"> <![endif]-->
-<!--[if IE 7]>    <html class="ie7 oldie"> <![endif]-->
-<!--[if IE 8]>    <html class="ie8 oldie"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="">
-<!--<![endif]-->
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow, noarchive" />
-<meta name="Description" content="This is <?php echo $rlname; ?>'s Mechlink profile.">
-<title><?php echo $rlname; ?> • Mechlink</title>
-<link href="http://www.mechlink.org/styles/boilerplate.css" rel="stylesheet" type="text/css">
-<link href="http://www.mechlink.org/styles/common.css" rel="stylesheet" type="text/css">
-<link href="http://www.mechlink.org/styles/mainuser.css" rel="stylesheet" type="text/css">
-<link href="http://www.mechlink.org/styles/textusr.css" rel="stylesheet" type="text/css">
-<link rel="shortcut icon" href="http://www.mechlink.org/images/favicon.ico?v=2" type="image/x-icon">
-<link rel="icon" href="http://www.mechlink.org/images/favicon.ico" type="image/x-icon">
-<script type="text/javascript" src="https://ws.sharethis.com/button/buttons.js"></script>
-<script type="text/javascript">stLight.options({publisher: "d7ff69d9-2897-4dc9-ac03-f66f1c76496f", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
-<!--<script src="js/respond.min.js"></script>-->
-<script src="js/jquery-1.9.1.min.js"></script>
-<script src="js/user.js"></script>
-<script language="javascript" type="text/javascript">
-var dateObject=new Date();
-</script>
-<script src="http://www.mechlink.org/js/main.js"></script>
-<script src="http://www.mechlink.org/js/ajax.js"></script>
-<script type="text/javascript" src="/js/datejs/date.js"></script>
 <script type="text/javascript">
-function friendToggle(type,user,elem){
-	var conf = confirm("Press OK to "+type+" <?php echo $rlname; ?>.");
+	$(function(){
+		document.title = "<?php echo $user->rlname; ?> • MechLink";
+	});
+
+	function friendToggle(type,user,elem){
+	var conf = confirm("Press OK to "+type+" <?php echo $user->rlname; ?>.");
 	if(conf != true){
 		return false;
 	}
@@ -278,7 +199,7 @@ function friendToggle(type,user,elem){
 			if(ajax.responseText == "friend_request_sent"){
 				_(elem).innerHTML = '<span class="friendBtn">Request Sent</span>';
 			} else if(ajax.responseText == "unfriend_ok"){
-				_(elem).innerHTML = '<button onclick="friendToggle(\'connect\',\'<?php echo $rlname; ?>\',\'friendBtn\')">Friend</button>';
+				_(elem).innerHTML = '<button onclick="friendToggle(\'connect\',\'<?php echo $user->rlname; ?>\',\'friendBtn\')">Friend</button>';
 			} else {
 				alert(ajax.responseText);
 				_(elem).innerHTML = '<span class="style5">Please try again later</span>';
@@ -287,8 +208,9 @@ function friendToggle(type,user,elem){
 	}
 	ajax.send("type="+type+"&user="+user);
 }
-function blockToggle(type,blockee,elem){
-	var conf = confirm("Press OK to confirm the '"+type+"' action on user <?php echo $rlname; ?>.");
+
+	function blockToggle(type,blockee,elem){
+	var conf = confirm("Press OK to confirm the '"+type+"' action on user <?php echo $user->rlname; ?>.");
 	if(conf != true){
 		return false;
 	}
@@ -298,9 +220,9 @@ function blockToggle(type,blockee,elem){
 	ajax.onreadystatechange = function() {
 		if(ajaxReturn(ajax) == true) {
 			if(ajax.responseText == "blocked_ok"){
-				elem.innerHTML = '<button onclick="blockToggle(\'unblock\',\'<?php echo $rlname; ?>\',\'blockBtn\')">Unblock User</button>';
+				elem.innerHTML = '<button onclick="blockToggle(\'unblock\',\'<?php echo $user->rlname; ?>\',\'blockBtn\')">Unblock User</button>';
 			} else if(ajax.responseText == "unblocked_ok"){
-				elem.innerHTML = '<button onclick="blockToggle(\'block\',\'<?php echo $rlname; ?>\',\'blockBtn\')">Block User</button>';
+				elem.innerHTML = '<button onclick="blockToggle(\'block\',\'<?php echo $user->rlname; ?>\',\'blockBtn\')">Block User</button>';
 			} else {
 				alert(ajax.responseText);
 				elem.innerHTML = 'Try again later';
@@ -309,18 +231,15 @@ function blockToggle(type,blockee,elem){
 	}
 	ajax.send("type="+type+"&blockee="+blockee);
 }
-</script>
-<script>
-function triggerUpload(event,elem){
-	event.preventDefault();
-	document.getElementById(elem).click();
-}
-</script>
-</head>
 
-<body>
+	function triggerUpload(event,elem){
+		event.preventDefault();
+		document.getElementById(elem).click();
+	}
+</script>
+
 <div id="fade" class="black_overlay"></div>
-<?php include_once("includes/header.php"); ?>
+<?php include_once("includes/navbar.php"); ?>
 <?php include_once("includes/overlay_edit_name.php"); ?>
 <?php include_once("includes/overlay_edit_location.php"); ?>
 <?php include_once("includes/overlay_edit_status.php"); ?>
@@ -343,7 +262,7 @@ function triggerUpload(event,elem){
               <input type="file" name="avatar" required id="FileUpload" onChange="form.submit()">
             </form>
           </div>
-          <div id="info_box"> <span class="style3"><?php echo $rlname; ?><?php echo $rlname_edit_btn; ?></span> <br />
+          <div id="info_box"> <span class="style3"><?php echo $user->rlname; ?><?php echo $user->rlname_edit_btn; ?></span> <br />
             <br />
             <span class="style4">
             Where are you?<?php echo $location_edit_btn; ?></span><br />
@@ -372,7 +291,7 @@ else {
         <div id="contentInner2">
           <hr />
           <?php include_once("includes/prof_nav.php"); ?>
-          <div id="main_cont"> <div id="user_about" descriptionprovided="<? echo $description == "" ? "false" : "true"; ?>" ><?php echo $about_edit_btn; echo "<span id='user_about_text'>"; echo $description == "" ? "Tell others about yourself or your business." : nl2br($description) ?>  </span></div></div>
+          <div id="main_cont"> <div id="user_about" descriptionprovided="<? echo $user->description == "" ? "false" : "true"; ?>" ><?php echo $about_edit_btn; echo "<span id='user_about_text'>"; echo $user->description == "" ? "Tell others about yourself or your business." : nl2br($user->description) ?>  </span></div></div>
           <hr />
           <div align="center">
             <div id="section_header"> <span class="style2"> Friends <?php echo "(".$friend_count.")"; ?>&nbsp;&nbsp;<?php echo $friends_view_all_link; ?> </span>

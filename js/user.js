@@ -149,17 +149,18 @@ function UserUploadNewSkillset(){
     }
     else {
         ApplyError("skillset_restored_date_label", false);
-        dateStart = dateStart.toString('MM/dd/yyyy');
-        dateEnd = dateEnd.toString('MM/dd/yyyy');
+        dateStart = dateStart.toString('yyyy-MM-dd');
+        dateEnd = dateEnd.toString('yyyy-MM-dd');
     }
     //endregion
 
     if(formError){
         ApplyError("skillset_project_details",true);
-        $("#skillset_error_message").html("Please enter all required fields");
+        $("#skillset_error_message").html("Please fix all fields");
     }
     else{
         ApplyError("skillset_project_details",false);
+        $("#skillset_error_message").html("");
 
         //TODO: This is a bad way to do this. I really should get the username somewhere else.
         var u = window.location.search.split("&")[0].split("?")[1].split("=")[1];
@@ -168,7 +169,7 @@ function UserUploadNewSkillset(){
             type: "POST",
             dataType: 'json',
             data : {"oper":"AddSkillset",automobiletype:type,location:skillLocation,restoredfrom:dateStart,
-                retoredto:dateEnd, awards: JSON.stringify(awards), skills:skills, username:u},
+                restoredto:dateEnd, awards: JSON.stringify(awards), skills:skills, username:u},
             success: function(data, textStatus, jqXHR){
                 console.dir(data);
             },

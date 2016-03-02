@@ -8,8 +8,9 @@ function restrict(elem){
 		rx = /[^a-z0-9]/gi;
 	} else if(elem == "rlname"){
 		rx = /[^a-z0-9\s.-]/gi;
-	} 
-	tf.value = tf.value.replace(rx, "");
+	}
+	if(tf != null)
+		tf.value = tf.value.replace(rx, "");
 }
 function emptyElement(x){
 	_(x).innerHTML = "";

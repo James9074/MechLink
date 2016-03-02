@@ -121,7 +121,7 @@ var dateObject=new Date();
 </head>
 
 <body>
-<?php include_once("includes/header.php"); ?>
+<?php include_once("includes/navbar.php"); ?>
 <?php include_once("includes/overlay_skills.php"); ?>
 <?php include_once("includes/overlay_project.php"); ?>
 <?php include_once("includes/overlay_post.php"); ?>
