@@ -98,6 +98,11 @@ function UserUploadAbout(first_load){
     }
 }
 
+/**
+ * Applies an error class to some text-holding ID
+ * @param aID - The ID to toggle and error on.
+ * @param aAdd - True for error, false to remove error
+ */
 function ApplyError(aID, aAdd){
     if(aAdd)
         $("#"+aID).addClass("status_error");
@@ -109,7 +114,7 @@ function ApplyError(aID, aAdd){
  * Linked to the "Post" button on the Add a New Skillset Overlay
  */
 function UserUploadNewSkillset(){
-    var failure = false;
+    var formError = false;
     $("#skillsetErrorMessage").html("");
 
     var type = $("#skillset_type").val();
@@ -118,36 +123,42 @@ function UserUploadNewSkillset(){
     var dateStartYear = $("#skillset_restored_from_year").val();
     var dateEndMonth = $("#skillset_restored_to_month").val();
     var dateEndYear = $("#skillset_restored_to_year").val();
-    var dateFrom;
-    var dateTo;
+    var dateStart = Date.parse(dateStartYear + "-" + dateStartMonth + "-01");
+    var dateEnd = Date.parse(dateEndYear + "-" + dateEndMonth + "-01");
     var awards = [];
     var skills = $("#skillset_skills").val();
     var schools = [];
 
+
+    //region Skillset Checks
     if(type.length < 1) {
-        failure = true;
+        formError = true;
         ApplyError("skillsetProjectDetailsLabel",true);
     }
     else ApplyError("skillsetProjectDetailsLabel",false);
 
     if(location.length < 1) {
-        failure = true;
+        formError = true;
         ApplyError("skillsetProjectDetailsLabel",true);
     }
     else ApplyError("skillsetProjectDetailsLabel",false);
 
-    if(dateStartMonth.length < 1 || dateStartYear.length != 4 ||
-        dateEndMonth.length < 1 || dateEndYear.length != 4){
-        failure = true;
-        ApplyError("skillset_restored_date_label",true);
+    if(dateStart == null || dateEnd == null || dateStart > dateEnd) {
+        formError = true;
+        ApplyError("skillset_restored_date_label", true);
     }
     else {
         ApplyError("skillset_restored_date_label", false);
-        //date =
-        //TODO: How does format date.
+        dateStart = dateStart.toString('MM/dd/yyyy');
+        dateEnd = dateEnd.toString('MM/dd/yyyy');
     }
+    //endregion
 
-    if(failure == false) {
+    if(formError){
+        ApplyError("skillset_project_details",true);
+        $("#skillset_error_message").html("Please enter all required fields");
+    }
+    else{
         ApplyError("skillset_project_details",false);
 
         //TODO: This is a bad way to do this. I really should get the username somewhere else.
@@ -156,38 +167,19 @@ function UserUploadNewSkillset(){
             url : "user.php",
             type: "POST",
             dataType: 'json',
-            data : {oper:"AddSkillset",automobiletype:type,location:skillLocation,restoredfrom:dateFrom,
-                retoredto:dateTo, awards: JSON.stringify(awards), skills:skills, username:u},
-            success: function(data, textStatus, jqXHR)
-            {
-                if (first_load == true) {
-                    /*$("#light_select").show();
-                    $("#edit_about_cancel").show();
-                    $("#light_edit_about").hide();
-                    $("#light_edit_about").html(initialAboutPostHTML);
-                    $(
-                    "#edit_about_message").hide();*/
-                }
-                console.log("Success!");
+            data : {"oper":"AddSkillset",automobiletype:type,location:skillLocation,restoredfrom:dateStart,
+                retoredto:dateEnd, awards: JSON.stringify(awards), skills:skills, username:u},
+            success: function(data, textStatus, jqXHR){
                 console.dir(data);
-
-                //Undo loading effects
-               // $("#fade").hide();
-                //$("#light_edit_about").hide();
             },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                console.log("Error: " + errorThrown);
+            error: function (jqXHR, textStatus, errorThrown){
+                if(DEBUG) {
+                    console.log(errorThrown + ": ");
+                    console.log(JSON.parse(jqXHR.responseText));
+                }
             }
         });
     }
-    else{
-        ApplyError("skillset_project_details",true);
-        $("#skillset_error_message").html("Please enter all required fields");
-    }
-
-    //document.getElementById('light_skills').style.display='none';document.getElementById('fade').style.display='none';
-
 }
 
 $(document).ready(function() {

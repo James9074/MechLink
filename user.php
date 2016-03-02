@@ -31,18 +31,40 @@ if(isset($_POST["oper"])) {
 		$database->query('INSERT INTO skillsets (automobiletype, location, restoredfrom, restoredto, award1, award2, award3, award4, skills, username) VALUES (:automobiletype, :location, :restoredfrom, :retoredto, :award1, :award2, :award3, :award4, :skills, :username)');
 		$database->bind(':automobiletype',$_POST["automobiletype"]);
 		$database->bind(':location',$_POST["location"]);
-		$database->bind(':restoredfrom',$mysqltime);
-		$database->bind(':retoredto',$mysqltime);
+		$database->bind(':restoredfrom',$_POST["restoredfrom"]);
+		$database->bind(':retoredto',$_POST["restoredto"]);
 		$database->bind(':award1',$awards[0]);
 		$database->bind(':award2',$awards[1]);
 		$database->bind(':award3',$awards[2]);
 		$database->bind(':award4',$awards[3]);
 		$database->bind(':skills',$_POST["skills"]);
 		$database->bind(':username',$_POST["username"]);
+		header('Content-Type: application/json');
+		try {
+			$result = $database->execute();
+			print json_encode($mysqltime);
+		}catch (PDOException $e) {
+			header('HTTP/1.1 500 Internal Server Error');
+			die(json_encode(array('status' => 'DB Error', 'error' => $e)));
+		}
 
-		echo $database->execute();
-		echo $database->lastInsertId();
-		echo json_encode($returnData);
+
+		//echo $result;
+		//echo $database->lastInsertId();
+
+		/*if ($everything_is_ok)
+		{
+			header('Content-Type: application/json');
+			print json_encode($result);
+		}
+		else
+		{
+			header('HTTP/1.1 500 Internal Server Booboo');
+			header('Content-Type: application/json; charset=UTF-8');
+			die(json_encode(array('message' => 'ERROR', 'code' => 1337)));
+		}*/
+
+		//echo json_encode($returnData);
 		exit();
 	}
 	exit();
@@ -242,6 +264,7 @@ var dateObject=new Date();
 </script>
 <script src="http://www.mechlink.org/js/main.js"></script>
 <script src="http://www.mechlink.org/js/ajax.js"></script>
+<script type="text/javascript" src="/js/datejs/date.js"></script>
 <script type="text/javascript">
 function friendToggle(type,user,elem){
 	var conf = confirm("Press OK to "+type+" <?php echo $rlname; ?>.");

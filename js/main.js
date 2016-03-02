@@ -1,3 +1,5 @@
+DEBUG = true;
+
 function _(x){
 	return document.getElementById(x);
 }
