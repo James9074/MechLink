@@ -1509,7 +1509,7 @@ form > div > label, legend {
 	font-weight:bold;
 }
 
-input.status_error{
+textarea.status_error, input.status_error{
 	color:#666;
 	font-weight:100;
 	border: red 2px solid !important;

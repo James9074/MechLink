@@ -58,6 +58,10 @@ function CheckAboutInput(){
         ApplyError($("#edit_about_message",true));
 }
 
+/**
+ * Linked to the post button on the edit about info modal.
+ * @param first_load - True if we should fallback to initial modal after this one is closed
+ */
 function UserUploadAbout(first_load){
     var aboutTest = $("#edit_about_textarea").val();
     if(aboutTest.length < 100){
@@ -68,7 +72,6 @@ function UserUploadAbout(first_load){
         ApplyError($("#edit_about_message"),true);
     }
     else {
-
         ApplyError($("#edit_about_message"),false);
         ShowLoading($("#edit_about_buttons"));
         $.ajax({
@@ -82,6 +85,7 @@ function UserUploadAbout(first_load){
                 if(first_load) ModalOpen("Select");
 
                 HideLoading($("#edit_about_buttons"));
+                ModalOpen("None");
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
@@ -124,21 +128,21 @@ function UserUploadNewSkillset(){
     }
     else ApplyError($("#skillset_type"),false);
 
-    if(location.length < 1) {
+    if(skills.length < 1) {
         formError = true;
-        ApplyError($("#skillset_restored_date_label"),true);
+        ApplyError($("#skillset_skills"),true);
     }
-    else ApplyError($("#skillset_restored_date_label"),false);
+    else ApplyError($("#skillset_skills"),false);
 
     if(dateStart == null || dateEnd == null || dateStart > dateEnd) {
         formError = true;
         ApplyError($("#skillset_restored_date_label"),true);
-    }
-    else {
+    } else {
         ApplyError($("#skillset_restored_date_label"), false);
         dateStart = dateStart.toString('yyyy-MM-dd');
         dateEnd = dateEnd.toString('yyyy-MM-dd');
     }
+
     //endregion
 
     if(formError){
@@ -149,14 +153,12 @@ function UserUploadNewSkillset(){
         ApplyError($("#skillset_project_details"),false);
         $("#skillset_error_message").html("");
 
-        //TODO: This is a bad way to do this. I really should get the username somewhere else.
-        var u = window.location.search.split("&")[0].split("?")[1].split("=")[1];
         $.ajax({
             url : "user.php",
             type: "POST",
             dataType: 'json',
             data : {"oper":"AddSkillset",automobiletype:type,location:skillLocation,restoredfrom:dateStart,
-                restoredto:dateEnd, awards: JSON.stringify(awards), skills:skills, username:u},
+                restoredto:dateEnd, awards: JSON.stringify(awards), skills:skills},
             success: function(data, textStatus, jqXHR){
                 console.dir(data);
                 ModalOpen("None");

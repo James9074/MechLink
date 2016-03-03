@@ -17,6 +17,7 @@ if(isset($_POST["oper"])) {
 		$database->query('UPDATE users SET description=:description WHERE username=:username');
 		$database->bind(':description',$_POST["about"]);
 		$database->bind(':username',$_SESSION["username"]);
+
 		try {
 			$result = $database->execute();
 			print json_encode($returnData);
@@ -36,7 +37,7 @@ if(isset($_POST["oper"])) {
 		$database->bind(':award3',$awards[2]);
 		$database->bind(':award4',$awards[3]);
 		$database->bind(':skills',$_POST["skills"]);
-		$database->bind(':username',$_POST["username"]);
+		$database->bind(':username',$_SESSION["username"]);
 
 		try {
 			$result = $database->execute();
