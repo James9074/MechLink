@@ -11,6 +11,10 @@ spl_autoload_register(function($className)
 	include_once($class);
 });
 
+function issetor(&$var, $default = false) {
+	return isset($var) ? $var : $default;
+}
+
 // It is important for any file that includes this file, to have
 // check_login_status.php included at its very top.
 $envelope = '<img src="http://www.mechlink.org/gifs/notifications.gif" style="width:0px; height:0px; display:none;" alt="Notifications" title="Sign in to see notifications">';

@@ -72,12 +72,16 @@ if(!(bool)$user->activated){
 
 $log_username = $_SESSION['username'];
 
+$profile_pic = "";
+
+
+
 // Check to see if the viewer is the account owner
 $isOwner = "no";
 if($_SESSION['username'] == $user->username && $user_ok == true){
 	$isOwner = "yes";
 	$profile_pic_btn = '<button class="profile_pic_btn" style="display:block;" onclick="triggerUpload(event, \'FileUpload\')"></button>';
-	$user->rlname_edit_btn = '<button class="rlname_edit_btn" style="display:inline-block; margin-top:3px;" onclick = "document.getElementById(\'light_edit_name\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
+	$rlname_edit_btn = '<button class="rlname_edit_btn" style="display:inline-block; margin-top:3px;" onclick = "document.getElementById(\'light_edit_name\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
 	$category_edit_btn = '<button class="category_edit_btn" style="display:inline-block; margin-top:1px;"></button>';
 	$location_edit_btn = '<button class="location_edit_btn" style="display:inline-block; margin-top:1px;" onclick = "document.getElementById(\'light_edit_location\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
 	$status_edit_btn = '<button class="status_edit_btn" style="display:inline-block; margin-top:1px;" onclick = "document.getElementById(\'light_edit_status\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
@@ -255,17 +259,17 @@ include_once("includes/header.php");
     <div id="content">
       <div id="contentInner">
         <div id="contentitem3">
-          <div id="profile_pic_box"><?php echo $profile_pic_btn; ?><?php echo $profile_pic; ?></div>
+          <div id="profile_pic_box"><?php echo issetor($profile_pic_btn); ?><?php echo $profile_pic; ?></div>
           <div id="standardUpload">
             <form id="form" enctype="multipart/form-data" method="post" action="php_parsers/photo_system.php">
               <input type="file" name="avatar" required id="FileUpload" onChange="form.submit()">
             </form>
           </div>
-          <div id="info_box"> <span class="style3"><?php echo $user->rlname; ?><?php echo $user->rlname_edit_btn; ?></span> <br />
+          <div id="info_box"> <span class="style3"><?php echo $user->rlname; ?><?php echo issetor($rlname_edit_btn); ?></span> <br />
             <br />
             <span class="style4">
-            Where are you?<?php echo $location_edit_btn; ?></span><br />
-            <span class="style4">Status:<?php echo $status_edit_btn; ?></span> </div>
+            Where are you?<?php echo issetor($location_edit_btn); ?></span><br />
+            <span class="style4">Status:<?php echo issetor($status_edit_btn); ?></span> </div>
           <div id="info_box2">
             <?php
 $isOwner = "no";
@@ -290,7 +294,7 @@ else {
         <div id="contentInner2">
           <hr />
           <?php include_once("includes/prof_nav.php"); ?>
-          <div id="main_cont"> <div id="user_about" descriptionprovided="<? echo $user->description == "" ? "false" : "true"; ?>" ><?php echo $about_edit_btn; echo "<span id='user_about_text'>"; echo $user->description == "" ? "Tell others about yourself or your business." : nl2br($user->description) ?>  </span></div></div>
+          <div id="main_cont"> <div id="user_about" descriptionprovided="<? echo $user->description == "" ? "false" : "true"; ?>" ><?php echo issetor($about_edit_btn); echo "<span id='user_about_text'>"; echo $user->description == "" ? "Tell others about yourself or your business." : nl2br($user->description) ?>  </span></div></div>
           <hr />
           <div align="center">
             <div id="section_header"> <span class="style2"> Friends <?php echo "(".$friend_count.")"; ?>&nbsp;&nbsp;<?php echo $friends_view_all_link; ?> </span>
