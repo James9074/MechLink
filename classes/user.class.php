@@ -18,6 +18,7 @@ class User
     public $lastsession;
     public $description;
     public $activated;
+    public $friends;
     private $database;
 
     function __construct() {
@@ -35,11 +36,26 @@ class User
         $this->database->bind(':username',$username);
         try {
             $row = $this->database->single();
-            if($this->database->rowCount() > 0)
+            if(sizeof($row) > 1)
                 $this->fill( $row );
         }catch (PDOException $e) {
             //Error..
         }
+    }
+
+    public function getFriends(){
+        if (isset($this->friends))
+            return $this->friends;
+        $this->database->query('SELECT * FROM friends WHERE user1 = :username or user2 = :username');
+        $this->database->bind(':username',$this->username);
+        try {
+            $rows = $this->database->resultset();
+            if($this->database->rowCount() > 0)
+                $this->friends = $rows;
+        }catch (PDOException $e) {
+            //Error..
+        }
+        return $this->friends;
     }
 
     protected function fill( array $row ) {

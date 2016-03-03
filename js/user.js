@@ -14,6 +14,7 @@ function ModalOpen(type){
     $("#light_edit_about").hide();
     $("#light_select").hide();
     $("#light_skills").hide();
+    $("#lightshare").hide();
     $("#fade").show();
 
     //Open desired Modal
@@ -41,6 +42,9 @@ function ModalOpen(type){
             $("#light_skills").show();
         case "Select":
             $("#light_select").show();
+        case "Share":
+            $("#lightshare").show();
+            break;
         default:
             $("#fade").hide();
             break;
