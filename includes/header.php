@@ -21,6 +21,7 @@
     <script type="text/javascript">stLight.options({publisher: "d7ff69d9-2897-4dc9-ac03-f66f1c76496f", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
     <!--<script src="js/respond.min.js"></script>-->
     <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/common.js"></script>
     <script src="js/user.js"></script>
     <script language="javascript" type="text/javascript">
         var dateObject=new Date();

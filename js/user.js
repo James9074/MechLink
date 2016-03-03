@@ -12,6 +12,8 @@ function UserConfigureInitialProfileSetup(){
 function ModalOpen(type){
     //Close all modals, prep for new modal
     $("#light_edit_about").hide();
+    $("#light_select").hide();
+    $("#light_skills").hide();
     $("#fade").show();
 
     //Open desired Modal
@@ -35,6 +37,10 @@ function ModalOpen(type){
             $("#edit_about_message").hide();
 
             break;
+        case "AddSkillset":
+            $("#light_skills").show();
+        case "Select":
+            $("#light_select").show();
         default:
             $("#fade").hide();
             break;
@@ -46,26 +52,25 @@ function CheckAboutInput(){
     $("#edit_about_message").html($("#edit_about_textarea").val().length + "/2000");
     if($("#edit_about_textarea").val().length > 100 && $("#edit_about_textarea").val().length <= 2000) {
         $("#edit_about_post").removeAttr('disabled');
-        $("#edit_about_message").removeClass('status_error');
+        ApplyError($("#edit_about_message"),false);
     }
-    else{
-        $("#edit_about_message").addClass('status_error');
-    }
+    else
+        ApplyError($("#edit_about_message",true));
 }
 
 function UserUploadAbout(first_load){
     var aboutTest = $("#edit_about_textarea").val();
     if(aboutTest.length < 100){
         $("#edit_about_message").html("Please fill in at least 100 characters.");
-        $("#edit_about_message").addClass('status_error');
+        ApplyError($("#edit_about_message"),false);
     } else if(aboutTest.length > 2000){
         $("#edit_about_message").html("Please use no more than 2000 characters.");
-        $("#edit_about_message").addClass('status_error');
+        ApplyError($("#edit_about_message"),true);
     }
     else {
-        $("#edit_about_message").removeClass('status_error');
-        $("#edit_about_buttons").hide();
-        $("#edit_about_loading").show();
+
+        ApplyError($("#edit_about_message"),false);
+        ShowLoading($("#edit_about_buttons"));
         $.ajax({
             url : "user.php",
             type: "POST",
@@ -73,22 +78,10 @@ function UserUploadAbout(first_load){
             data : {"oper":"EditAbout",about:aboutTest},
             success: function(data, textStatus, jqXHR)
             {
-                //Close the window. If this is the first load type, restore it.
-                if(first_load) {
-                   // $("#light_select").show();
+                //Close the window. If this is the first load time, restore it.
+                if(first_load) ModalOpen("Select");
 
-                }
-
-                $("#edit_about_post").attr('disabled','true');
-
-                //Undo loading effects
-                $("#light_select").show();
-                $("#edit_about_loading").hide();
-                $("#fade").hide();
-                $("#light_edit_about").hide();
-                console.log("Success!");
-                console.dir(data);
-
+                HideLoading($("#edit_about_buttons"));
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
@@ -102,18 +95,6 @@ function UserUploadAbout(first_load){
             }
         });
     }
-}
-
-/**
- * Applies an error class to some text-holding ID
- * @param aID - The ID to toggle and error on.
- * @param aAdd - True for error, false to remove error
- */
-function ApplyError(aID, aAdd){
-    if(aAdd)
-        $("#"+aID).addClass("status_error");
-    else
-        $("#"+aID).removeClass("status_error");
 }
 
 /**
@@ -139,33 +120,33 @@ function UserUploadNewSkillset(){
     //region Skillset Checks
     if(type.length < 1) {
         formError = true;
-        ApplyError("skillsetProjectDetailsLabel",true);
+        ApplyError($("#skillset_type"),true);
     }
-    else ApplyError("skillsetProjectDetailsLabel",false);
+    else ApplyError($("#skillset_type"),false);
 
     if(location.length < 1) {
         formError = true;
-        ApplyError("skillsetProjectDetailsLabel",true);
+        ApplyError($("#skillset_restored_date_label"),true);
     }
-    else ApplyError("skillsetProjectDetailsLabel",false);
+    else ApplyError($("#skillset_restored_date_label"),false);
 
     if(dateStart == null || dateEnd == null || dateStart > dateEnd) {
         formError = true;
-        ApplyError("skillset_restored_date_label", true);
+        ApplyError($("#skillset_restored_date_label"),true);
     }
     else {
-        ApplyError("skillset_restored_date_label", false);
+        ApplyError($("#skillset_restored_date_label"), false);
         dateStart = dateStart.toString('yyyy-MM-dd');
         dateEnd = dateEnd.toString('yyyy-MM-dd');
     }
     //endregion
 
     if(formError){
-        ApplyError("skillset_project_details",true);
+        ApplyError($("#skillset_project_details"),true);
         $("#skillset_error_message").html("Please fix all fields");
     }
     else{
-        ApplyError("skillset_project_details",false);
+        ApplyError($("#skillset_project_details"),false);
         $("#skillset_error_message").html("");
 
         //TODO: This is a bad way to do this. I really should get the username somewhere else.
@@ -178,6 +159,7 @@ function UserUploadNewSkillset(){
                 restoredto:dateEnd, awards: JSON.stringify(awards), skills:skills, username:u},
             success: function(data, textStatus, jqXHR){
                 console.dir(data);
+                ModalOpen("None");
             },
             error: function (jqXHR, textStatus, errorThrown){
                 if(DEBUG) {

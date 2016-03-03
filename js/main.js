@@ -11,3 +11,11 @@ function toggleElement(x){
 		x.style.display = 'block';
 	}
 }
+
+function ShowLoading(aObj){
+	aObj.append('<img class="Loader" src="http://www.mechlink.org/gifs/blueloader.gif" alt="Loading..." />');
+}
+
+function HideLoading(aObj){
+	aObj.find(".Loader").remove();
+}
