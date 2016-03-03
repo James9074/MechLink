@@ -54,15 +54,11 @@ if(isset($_POST["oper"])) {
 include_once("includes/check_login_status.php");
 
 // Make sure the _GET username is set, and sanitize it
-if(isset($_GET["u"])){
+if(isset($_GET["u"]))
 	$u = preg_replace('#[^a-z0-9]#i', '', $_GET['u']);
-} else {
-    header("location: http://www.mechlink.org");
-    exit();
-}
 include_once("includes/headerphpcode.php");
 
-$user = User::withUsername($u);
+$user = User::withUsername(issetor($u,true));
 
 if(!(bool)$user->activated){
 	header("location: http://www.mechlink.org/404");
