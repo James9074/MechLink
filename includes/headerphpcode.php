@@ -1,4 +1,6 @@
 <?php
+//headerphpcode.php -> Include this file at the top of any php page in this website to get the current user's
+//						Notifications, friends, and notes.
 
 ini_set('display_startup_errors',1);
 ini_set('display_errors',1);

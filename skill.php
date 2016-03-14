@@ -65,7 +65,7 @@ if(isset($_POST["add_skillset"]) && isset($_POST["u"])){
 	echo $sql;
 	exit();
 }
-?>
+
 include_once("includes/check_login_status.php");
 // Initialize any variables that the page might echo
 $rlname = "";
@@ -131,8 +131,8 @@ $profile_pic = '<img src="user/'.$u.'/'.$avatar.'" alt="'.$u.'">';
 if($avatar == NULL){
 	$profile_pic = '<img src="images/avatardefault_large.png" alt="'.$user1.'">';
 }
-?>
-<?php
+
+
 $isFriend = false;
 $ownerBlockViewer = false;
 $viewerBlockOwner = false;

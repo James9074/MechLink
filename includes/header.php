@@ -15,6 +15,7 @@
     <link href="http://www.mechlink.org/styles/common.css" rel="stylesheet" type="text/css">
     <link href="http://www.mechlink.org/styles/mainuser.css" rel="stylesheet" type="text/css">
     <link href="http://www.mechlink.org/styles/textusr.css" rel="stylesheet" type="text/css">
+    <link href="http://www.mechlink.org/styles/user.css" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" href="http://www.mechlink.org/images/favicon.ico?v=2" type="image/x-icon">
     <link rel="icon" href="http://www.mechlink.org/images/favicon.ico" type="image/x-icon">
     <script type="text/javascript" src="https://ws.sharethis.com/button/buttons.js"></script>

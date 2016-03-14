@@ -53,20 +53,18 @@ if(isset($_POST["oper"])) {
 if(isset($_GET["u"]))
 	$u = preg_replace('#[^a-z0-9]#i', '', $_GET['u']);
 
-include_once("includes/check_login_status.php");
 include_once("includes/headerphpcode.php");
 
+//========== Grab the user from the DB ==========//
 $current_user = User::withUsername(issetor($u,true));
 if(!(bool)$current_user->activated){
 	header("location: http://www.mechlink.org/404");
 	exit();
 }
 
-$log_username = $_SESSION['username'];
-
-// Check to see if the viewer is the account owner
+//========== Check to see if the viewer is the account owner ==========//
 $isOwner = false;
-if($_SESSION['username'] == $current_user->username && $user_ok == true){
+if($log_username == $current_user->username && $user_ok == true){
 	$isOwner = true;
 	$profile_pic_btn = '<button class="profile_pic_btn" style="display:block;" onclick="triggerUpload(event, \'FileUpload\')"></button>';
 	$rlname_edit_btn = '<button class="rlname_edit_btn" style="display:inline-block; margin-top:3px;" onclick = "document.getElementById(\'light_edit_name\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
@@ -76,20 +74,20 @@ if($_SESSION['username'] == $current_user->username && $user_ok == true){
 	$about_edit_btn = '<button class="about_edit_btn" style="display:block;" onclick = "ModalOpen(\'EditAbout\');"></button>';
 }
 
+//========== Set profile pic ==========//
 $profile_pic = '<img src="user/'.$u.'/'.$current_user->avatar.'" alt="'.$u.'">';
 if($current_user->avatar == null)
 	$profile_pic = '<img src="images/avatardefault_large.png" alt="'.$current_user->username.'">';
 
-
-
+//========== Check if friend with current user ==========//
 $isFriend = false;
-/*foreach($current_user->getFriends() as $friend) {
-	echo $friend['user1'];
-}*/
-exit();
+foreach($current_user->getFriends() as $friend) {
+	if($log_username == $friend['user1'] || $log_username == $friend['user2'])
+		$isFriend = true;
+}
 
 
-
+//========== Check if friend or if blocked by current user (or other way around) ==========//
 $ownerBlockViewer = false;
 $viewerBlockOwner = false;
 if($u != $log_username && $user_ok == true){
@@ -186,7 +184,7 @@ if($friend_count < 1){
 	}
 }
 
-
+//HTML STARTS HERE!
 include_once("includes/header.php");
 ?>
 <script type="text/javascript">
