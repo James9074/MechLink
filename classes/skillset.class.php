@@ -14,6 +14,7 @@ class Skillset
     public $award4;
     public $skills;
     public $username;
+    public $dateposted;
     private $database;
 
     function __construct() {
@@ -23,7 +24,7 @@ class Skillset
     public static function createNew($newSkillset){
 
         $database = new Database();
-        $database->query('INSERT INTO skillsets (automobiletype, location, restoredfrom, restoredto, award1, award2, award3, award4, skills, username) VALUES (:automobiletype, :location, :restoredfrom, :restoredto, :award1, :award2, :award3, :award4, :skills, :username)');
+        $database->query('INSERT INTO skillsets (automobiletype, location, restoredfrom, restoredto, award1, award2, award3, award4, skills, username, dateposted) VALUES (:automobiletype, :location, :restoredfrom, :restoredto, :award1, :award2, :award3, :award4, :skills, :username, :dateposted)');
         $database->bind(':automobiletype',$newSkillset["automobiletype"]);
         $database->bind(':location',$newSkillset["location"]);
         $database->bind(':restoredfrom',$newSkillset["restoredfrom"]);
@@ -34,6 +35,7 @@ class Skillset
         $database->bind(':award4',$newSkillset['award4']);
         $database->bind(':skills',$newSkillset["skills"]);
         $database->bind(':username',$newSkillset["username"]);
+        $database->bind(':dateposted',date("Y-m-d"));
 
         try {
             $result = $database->execute();
@@ -62,12 +64,6 @@ class Skillset
         }
     }
 
-    protected function createByArray($newSkillset){
-
-
-        return $result;
-    }
-
     protected function fill( array $row ) {
         $this->id = $row['id'];
         $this->automobiletype = $row["automobiletype"];
@@ -80,5 +76,6 @@ class Skillset
         $this->award4 = $row["award4"];
         $this->skills = $row["skills"];
         $this->username = $row["username"];
+        $this->dateposted = $row["dateposted"];
     }
 }

@@ -19,6 +19,7 @@ class User
     public $description;
     public $activated;
     public $friends;
+    public $skillsets;
     public $blockedUsers;
     private $database;
 
@@ -76,6 +77,27 @@ class User
             //Error..
         }
         return $this->blockedUsers;
+    }
+
+    public function getSkillsets(){
+        if (isset($this->skillsets))
+            return $this->skillsets;
+        $this->database->query('SELECT id FROM skillsets WHERE username = :username');
+        $this->database->bind(':username',$this->username);
+        try {
+            $rows = $this->database->resultset();
+            if($this->database->rowCount() > 0) {
+                $this->skillsets = [];
+                foreach ($rows as $row) {
+                    array_push($this->skillsets, Skillset::withID($row['id']));
+                }
+            }
+            else
+                $this->skillsets = [];
+        }catch (PDOException $e) {
+            //Error..
+        }
+        return $this->skillsets;
     }
 
     protected function fill( array $row ) {
