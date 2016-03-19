@@ -28,6 +28,8 @@ if(isset($_POST["oper"])) {
 		}
 	} else if ($oper == "AddSkillset") {
 		$awards = json_decode($_POST["awards"], true);
+		$schools = json_decode($_POST["schools"], false);
+		//print json_encode($schools);
 		$newSkillset = array(
 			"automobiletype" => $_POST["automobiletype"],
 			"location" => $_POST["location"],
@@ -38,11 +40,28 @@ if(isset($_POST["oper"])) {
 			"award3" => $awards[2],
 			"award4" => $awards[3],
 			"skills" => $_POST["automobiletype"],
-			"username" => $_SESSION["username"],
+			"username" => $_SESSION["username"]
 			);
+
 		try {
 			$createdSkillset = Skillset::createNew($newSkillset);
-			print json_encode($createdSkillset);
+			foreach($schools as $school){
+				$degrees = $school->degrees;
+				$newSchool = array(
+					"name" => $school->name,
+					"location" => $school->location,
+					"attendedfrom" => $school->attendedfrom,
+					"attendedto" => $school->attendedto,
+					"awards" => $school->awards,
+					"degree1" => $degrees[0],
+					"degree2" => $degrees[1],
+					"degree3" => $degrees[2],
+					"degree4" => $degrees[3],
+					"skillset" => $createdSkillset->id
+				);
+				$createdSchool = School::createNew($newSchool);
+			}
+			print json_encode($returnData);
 		}catch (PDOException $e) {
 			header('HTTP/1.1 500 Internal Server Error');
 			die(json_encode(array('status' => 'DB Error', 'error' => $e)));

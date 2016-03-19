@@ -162,7 +162,7 @@ function UserUploadNewSkillset(){
             type: "POST",
             dataType: 'json',
             data : {"oper":"AddSkillset",automobiletype:type,location:skillLocation,restoredfrom:dateStart,
-                restoredto:dateEnd, awards: JSON.stringify(awards), skills:skills},
+                restoredto:dateEnd, awards: JSON.stringify(awards), skills:skills, schools: JSON.stringify(schools)},
             success: function(data, textStatus, jqXHR){
                 console.dir(data);
                 ModalOpen("None");

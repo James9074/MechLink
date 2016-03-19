@@ -15,6 +15,7 @@ class Skillset
     public $skills;
     public $username;
     public $dateposted;
+    public $schools;
     private $database;
 
     function __construct() {
