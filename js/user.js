@@ -178,9 +178,7 @@ function UserUploadNewSkillset(){
 }
 
 $(document).ready(function() {
-    if($("#user_about").attr("descriptionprovided") == 'false') {
-        UserConfigureInitialProfileSetup();
-    }
+
 
     $("#edit_about_textarea").on('change keydown paste input', function(){
         CheckAboutInput();

@@ -19,6 +19,7 @@ class User
     public $description;
     public $activated;
     public $friends;
+    public $blockedUsers;
     private $database;
 
     function __construct() {
@@ -52,10 +53,29 @@ class User
             $rows = $this->database->resultset();
             if($this->database->rowCount() > 0)
                 $this->friends = $rows;
+            else
+                $this->friends = [];
         }catch (PDOException $e) {
             //Error..
         }
         return $this->friends;
+    }
+
+    public function getBlockedUsers(){
+        if (isset($this->blockedUsers))
+            return $this->blockedUsers;
+        $this->database->query('SELECT * FROM blockedusers WHERE blocker = :username or blockee = :username');
+        $this->database->bind(':username',$this->username);
+        try {
+            $rows = $this->database->resultset();
+            if($this->database->rowCount() > 0)
+                $this->blockedUsers = $rows;
+            else
+                $this->blockedUsers = [];
+        }catch (PDOException $e) {
+            //Error..
+        }
+        return $this->blockedUsers;
     }
 
     protected function fill( array $row ) {
