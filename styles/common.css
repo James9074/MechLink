@@ -496,21 +496,24 @@ input::-webkit-input-placeholder {
 }
 
 .formfields {
-	position: relative;
-	width: 100%;
-	min-height: 30px;
-	height: auto;
-	margin-top: 15px;
-	font-size: 12px;
-	font-family: Arial, Helvetica, sans-serif;
-	color: #666;
-	background-color: #FFF;
-	border:#CCC 2px solid;
-	border-radius: 5px;
-	padding-left: 5px;
-	padding-right: 5px;
-	-webkit-appearance: none;
-	-moz-appearance: none;
+	 position: relative;
+	 width: 100%;
+	 min-height: 30px;
+	 height: auto;
+	 margin-top: 15px;
+	 font-size: 12px;
+	 font-family: Arial, Helvetica, sans-serif;
+	 color: #666;
+	 background-color: #FFF;
+	 border:#CCC 2px solid;
+	 border-radius: 5px;
+	 padding-left: 5px;
+	 padding-right: 5px;
+	 -webkit-appearance: none;
+	 -moz-appearance: none;
+ }
+textarea.formfields{
+	height:100px;
 }
 .formfields:focus {
 	outline: 0;

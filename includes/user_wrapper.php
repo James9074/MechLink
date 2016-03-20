@@ -30,9 +30,8 @@ if($log_username == $current_user->username && $user_ok == true){
     $about_edit_btn = '<button class="about_edit_btn" style="display:block;" onclick = "ModalOpen(\'EditAbout\');"></button>';
     $skill_edit_btn = '<button class="skill_edit_btn" style="display:block;" onclick = "document.getElementById(\'light_skills\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
     $skill_delete_btn = '<button onclick = "document.getElementById(\'light_delete_skillset\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'">Delete</button>';
-    $project_edit_btn = '<button class="project_edit_btn" style="display:block;" onclick = "document.getElementById(\'light_project\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
-    $project_delete_btn = '<button onclick = "document.getElementById(\'light_delete_project\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'">Delete</button>';
-
+    $project_edit_btn = '<button class="edit_btn" onclick="EditProject();"></button>';
+    $project_delete_btn = '<button class="delete_btn" onclick="PromptDeleteProject();"></button>';
 }
 
 //========== Set profile pic ==========//

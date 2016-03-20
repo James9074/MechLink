@@ -12,9 +12,9 @@ if(isset($_POST["oper"])) {
 	$returnData["postData"] = $_POST;
 	$database = new Database();
 	header('Content-Type: application/json');
-	if ($oper == "DeleteSkillset") {
+	if ($oper == "DeleteProject") {
 
-	} else if ($oper == "EditSkillset") {
+	} else if ($oper == "EditProject") {
 
 	}
 	exit();
@@ -22,74 +22,17 @@ if(isset($_POST["oper"])) {
 
 include_once("includes/user_wrapper.php");
 
-//$skillset = Skillset::withID($_GET['id']);
-/*if($skillset->id == null) {
+$project = Project::withID($_GET['id']);
+if($project->id == null) {
 	header("location: http://www.mechlink.org/404");
 	exit();
-}*/
+}
 
 include_once("includes/headerphpcode.php");
 
 //HTML STARTS HERE!
 include_once("includes/header.php"); ?>
-	<meta name="Description" content="This is <?php echo $current_user->rlname; ?>'s Mechlink profile.">
-	<title><?php echo $current_user->rlname; ?> • MechLink"</title>
-	<script src="js/user.js"></script>
-</head>
-<script>
-function friendToggle(type,user,elem){
-	var conf = confirm("Press OK to "+type+" <?php echo $rlname; ?>.");
-	if(conf != true){
-		return false;
-	}
-	_(elem).innerHTML = '<img src="http://www.mechlink.org/gifs/greenloader.gif" alt="Loading..." />';
-	var ajax = ajaxObj("POST", "php_parsers/friend_system.php");
-	ajax.onreadystatechange = function() {
-		if(ajaxReturn(ajax) == true) {
-			if(ajax.responseText == "friend_request_sent"){
-				_(elem).innerHTML = '<span class="friendBtn">Request Sent</span>';
-			} else if(ajax.responseText == "unfriend_ok"){
-				_(elem).innerHTML = '<button onclick="friendToggle(\'connect\',\'<?php echo $rlname; ?>\',\'friendBtn\')">Friend</button>';
-			} else {
-				alert(ajax.responseText);
-				_(elem).innerHTML = '<span class="style5">Please try again later</span>';
-			}
-		}
-	}
-	ajax.send("type="+type+"&user="+user);
-}
-function blockToggle(type,blockee,elem){
-	var conf = confirm("Press OK to confirm the '"+type+"' action on user <?php echo $rlname; ?>.");
-	if(conf != true){
-		return false;
-	}
-	var elem = document.getElementById(elem);
-	elem.innerHTML = '<img src="http://www.mechlink.org/gifs/greenloader.gif" alt="Loading..." />';
-	var ajax = ajaxObj("POST", "php_parsers/block_system.php");
-	ajax.onreadystatechange = function() {
-		if(ajaxReturn(ajax) == true) {
-			if(ajax.responseText == "blocked_ok"){
-				elem.innerHTML = '<button onclick="blockToggle(\'unblock\',\'<?php echo $rlname; ?>\',\'blockBtn\')">Unblock User</button>';
-			} else if(ajax.responseText == "unblocked_ok"){
-				elem.innerHTML = '<button onclick="blockToggle(\'block\',\'<?php echo $rlname; ?>\',\'blockBtn\')">Block User</button>';
-			} else {
-				alert(ajax.responseText);
-				elem.innerHTML = 'Try again later';
-			}
-		}
-	}
-	ajax.send("type="+type+"&blockee="+blockee);
-}
-</script>
-<script>
-function triggerUpload(event,elem){
-	event.preventDefault();
-	document.getElementById(elem).click();	
-}
-</script>
-</head>
 
-<body>
 <?php include_once("includes/navbar.php"); ?>
 <?php include_once("includes/overlay_edit_name.php"); ?>
 <?php include_once("includes/overlay_edit_location.php"); ?>
@@ -112,7 +55,7 @@ function triggerUpload(event,elem){
               <input type="file" name="avatar" required id="FileUpload" onChange="form.submit()">
             </form>
           </div>
-          <div id="info_box"> <span class="style3"><?php echo $rlname; ?><?php echo $rlname_edit_btn; ?></span> <br />
+          <div id="info_box"> <span class="style3"><?php echo $current_user->rlname; ?><?php echo $rlname_edit_btn; ?></span> <br />
             <br />
             <span class="style4">
             Where are you?<?php echo $location_edit_btn; ?></span><br />
@@ -143,37 +86,37 @@ else {
           <?php include_once("includes/prof_nav.php"); ?>
           <div id="main_cont"> 
           
-          <?php echo $project_edit_btn; ?>
-          
-          <?php echo $project_delete_btn; ?>
-          
-          <br />
-          <br />
-          
-          <br />
-          <div>
-        <button tabindex="5" onclick = "document.getElementById('lightupload_pics').style.display='block';document.getElementById('fade').style.display='block'">Add photos</button>
-        </div>
-        <br />
-        <br />
-          
-          <b>Restoration Project</b>
-          
-          <p>Type of automobile</p>
-          
-          City + state or location
-          
-          <p>Restoration details</p>
-          
-          
-          
-          <p><b>Required Skills</b></p>
-          
-          Required skills
-          
-          
-          
-          
+          <div style="float:left;"><?php echo $project_edit_btn; ?></div>
+
+		  <div style="float:right;"><?php echo $project_delete_btn; ?></div>
+
+		  <p class="section_header" style="clear:both;">Restoration Pictures</p>
+		  <div class="data_section" style="padding:10px">
+			  <?php foreach($project->getPhotos() as $picture){ ?>
+				  <img src="/images/<?php echo $picture->filename; ?>" style="max-height:101px; max-width:180px; display:inline-block; vertical-align:middle; margin-bottom:5px;"/>
+			  <?php } ?>
+			  <br/>
+			  <button tabindex="5" onclick = "document.getElementById('lightupload_pics').style.display='block';document.getElementById('fade').style.display='block'">Add photos</button>
+		  </div>
+
+		  <p class="section_header">Restoration Project</p>
+		  <div class="data_section">
+			  <p>Type of automobile: <?php echo $project->automobiletype; ?></p>
+			  Location: <?php echo $project->location; ?>
+		  </div>
+
+		  <p class="section_header">Restoration Details</p>
+		  <div class="data_section">
+			  <p><?php echo $project->details; ?></p>
+		  </div>
+
+		  <?php if($project->skills != null){ ?>
+			  <p class="section_header">Required Skills</p>
+			  <div class="data_section">
+				  <p><?php echo $project->skills; ?></p>
+			  </div>
+		  <?php } ?>
+
           </div>
           <hr />
           <div align="center">

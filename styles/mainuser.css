@@ -16,6 +16,16 @@ button::-moz-focus-inner {
  border: 0
 }
 
+.data_section{
+	border-top: 1px solid #E0E0E0;
+	background-color: #F7F7F7;
+	padding: 0px 10px 1px 10px;
+}
+
+.section_header{
+	font-weight:bold;
+	font-size: 1.2em;
+}
 
 /* common styles */
 textarea.about {
@@ -26,10 +36,7 @@ textarea#specificskills {
 	width:100%;
 	height:100px;
 }
-textarea#restoration_details {
-	width:100%;
-	height:100px;
-}
+
 #container {
 	position: relative;
 	height: auto;
@@ -310,7 +317,7 @@ div#profile_pic_box > img {
 	border: none;
 	margin-bottom: 10px;
 }
-.project_edit_btn {
+.edit_btn {
 	position: relative;
 	background: url(http://www.mechlink.org/images/edit_btn_lrg.png) 0px 0px no-repeat;
 	height: 37px;
@@ -319,7 +326,7 @@ div#profile_pic_box > img {
 	border: none;
 	margin-bottom: 10px;
 }
-.project_edit_btn:hover {
+.edit_btn:hover {
 	position: relative;
 	background: url(http://www.mechlink.org/images/edit_btn_lrg_hover.png) 0px 0px no-repeat;
 	height: 37px;
@@ -328,6 +335,26 @@ div#profile_pic_box > img {
 	border: none;
 	margin-bottom: 10px;
 }
+
+.delete_btn {
+	position: relative;
+	background: url(http://www.mechlink.org/images/delete_btn_lrg.png) 0px 0px no-repeat;
+	height: 37px;
+	width: 37px;
+	z-index: 8000;
+	border: none;
+	margin-bottom: 10px;
+}
+.delete_btn:hover {
+	position: relative;
+	background: url(http://www.mechlink.org/images/delete_btn_lrg_hover.png) 0px 0px no-repeat;
+	height: 37px;
+	width: 37px;
+	z-index: 8000;
+	border: none;
+	margin-bottom: 10px;
+}
+
 #section_header {
 	position: relative;
 	height: auto;

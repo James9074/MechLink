@@ -26,6 +26,23 @@ if(isset($_POST["oper"])) {
 			header('HTTP/1.1 500 Internal Server Error');
 			die(json_encode(array('status' => 'DB Error', 'error' => $e)));
 		}
+	} else if ($oper == "AddProject") {
+		$newProject = array(
+			"automobiletype" => $_POST["automobiletype"],
+			"location" => $_POST["location"],
+			"details" => $_POST["details"],
+			"skills" => $_POST["skills"],
+			"username" => $_SESSION["username"]
+		);
+
+		try {
+			$createdProject = Project::createNew($newProject);
+			$returnData["newProject"] = $createdProject;
+			print json_encode($returnData);
+		}catch (PDOException $e) {
+			header('HTTP/1.1 500 Internal Server Error');
+			die(json_encode(array('status' => 'DB Error', 'error' => $e)));
+		}
 	} else if ($oper == "AddSkillset") {
 		$awards = json_decode($_POST["awards"], true);
 		$schools = json_decode($_POST["schools"], false);
@@ -75,74 +92,7 @@ include_once("includes/user_wrapper.php");
 
 //HTML STARTS HERE!
 include_once("includes/header.php"); ?>
-	<meta name="Description" content="This is <?php echo $current_user->rlname; ?>'s Mechlink profile.">
-	<title><?php echo $current_user->rlname; ?> • MechLink"</title>
-	<script src="js/user.js"></script>
-</head>
 
-<body>
-<script type="text/javascript">
-	$(function(){
-		<? if($log_username == $current_user->username){?>
-		if($("#user_about").attr("descriptionprovided") == 'false') {
-			UserConfigureInitialProfileSetup();
-		}
-		<?}?>
-
-	});
-
-	function friendToggle(type,user,elem){
-	var conf = confirm("Press OK to "+type+" <?php echo $current_user->rlname; ?>.");
-	if(conf != true){
-		return false;
-	}
-	_(elem).innerHTML = '<img src="http://www.mechlink.org/gifs/greenloader.gif" alt="Loading..." />';
-	var ajax = ajaxObj("POST", "php_parsers/friend_system.php");
-	ajax.onreadystatechange = function() {
-		if(ajaxReturn(ajax) == true) {
-			if(ajax.responseText == "friend_request_sent"){
-				_(elem).innerHTML = '<span class="friendBtn">Request Sent</span>';
-			} else if(ajax.responseText == "unfriend_ok"){
-				_(elem).innerHTML = '<button onclick="friendToggle(\'connect\',\'<?php echo $current_user->rlname; ?>\',\'friendBtn\')">Friend</button>';
-			} else {
-				alert(ajax.responseText);
-				_(elem).innerHTML = '<span class="style5">Please try again later</span>';
-			}
-		}
-	}
-	ajax.send("type="+type+"&user="+user);
-}
-
-	function blockToggle(type,blockee,elem){
-	var conf = confirm("Press OK to confirm the '"+type+"' action on user <?php echo $current_user->rlname; ?>.");
-	if(conf != true){
-		return false;
-	}
-	var elem = document.getElementById(elem);
-	elem.innerHTML = '<img src="http://www.mechlink.org/gifs/greenloader.gif" alt="Loading..." />';
-	var ajax = ajaxObj("POST", "php_parsers/block_system.php");
-	ajax.onreadystatechange = function() {
-		if(ajaxReturn(ajax) == true) {
-			if(ajax.responseText == "blocked_ok"){
-				elem.innerHTML = '<button onclick="blockToggle(\'unblock\',\'<?php echo $current_user->rlname; ?>\',\'blockBtn\')">Unblock User</button>';
-			} else if(ajax.responseText == "unblocked_ok"){
-				elem.innerHTML = '<button onclick="blockToggle(\'block\',\'<?php echo $current_user->rlname; ?>\',\'blockBtn\')">Block User</button>';
-			} else {
-				alert(ajax.responseText);
-				elem.innerHTML = 'Try again later';
-			}
-		}
-	}
-	ajax.send("type="+type+"&blockee="+blockee);
-}
-
-	function triggerUpload(event,elem){
-		event.preventDefault();
-		document.getElementById(elem).click();
-	}
-</script>
-
-<div id="fade" class="black_overlay"></div>
 <?php include_once("includes/navbar.php"); ?>
 <?php include_once("includes/overlay_edit_name.php"); ?>
 <?php include_once("includes/overlay_edit_location.php"); ?>

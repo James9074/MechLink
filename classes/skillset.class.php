@@ -68,7 +68,7 @@ class Skillset
     public function getSchools(){
         if (isset($this->schools))
             return $this->schools;
-        $this->database->query('SELECT * FROM schools WHERE skillset = :skillset');
+        $this->database->query('SELECT id FROM schools WHERE skillset = :skillset');
         $this->database->bind(':skillset',$this->id);
         try {
             $rows = $this->database->resultset();
