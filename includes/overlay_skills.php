@@ -40,7 +40,7 @@
   }
 
   function PromptDeleteSkill(){
-    var id = "<?php echo $_GET['id']; ?>";
+    var id = "<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>";
     if(id != "") {
       ModalOpen("Warning");
       $("#light_warning").find("#warning_question").html("Are you sure you want to delete this skillset?");
@@ -69,7 +69,7 @@
 
 
   function EditSkill(){
-    var id = "<?php echo $_GET['id']; ?>";
+    var id = "<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>";
     if(id != "") {
       PrepEdit(id);
       ModalOpen("Skillset");

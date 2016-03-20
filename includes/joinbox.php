@@ -3,7 +3,7 @@ function restrict(elem){
 	var tf = _(elem);
 	var rx = new RegExp;
 	if(elem == "email"){
-		rx = /[' "]/gi;
+		rx = /[' ']/gi;
 	} else if(elem == "username"){
 		rx = /[^a-z0-9]/gi;
 	} else if(elem == "rlname"){
