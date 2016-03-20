@@ -20,6 +20,14 @@
     }
   }
 
+  function AddAward(){
+    for(var i=0; i < 5; i++){
+      if ($("#skillset_award_"+i).css("display") == "none"){
+        $("#skillset_award_"+i).show(); break;
+      }
+    }
+  }
+
   function AddSchools(){
     var template = $("#skillset_schools #school_1").html();
 
@@ -31,14 +39,132 @@
     }
   }
 
+  function PromptDeleteSkill(){
+    var id = "<?php echo $_GET['id']; ?>";
+    if(id != "") {
+      ModalOpen("Warning");
+      $("#light_warning").find("#warning_question").html("Are you sure you want to delete this skillset?");
+      $("#light_warning").find("#yesButton").attr("onclick","DeleteSkill("+id+");");
+    }
+  }
+
+  function DeleteSkill(aID){
+    $.ajax({
+      url : "user.php",
+      type: "POST",
+      dataType: 'json',
+      data : {"oper":"DeleteSkillset",id:aID},
+      success: function(data, textStatus, jqXHR) {
+        var newLoc = "http://www.mechlink.org/skills.php?u="+data['username'];
+        window.location.href = newLoc;
+      },
+      error: function (jqXHR, textStatus, errorThrown){
+        if(DEBUG) {
+          console.log(errorThrown + ": ");
+          console.log(JSON.parse(jqXHR.responseText));
+        }
+      }
+    });
+  }
+
+
+  function EditSkill(){
+    var id = "<?php echo $_GET['id']; ?>";
+    if(id != "") {
+      PrepEdit(id);
+      ModalOpen("Skillset");
+    }
+  }
+
+  function PrepEdit(aID){
+    if(typeof aID == "undefined") aID = -1;
+    $.ajax({
+      url : "user.php",
+      type: "POST",
+      dataType: 'json',
+      data : {"oper":"GetSkillset",id:aID},
+      success: function(data, textStatus, jqXHR){
+        console.dir(data);
+        if(data['skillset'].id == null){
+          $("#skillset_id").val("");
+          return;
+        }
+        $("#skillset_type").val(data['skillset'].automobiletype);
+        $("#skillset_id").val(aID);
+        $("#skillset_location").val(data['skillset'].location);
+        var fromDate = Date.parse(data['skillset'].restoredfrom);
+        var toDate = Date.parse(data['skillset'].restoredto);
+        $("#skillset_restored_from_month").val(fromDate.getMonth()+1);
+        $("#skillset_restored_from_year").val(fromDate.getFullYear());
+        $("#skillset_restored_to_month").val(toDate.getMonth()+1);
+        $("#skillset_restored_to_year").val(toDate.getFullYear());
+
+        if(data['skillset'].award1 != ""){
+          $("#skillset_award_1").val(data['skillset'].award1);
+          $("#skillset_award_1").show();
+        }
+        if(data['skillset'].award2 != ""){
+          $("#skillset_award_2").val(data['skillset'].award2);
+          $("#skillset_award_2").show();
+        }
+        if(data['skillset'].award3 != ""){
+          $("#skillset_award_3").val(data['skillset'].award3);
+          $("#skillset_award_3").show();
+        }
+        if(data['skillset'].award4 != ""){
+          $("#skillset_award_4").val(data['skillset'].award4);
+          $("#skillset_award_4").show();
+        }
+
+        $("#skillset_skills").val(data['skillset'].skills);
+
+        for(var i=1; i <= data['skillset'].schools.length;i++){
+          AddSchool();
+          var schoolData = data['skillset'].schools[i-1];
+          var school = $("#school_"+i);
+          $(school).find("#school_id").val(schoolData.id);
+          $(school).find("#school_name").val(schoolData.name);
+          $(school).find("#school_location").val(schoolData.location);
+
+          if(schoolData.attendedfrom != null) {
+            var fromDate = Date.parse(schoolData.attendedfrom);
+            $("#school_attended_from_month").val(fromDate.getMonth() + 1);
+            $("#school_attended_from_year").val(fromDate.getFullYear());
+          }
+          if(schoolData.attendedto != null) {
+            var toDate = Date.parse(schoolData.attendedto);
+            $("#school_attended_to_month").val(toDate.getMonth() + 1);
+            $("#school_attended_to_year").val(toDate.getFullYear());
+          }
+
+          $(school).find("#school_awards").val(schoolData.awards);
+          $(school).find("#school_degree_1").val(schoolData.degree1);
+          $(school).find("#school_degree_2").val(schoolData.degree2);
+          $(school).find("#school_degree_3").val(schoolData.degree3);
+          $(school).find("#school_degree_4").val(schoolData.degree4);
+
+        }
+
+      },
+      error: function (jqXHR, textStatus, errorThrown){
+        if(DEBUG) {
+          console.log(errorThrown + ": ");
+          console.log(JSON.parse(jqXHR.responseText));
+        }
+      }
+    });
+  }
+
+
   /**
    * Linked to the "Post" button
    */
-  function UserUploadNewSkillset(){
+  function UploadNewSkillset(){
     var formError = false;
     $("#skillsetErrorMessage").html("");
 
     var type = $("#skillset_type").val();
+    var id = $("#skillset_id").val();
     var skillLocation = $("#skillset_location").val();
     var dateStartMonth = $("#skillset_restored_from_month").val();
     var dateStartYear = $("#skillset_restored_from_year").val();
@@ -47,10 +173,10 @@
     var dateStart = Date.parse(dateStartYear + "-" + dateStartMonth + "-01");
     var dateEnd = Date.parse(dateEndYear + "-" + dateEndMonth + "-01");
     var awards = [];
-    awards[0] = "";
-    awards[1] = "";
-    awards[2] = "";
-    awards[3] = "";
+    awards[0] = $("#skillset_award_1").val();
+    awards[1] = $("#skillset_award_2").val();
+    awards[2] = $("#skillset_award_3").val();
+    awards[3] = $("#skillset_award_4").val();
     var skills = $("#skillset_skills").val();
     var schools = [];
 
@@ -91,8 +217,8 @@
         }
         else ApplyError($(nameElement),false);
 
-        var school_location = $(school).find("#school_location").val()
-
+        var school_location = $(school).find("#school_location").val();
+        var school_id = $(school).find("#school_id").val();
         var attendedfromMonth = $(school).find("#school_attended_from_month").val();
         var attendedfromYear = $(school).find("#school_attended_from_year").val();
         var attendedtoMonth = $(school).find("#school_attended_to_month").val();
@@ -109,7 +235,7 @@
         var degree3 = $(school).find("#school_degree_3").val();
         var degree4 = $(school).find("#school_degree_4").val();
 
-        schoolsData[i-1] = {name:name, location:school_location, attendedfrom:attendedfrom, attendedto:attendedto,
+        schoolsData[i-1] = {id : school_id,name:name, location:school_location, attendedfrom:attendedfrom, attendedto:attendedto,
             awards: school_awards, degrees: [degree1,degree2,degree3,degree4]};
       }
     }
@@ -130,10 +256,10 @@
         url : "user.php",
         type: "POST",
         dataType: 'json',
-        data : {"oper":"AddSkillset",automobiletype:type,location:skillLocation,restoredfrom:dateStart,
+        data : {"oper":"AddOrEditSkillset",id:id,automobiletype:type,location:skillLocation,restoredfrom:dateStart,
           restoredto:dateEnd, awards: JSON.stringify(awards), skills:skills, schools: JSON.stringify(schoolsData)},
         success: function(data, textStatus, jqXHR){
-          var newLoc = "http://www.mechlink.org/skill.php?u="+data['newSkillset'].username+"&id="+data['newSkillset'].id;
+          var newLoc = "http://www.mechlink.org/skill.php?u="+data['skillset'].username+"&id="+data['skillset'].id;
           window.location.href = newLoc;
           return;
           //ModalOpen("None");
@@ -157,6 +283,7 @@
   <div align="center">
     <div id="boxform">
       <div id="form_long"> <br />
+        <input id="skillset_id" type="hidden">
         <span id="skillset_project_details"><b>Restoration project details</b></span> <br />
         <br />
         <div>
@@ -200,11 +327,14 @@
           <option value="12">December</option>
         </select>
         <input id="skillset_restored_to_year" type="text" class="formfields_short" spellcheck="false" tabindex="6" onkeyup="restrict('')" maxlength="4" placeholder="Year">
-        <div>
-          <input id="skill_set_award1" type="text" class="formfields" spellcheck="false" tabindex="7" onfocus="emptyElement('status')" onkeyup="restrict('')" maxlength="60" placeholder="Award received (optional)">
+        <div id="skillset_awards">
+          <input id="skillset_award_1" type="text" class="formfields" spellcheck="false" tabindex="7" onfocus="emptyElement('status')" onkeyup="restrict('')" maxlength="60" placeholder="Award received (optional)">
+          <input id="skillset_award_2" style="display:none" type="text" class="formfields" spellcheck="false" tabindex="7" onfocus="emptyElement('status')" onkeyup="restrict('')" maxlength="60" placeholder="Award received (optional)">
+          <input id="skillset_award_3" style="display:none" type="text" class="formfields" spellcheck="false" tabindex="7" onfocus="emptyElement('status')" onkeyup="restrict('')" maxlength="60" placeholder="Award received (optional)">
+          <input id="skillset_award_4" style="display:none" type="text" class="formfields" spellcheck="false" tabindex="7" onfocus="emptyElement('status')" onkeyup="restrict('')" maxlength="60" placeholder="Award received (optional)">
         </div>
         <br />
-        <button tabindex="8"><img src="images/add_btn.png" />&nbsp;&nbsp;Add an award</button>
+        <button tabindex="8" onclick="AddAward();"><img src="images/add_btn.png" />&nbsp;&nbsp;Add an award</button>
         <br />
         <br />
         <br />
@@ -220,7 +350,8 @@
         <b>Education & training</b> <br />
         <br />
         <div id="skillset_schools">
-          <div id="school_1" class="skillset_school_container">
+          <div id="school_1" style="display: none" class="skillset_school_container">
+            <input id="school_id" type="hidden">
             <b id="school_title">School #1</b>
             <div>
               <input id="school_name" type="text" class="formfields" spellcheck="false" tabindex="10" onkeyup="restrict('')" maxlength="100" placeholder="Name of school (required)">
@@ -284,13 +415,12 @@
         <span id="skillset_error_message" class="status_error"></span>
         <br />
         <br/>
-        <button onclick = "UserUploadNewSkillset();" tabindex="20">Post</button>
-        <button onclick = "document.getElementById('light_skills').style.display='none';document.getElementById('light_select').style.display='block'" tabindex="21">Cancel</button>
+        <button onclick = "UploadNewSkillset();" tabindex="20">Post</button>
+        <button onclick = "ModalOpen('None');" tabindex="21">Cancel</button>
         <br />
         <br />
       </div>
     </div>
   </div>
 </div>
-<!--light_skills--> 
-
+<!--light_skills-->

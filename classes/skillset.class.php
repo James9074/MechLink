@@ -23,7 +23,6 @@ class Skillset
     }
 
     public static function createNew($newSkillset){
-
         $database = new Database();
         $database->query('INSERT INTO skillsets (automobiletype, location, restoredfrom, restoredto, award1, award2, award3, award4, skills, username, dateposted) VALUES (:automobiletype, :location, :restoredfrom, :restoredto, :award1, :award2, :award3, :award4, :skills, :username, :dateposted)');
         $database->bind(':automobiletype',$newSkillset["automobiletype"]);
@@ -52,14 +51,53 @@ class Skillset
         $instance->loadByID( $id );
         return $instance;
     }
+    
+    public function update($updateData){
+        $this->database->query('UPDATE skillsets SET automobiletype = :automobiletype, location = :location, restoredfrom = :restoredfrom, restoredto = :restoredto, award1 = :award1, award2 = :award2, award3 = :award3, award4 = :award4, skills = :skills, username = :username, dateposted = :dateposted WHERE id = :id');
+        $this->database->bind(':id',$this->id);
+        $this->database->bind(':automobiletype',$updateData["automobiletype"]);
+        $this->database->bind(':location',$updateData["location"]);
+        $this->database->bind(':restoredfrom',$updateData["restoredfrom"]);
+        $this->database->bind(':restoredto',$updateData["restoredto"]);
+        $this->database->bind(':award1',$updateData['award1']);
+        $this->database->bind(':award2',$updateData['award2']);
+        $this->database->bind(':award3',$updateData['award3']);
+        $this->database->bind(':award4',$updateData['award4']);
+        $this->database->bind(':skills',$updateData["skills"]);
+        $this->database->bind(':username',$this->username);
+        $this->database->bind(':dateposted',$this->dateposted);
+
+        try {
+            $result = $this->database->execute();
+            loadByID($this->id);
+        }catch (PDOException $e) {
+            //Error...
+            return $e;
+        }
+    }
+
+    public function delete(){
+        $this->database->query('DELETE from skillsets WHERE id = :id');
+        $this->database->bind(':id',$this->id);
+
+        try {
+            $result = $this->database->execute();
+            return true;
+        }catch (PDOException $e) {
+            //Error...
+            return $e;
+        }
+    }
 
     protected function loadByID( $id ) {
         $this->database->query('SELECT * FROM skillsets WHERE id = :id');
         $this->database->bind(':id',$id);
         try {
             $row = $this->database->single();
-            if(sizeof($row) > 1)
-                $this->fill( $row );
+            if(sizeof($row) > 1) {
+                $this->fill($row);
+                $this->getSchools();
+            }
         }catch (PDOException $e) {
             //Error..
         }

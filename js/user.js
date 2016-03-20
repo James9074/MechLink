@@ -15,6 +15,7 @@ function ModalOpen(type){
     $("#light_select").hide();
     $("#light_skills").hide();
     $("#lightshare").hide();
+    $("#light_warning").hide();
     $("#fade").show();
 
     //Open desired Modal
@@ -38,12 +39,17 @@ function ModalOpen(type){
             $("#edit_about_message").hide();
 
             break;
-        case "AddSkillset":
+        case "Skillset":
             $("#light_skills").show();
+            break;
         case "Select":
             $("#light_select").show();
+            break;
         case "Share":
             $("#lightshare").show();
+            break;
+        case "Warning":
+            $("#light_warning").show();
             break;
         default:
             $("#fade").hide();
@@ -82,9 +88,10 @@ function UserUploadAbout(first_load){
             url : "user.php",
             type: "POST",
             dataType: 'json',
-            data : {"oper":"EditAbout",about:aboutTest},
+            data : {"oper":"EditAbout",description:aboutTest},
             success: function(data, textStatus, jqXHR)
             {
+                console.dir(data);
                 //Close the window. If this is the first load time, restore it.
                 if(first_load) ModalOpen("Select");
 

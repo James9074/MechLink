@@ -28,6 +28,11 @@ if($skillset->id == null) {
 	exit();
 }
 
+if($skillset->username != $_GET['u']) {
+	header("location: http://www.mechlink.org/skill.php?u=".$skillset->username."&id=".$skillset->id);
+	exit();
+}
+
 include_once("includes/headerphpcode.php");
 
 //HTML STARTS HERE!
@@ -83,12 +88,16 @@ else {
         <div id="contentInner2">
           <hr />
           <?php include_once("includes/prof_nav.php"); ?>
-          <div id="main_cont"> <?php echo $skill_edit_btn; ?> <?php echo $skill_delete_btn; ?> <br />
+          <div id="main_cont">
+			  <div style="float:left;"><?php echo $skill_edit_btn; ?></div>
+
+			  <div style="float:right;"><?php echo $skill_delete_btn; ?></div>
+		  <br />
             <br />
-            <p class="section_header">Restoration Project</p>
+            <p class="section_header" style="clear:both;">Restoration Project</p>
 		    <div class="data_section">
 				<p>Type of automobile: <?php echo $skillset->automobiletype; ?></p>
-				City + state or location: <?php echo $skillset->location; ?>
+				Location: <?php echo $skillset->location; ?>
 				<p>Restored from: <?php echo $skillset->restoredfrom; ?> - <?php echo $skillset->restoredto; ?></p>
 				<?php if($skillset->hasAwards()){ ?>
 				<p>Awards:

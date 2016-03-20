@@ -51,6 +51,28 @@ class School
         return $instance;
     }
 
+    public function update($updateData){
+        $this->database->query('UPDATE schools SET name = :name, location = :location, attendedfrom = :attendedfrom, attendedto = :attendedto, awards = :awards, degree1 = :degree1, degree2 = :degree2, degree3 = :degree3, degree4 = :degree4, WHERE id = :id');
+        $this->database->bind(':id',$this->id);
+        $this->database->bind(':name',$updateData["name"]);
+        $this->database->bind(':location',$updateData["location"]);
+        $this->database->bind(':attendedfrom',$updateData["attendedfrom"]);
+        $this->database->bind(':attendedto',$updateData["attendedto"]);
+        $this->database->bind(':awards',$updateData['awards']);
+        $this->database->bind(':degree1',$updateData['degree1']);
+        $this->database->bind(':degree2',$updateData['degree2']);
+        $this->database->bind(':degree3',$updateData['degree3']);
+        $this->database->bind(':degree4',$updateData['degree4']);
+
+        try {
+            $result = $this->database->execute();
+            loadByID($this->id);
+        }catch (PDOException $e) {
+            //Error...
+            return $e;
+        }
+    }
+
     protected function loadByID( $id ) {
         $this->database->query('SELECT * FROM schools WHERE id = :id');
         $this->database->bind(':id',$id);

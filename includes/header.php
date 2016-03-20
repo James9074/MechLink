@@ -85,4 +85,20 @@
 </head>
 
 <body>
+<div id="light_warning" class="white_content_skills">
+    <div align="center">
+        <div id="boxform">
+            <div id="form_long"> <br />
+                <span id="warning_question"><b>Are you sure?</b></span> <br />
+                <br />
+                <div>
+                    <button id="yesButton" tabindex="20">Delete</button>
+                    <button onclick = "ModalOpen('None');" tabindex="21">Cancel</button>
+                    <br />
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="fade" class="black_overlay"></div>

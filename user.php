@@ -14,19 +14,21 @@ if(isset($_POST["oper"])) {
 	$database = new Database();
 	header('Content-Type: application/json');
 
-	if ($oper == "EditAbout") {
-		$database->query('UPDATE users SET description=:description WHERE username=:username');
-		$database->bind(':description',$_POST["about"]);
-		$database->bind(':username',$_SESSION["username"]);
+	if ($oper == "EditUser"){
 
+	} else if ($oper == "EditAbout") {
+		CheckSession();
 		try {
-			$result = $database->execute();
+			$user = User::withUsername($_SESSION["username"]);
+			$returnData['user'] = $user;
+			$user->update(array("description"=>$_POST["description"]));
 			print json_encode($returnData);
 		}catch (PDOException $e) {
 			header('HTTP/1.1 500 Internal Server Error');
 			die(json_encode(array('status' => 'DB Error', 'error' => $e)));
 		}
 	} else if ($oper == "AddProject") {
+		CheckSession();
 		$newProject = array(
 			"automobiletype" => $_POST["automobiletype"],
 			"location" => $_POST["location"],
@@ -43,11 +45,13 @@ if(isset($_POST["oper"])) {
 			header('HTTP/1.1 500 Internal Server Error');
 			die(json_encode(array('status' => 'DB Error', 'error' => $e)));
 		}
-	} else if ($oper == "AddSkillset") {
+	} else if ($oper == "AddOrEditSkillset") {
+		CheckSession();
 		$awards = json_decode($_POST["awards"], true);
 		$schools = json_decode($_POST["schools"], false);
 		//print json_encode($schools);
 		$newSkillset = array(
+			"id" => $_POST["id"],
 			"automobiletype" => $_POST["automobiletype"],
 			"location" => $_POST["location"],
 			"restoredfrom" => $_POST["restoredfrom"],
@@ -61,11 +65,17 @@ if(isset($_POST["oper"])) {
 			);
 
 		try {
-			$createdSkillset = Skillset::createNew($newSkillset);
-			$returnData["newSkillset"] = $createdSkillset;
+			if(isset($newSkillset->id)) {
+				$createdSkillset = Skillset::withID($newSkillset->id);
+				$createdSkillset->update($newSkillset);
+			}
+			else
+				$createdSkillset = Skillset::createNew($newSkillset);
+			$returnData["skillset"] = $createdSkillset;
 			foreach($schools as $school){
 				$degrees = $school->degrees;
 				$newSchool = array(
+					"id" => $school->id,
 					"name" => $school->name,
 					"location" => $school->location,
 					"attendedfrom" => $school->attendedfrom,
@@ -77,7 +87,37 @@ if(isset($_POST["oper"])) {
 					"degree4" => $degrees[3],
 					"skillset" => $createdSkillset->id
 				);
-				$createdSchool = School::createNew($newSchool);
+				if(isset($newSchool->id)) {
+					$createdSchool = School::withID($newSchool->id);
+					$createdSchool->update($newSchool);
+				}
+				else
+					$createdSchool = School::createNew($newSchool);
+			}
+			print json_encode($returnData);
+		}catch (PDOException $e) {
+			header('HTTP/1.1 500 Internal Server Error');
+			die(json_encode(array('status' => 'DB Error', 'error' => $e)));
+		}
+	} else if ($oper == "GetSkillset") {
+		try {
+			$skillset = Skillset::withID($_POST["id"]);
+			$returnData["skillset"] = $skillset;
+			print json_encode($returnData);
+		}catch (PDOException $e) {
+			header('HTTP/1.1 500 Internal Server Error');
+			die(json_encode(array('status' => 'DB Error', 'error' => $e)));
+		}
+	} else if ($oper == "DeleteSkillset") {
+		CheckSession();
+		try {
+			$skillset = Skillset::withID($_POST["id"]);
+			if($_SESSION["username"] != $skillset->username){
+				header('HTTP/1.1 500 Internal Server Error');
+				die(json_encode(array('status' => 'Authorization Error', 'error' => 'You do not own this skillset!')));
+			} else {
+				$returnData["username"] = $skillset->username;
+				$skillset->delete();
 			}
 			print json_encode($returnData);
 		}catch (PDOException $e) {
@@ -86,6 +126,13 @@ if(isset($_POST["oper"])) {
 		}
 	}
 	exit();
+}
+
+function CheckSession(){
+	if(!isset($_SESSION["username"])){
+		header('HTTP/1.1 500 Internal Server Error');
+		die(json_encode(array('status' => 'Authorization Error', 'error' => 'You must log in first!')));
+	}
 }
 
 include_once("includes/user_wrapper.php");

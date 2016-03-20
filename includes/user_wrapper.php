@@ -23,13 +23,13 @@ $project_delete_btn = "";
 if($log_username == $current_user->username && $user_ok == true){
     $isOwner = true;
     $profile_pic_btn = '<button class="profile_pic_btn" style="display:block;" onclick="triggerUpload(event, \'FileUpload\')"></button>';
-    $rlname_edit_btn = '<button class="rlname_edit_btn" style="display:inline-block; margin-top:3px;" onclick = "document.getElementById(\'light_edit_name\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
-    $category_edit_btn = '<button class="category_edit_btn" style="display:inline-block; margin-top:1px;"></button>';
-    $location_edit_btn = '<button class="location_edit_btn" style="display:inline-block; margin-top:1px;" onclick = "document.getElementById(\'light_edit_location\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
-    $status_edit_btn = '<button class="status_edit_btn" style="display:inline-block; margin-top:1px;" onclick = "document.getElementById(\'light_edit_status\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
-    $about_edit_btn = '<button class="about_edit_btn" style="display:block;" onclick = "ModalOpen(\'EditAbout\');"></button>';
-    $skill_edit_btn = '<button class="skill_edit_btn" style="display:block;" onclick = "document.getElementById(\'light_skills\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
-    $skill_delete_btn = '<button onclick = "document.getElementById(\'light_delete_skillset\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'">Delete</button>';
+    $rlname_edit_btn = '<button class="edit_btn" style="display:inline-block; margin-top:3px;" onclick = "document.getElementById(\'light_edit_name\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
+    $category_edit_btn = '<button class="edit_btn" style="display:inline-block; margin-top:1px;"></button>';
+    $location_edit_btn = '<button class="edit_btn" style="display:inline-block; margin-top:1px;" onclick = "document.getElementById(\'light_edit_location\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
+    $status_edit_btn = '<button class="edit_btn" style="display:inline-block; margin-top:1px;" onclick = "document.getElementById(\'light_edit_status\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
+    $about_edit_btn = '<button class="edit_btn" style="display:block;" onclick = "ModalOpen(\'EditAbout\');"></button>';
+    $skill_edit_btn = '<button class="edit_btn" onclick="EditSkill();"></button>';
+    $skill_delete_btn = '<button class="delete_btn" onclick="PromptDeleteSkill();"></button>';
     $project_edit_btn = '<button class="edit_btn" onclick="EditProject();"></button>';
     $project_delete_btn = '<button class="delete_btn" onclick="PromptDeleteProject();"></button>';
 }

@@ -3,17 +3,22 @@ include_once("includes/db_conn.php");
 
 class User
 {
+    public $id;
     public $rlname;
     public $username;
     public $category;
+    public $email;
     public $location;
     public $profile_id;
     public $gender;
+    public $website;
     public $country;
     public $userlevel;
     public $avatar;
+    public $ip;
     public $signup;
     public $lastlogin;
+    public $notescheck;
     public $joindate;
     public $lastsession;
     public $description;
@@ -31,6 +36,34 @@ class User
         $instance = new self();
         $instance->loadByUsername( $username );
         return $instance;
+    }
+
+    public function update($updateData){
+        $this->database->query('UPDATE users SET rlname = :rlname, category = :category, location = :location, email = :email, gender = :gender, website = :website, country = :country, userlevel = :userlevel, avatar = :avatar, ip = :ip, signup = :signup, lastlogin = :lastlogin,notescheck = :notescheck,activated = :activated, description = :description WHERE username = :username');
+        $this->database->bind(':rlname',isset($updateData["rlname"]) ? $updateData["rlname"] : $this->rlname);
+        $this->database->bind(':category',isset($updateData["category"]) ? $updateData["category"] : $this->category);
+        $this->database->bind(':location',isset($updateData["location"]) ? $updateData["location"] : $this->location);
+        $this->database->bind(':username',$this->username);
+        $this->database->bind(':email',isset($updateData["email"]) ? $updateData["email"] : $this->email);
+        $this->database->bind(':gender',isset($updateData["gender"]) ? $updateData["gender"] : $this->gender);
+        $this->database->bind(':website',isset($updateData["website"]) ? $updateData["website"] : $this->website);
+        $this->database->bind(':country',isset($updateData["country"]) ? $updateData["country"] : $this->country);
+        $this->database->bind(':userlevel',isset($updateData["userlevel"]) ? $updateData["userlevel"] : $this->userlevel);
+        $this->database->bind(':avatar',isset($updateData["avatar"]) ? $updateData["avatar"] : $this->avatar);
+        $this->database->bind(':ip',isset($updateData["ip"]) ? $updateData["ip"] : $this->ip);
+        $this->database->bind(':signup',isset($updateData["signup"]) ? $updateData["signup"] : $this->signup);
+        $this->database->bind(':lastlogin',isset($updateData["lastlogin"]) ? $updateData["lastlogin"] : $this->lastlogin);
+        $this->database->bind(':notescheck',isset($updateData["notescheck"]) ? $updateData["notescheck"] : $this->notescheck);
+        $this->database->bind(':activated',isset($updateData["activated"]) ? $updateData["activated"] : $this->activated);
+        $this->database->bind(':description',isset($updateData["description"]) ? $updateData["description"] : $this->description);
+
+        try {
+            $result = $this->database->execute();
+            $this->loadByUsername($this->username);
+        }catch (PDOException $e) {
+            //Error...
+            return $e;
+        }
     }
 
     protected function loadByUsername( $username ) {
@@ -101,20 +134,25 @@ class User
     }
 
     protected function fill( array $row ) {
+        $this->id = $row["id"];
         $this->rlname = $row["rlname"];
-        $this->username = $row["username"];
         $this->category = $row["category"];
+        $this->username = $row["username"];
+        $this->email = $row["email"];
         $this->location = $row["location"];
         $this->profile_id = $row["id"];
-        $this->gender = $row["gender"] == "m" ? "male" : "female";
+        $this->gender = $row["gender"];
+        $this->website = $row["website"];
         $this->country = $row["country"];
         $this->userlevel = $row["userlevel"];
         $this->avatar = $row["avatar"];
+        $this->ip = $row["ip"];
         $this->signup = $row["signup"];
         $this->lastlogin = $row["lastlogin"];
+        $this->notescheck = $row["notescheck"];
         $this->joindate = $row["signup"];
         $this->lastsession = $row["lastlogin"];
         $this->description = $row["description"];
-        $this->activated = $row["activated"] == 1 ? true : false;
+        $this->activated = $row["activated"];
     }
 }
