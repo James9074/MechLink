@@ -124,5 +124,52 @@ if($friend_count < 1){
         $friendsHTML .= '<a href="user.php?u='.$friend_username.'"><img class="friendpics" src="'.$friend_pic.'" alt="'.$friend_username.'" title="'.$friend_username.'"></a>';
     }
 }
+//HTML STARTS HERE!
+include_once("includes/header.php"); ?>
 
-?>
+<?php include_once("includes/navbar.php"); ?>
+<?php include_once("includes/overlay_edit_name.php"); ?>
+<?php include_once("includes/overlay_edit_location.php"); ?>
+<?php include_once("includes/overlay_edit_status.php"); ?>
+<?php include_once("includes/overlaysshare.php"); ?>
+<?php include_once("includes/overlay_edit_about.php"); ?>
+<?php include_once("includes/overlay_first.php"); ?>
+<?php include_once("includes/overlay_skills.php"); ?>
+<?php include_once("includes/overlay_project.php"); ?>
+<?php include_once("includes/overlay_upload_pics.php"); ?>
+<?php include_once("includes/overlay_post.php"); ?>
+
+
+<div id="container">
+    <div class="gridHeader clearfix">
+        <div id="content">
+            <div id="contentInner">
+                <div id="contentitem3">
+                    <div id="profile_pic_box"><?php echo issetor($profile_pic_btn); ?><?php echo $profile_pic; ?></div>
+                    <div id="standardUpload">
+                        <form id="form" enctype="multipart/form-data" method="post" action="php_parsers/photo_system.php">
+                            <input type="file" name="avatar" required id="FileUpload" onChange="form.submit()">
+                        </form>
+                    </div>
+                    <div id="info_box"> <span class="style3"><?php echo $current_user->rlname; ?><?php echo issetor($rlname_edit_btn); ?></span> <br />
+                        <br />
+            <span class="style4">
+				<?php if($current_user->location != null){
+                    echo $current_user->location;
+                }
+                else{
+                    echo "Where are you?";
+                } ?>
+                <?php echo issetor($location_edit_btn); ?></span><br />
+                        <span class="style4">Status:<?php echo issetor($status_edit_btn); ?></span> </div>
+                    <div id="info_box2">
+                        <?php $show = $isOwner ? 'none' : 'visible'; ?>
+                        <div id="prof_links" style="display:visible;"><a href = "javascript:void(0)" onclick = "ModalOpen('Share');" class="a4">Share&nbsp;<img src="http://www.mechlink.org/images/sharebutton.png" alt="Share" style="margin-top:-5px;"/></a></div>
+                        <div id="prof_links" style="display:<? echo $show; ?>"><a href ="#" class="a4">Send Message</a></div>
+                        <div id="prof_links" style="display:<? echo $show; ?>;"><span id="friendBtn2"><?php echo $friend_button2; ?></span></div>
+                    </div>
+                </div>
+                <div id="contentInner2">
+                    <hr />
+                    <?php include_once("includes/prof_nav.php"); ?>
+                    <div id="main_cont">

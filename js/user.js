@@ -14,6 +14,9 @@ function ModalOpen(type){
     $("#light_edit_about").hide();
     $("#light_select").hide();
     $("#light_skills").hide();
+    $("#light_edit_name").hide();
+    $("#light_edit_status").hide();
+    $("#light_edit_location").hide();
     $("#lightshare").hide();
     $("#light_warning").hide();
     $("#fade").show();
@@ -88,10 +91,9 @@ function UserUploadAbout(first_load){
             url : "user.php",
             type: "POST",
             dataType: 'json',
-            data : {"oper":"EditAbout",description:aboutTest},
+            data : {"oper":"EditUser",description:aboutTest},
             success: function(data, textStatus, jqXHR)
             {
-                console.dir(data);
                 //Close the window. If this is the first load time, restore it.
                 if(first_load) ModalOpen("Select");
 
@@ -110,6 +112,46 @@ function UserUploadAbout(first_load){
             }
         });
     }
+}
+
+function UserUploadRealName(){
+    var rlname = $("#user_rl_name").val();
+    $.ajax({
+        url : "user.php",
+        type: "POST",
+        dataType: 'json',
+        data : {"oper":"EditUser",rlname:rlname},
+        success: function(data, textStatus, jqXHR)
+        {
+            ModalOpen("None");
+            location.reload();
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            console.log("Error: " + errorThrown);
+            console.dir(JSON.parse(jqXHR.responseText).status);
+        }
+    });
+}
+
+function UserUploadLocation(){
+    var userLocation = $("#user_rl_location").val();
+    $.ajax({
+        url : "user.php",
+        type: "POST",
+        dataType: 'json',
+        data : {"oper":"EditUser",location:userLocation},
+        success: function(data, textStatus, jqXHR)
+        {
+            ModalOpen("None");
+            location.reload();
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            console.log("Error: " + errorThrown);
+            console.dir(JSON.parse(jqXHR.responseText).status);
+        }
+    });
 }
 
 $(document).ready(function() {

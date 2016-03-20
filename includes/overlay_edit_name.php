@@ -5,12 +5,12 @@
         <b>Edit your name</b> <br />
         <br />
         <div>
-          <input id="" type="text" class="formfields" spellcheck="false" tabindex="1" onkeyup="restrict('')" maxlength="60" placeholder="<?php echo $rlname; ?>">
+          <input id="user_rl_name" type="text" class="formfields" spellcheck="false" tabindex="1" onkeyup="restrict('')" maxlength="60" placeholder="<?php echo $current_user->rlname; ?>">
         </div>
         <br />
         <br />
-        <button onclick = "document.getElementById('light_edit_name').style.display='none';document.getElementById('fade').style.display='none'" tabindex="2">Post</button>
-        <button onclick = "document.getElementById('light_edit_name').style.display='none';document.getElementById('fade').style.display='none'" tabindex="3">Cancel</button>
+        <button onclick = "UserUploadRealName();" tabindex="2">Post</button>
+        <button onclick = "ModalOpen('None');" tabindex="3">Cancel</button>
         <br />
         <br />
       </div>
