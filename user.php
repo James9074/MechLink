@@ -39,7 +39,7 @@ if(isset($_POST["oper"])) {
 			"award2" => $awards[1],
 			"award3" => $awards[2],
 			"award4" => $awards[3],
-			"skills" => $_POST["automobiletype"],
+			"skills" => $_POST["skills"],
 			"username" => $_SESSION["username"]
 			);
 
@@ -179,15 +179,7 @@ include_once("includes/header.php"); ?>
         </div>
         <div id="contentInner2">
 		<hr />
-		<div align="center">
-			<div id="prof_nav">
-				<div id="prof_nav_item"><a class="a3" href="user.php?u=<?php echo $u; ?>">About</a></div>
-
-				<div id="prof_nav_item"><a class="a3" href="pics.php?u=<?php echo $u; ?>">Pics</a></div>
-
-				<div id="prof_nav_item"><a class="a3" href="friends.php?u=<?php echo $u; ?>">Friends</a></div>
-			</div>
-		</div>
+			<?php include_once("includes/prof_nav.php"); ?>
           <div id="main_cont"> <div id="user_about" descriptionprovided="<? echo $current_user->description == "" ? "false" : "true"; ?>" ><?php echo issetor($about_edit_btn); echo "<span id='user_about_text'>"; echo $current_user->description == "" ? "Tell others about yourself or your business." : nl2br($current_user->description) ?>  </span></div></div>
           <hr />
           <div align="center">

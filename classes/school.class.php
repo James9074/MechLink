@@ -63,6 +63,19 @@ class School
         }
     }
 
+    public function hasDegrees(){
+        if($this->degree1 != "")
+            return true;
+        if($this->degree2 != "")
+            return true;
+        if($this->degree3 != "")
+            return true;
+        if($this->degree4 != "")
+            return true;
+
+        return false;
+    }
+
     protected function fill( array $row ) {
         $this->id = $row['id'];
         $this->name = $row["name"];

@@ -83,7 +83,14 @@
       var school = $("#school_"+i);
       if ($(school).css("display") != "none"){
 
-        var name = $(school).find("#school_name").val()
+        var nameElement = $(school).find("#school_name");
+        var name = $(nameElement).val()
+        if(name.length < 1) {
+          formError = true;
+          ApplyError($(nameElement),true);
+        }
+        else ApplyError($(nameElement),false);
+
         var school_location = $(school).find("#school_location").val()
 
         var attendedfromMonth = $(school).find("#school_attended_from_month").val();
@@ -216,7 +223,7 @@
           <div id="school_1" class="skillset_school_container">
             <b id="school_title">School #1</b>
             <div>
-              <input id="school_name" type="text" class="formfields" spellcheck="false" tabindex="10" onkeyup="restrict('')" maxlength="100" placeholder="Name of school (optional)">
+              <input id="school_name" type="text" class="formfields" spellcheck="false" tabindex="10" onkeyup="restrict('')" maxlength="100" placeholder="Name of school (required)">
             </div>
             <div>
               <input id="school_location" type="text" class="formfields" spellcheck="false" tabindex="11" onkeyup="restrict('')" maxlength="60" placeholder="City + state or location (optional)">

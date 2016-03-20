@@ -18,9 +18,9 @@ class User
     public $lastsession;
     public $description;
     public $activated;
-    public $friends;
-    public $skillsets;
-    public $blockedUsers;
+    private $friends;
+    private $skillsets;
+    private $blockedUsers;
     private $database;
 
     function __construct() {

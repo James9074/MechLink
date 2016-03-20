@@ -31,6 +31,10 @@ if($numrows < 1){
 }
 // Check to see if the viewer is the account owner
 $isOwner = "no";
+$profile_pic_btn = "";
+$rlname_edit_btn = "";
+$category_edit_btn = "";
+$location_edit_btn = "";
 if($u == $log_username && $user_ok == true){
 	$isOwner = "yes";
 	$profile_pic_btn = '<button class="profile_pic_btn" style="display:block;" onclick="triggerUpload(event, \'FileUpload\')"></button>';

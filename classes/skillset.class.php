@@ -65,6 +65,40 @@ class Skillset
         }
     }
 
+    public function getSchools(){
+        if (isset($this->schools))
+            return $this->schools;
+        $this->database->query('SELECT * FROM schools WHERE skillset = :skillset');
+        $this->database->bind(':skillset',$this->id);
+        try {
+            $rows = $this->database->resultset();
+            if($this->database->rowCount() > 0) {
+                $this->schools = [];
+                foreach ($rows as $row) {
+                    array_push($this->schools, School::withID($row['id']));
+                }
+            }
+            else
+                $this->schools = [];
+        }catch (PDOException $e) {
+            //Error..
+        }
+        return $this->schools;
+    }
+
+    public function hasAwards(){
+        if($this->award1 != "")
+            return true;
+        if($this->award2 != "")
+            return true;
+        if($this->award3 != "")
+            return true;
+        if($this->award4 != "")
+            return true;
+
+        return false;
+    }
+
     protected function fill( array $row ) {
         $this->id = $row['id'];
         $this->automobiletype = $row["automobiletype"];

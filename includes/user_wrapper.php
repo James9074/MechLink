@@ -13,6 +13,13 @@ exit();
 $isOwner = false;
 $skill_edit_btn = "";
 $skill_delete_btn = "";
+$profile_pic_btn = "";
+$rlname_edit_btn = "";
+$category_edit_btn = "";
+$location_edit_btn = "";
+$status_edit_btn = "";
+$project_edit_btn = "";
+$project_delete_btn = "";
 if($log_username == $current_user->username && $user_ok == true){
     $isOwner = true;
     $profile_pic_btn = '<button class="profile_pic_btn" style="display:block;" onclick="triggerUpload(event, \'FileUpload\')"></button>';
@@ -23,6 +30,9 @@ if($log_username == $current_user->username && $user_ok == true){
     $about_edit_btn = '<button class="about_edit_btn" style="display:block;" onclick = "ModalOpen(\'EditAbout\');"></button>';
     $skill_edit_btn = '<button class="skill_edit_btn" style="display:block;" onclick = "document.getElementById(\'light_skills\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
     $skill_delete_btn = '<button onclick = "document.getElementById(\'light_delete_skillset\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'">Delete</button>';
+    $project_edit_btn = '<button class="project_edit_btn" style="display:block;" onclick = "document.getElementById(\'light_project\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
+    $project_delete_btn = '<button onclick = "document.getElementById(\'light_delete_project\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'">Delete</button>';
+
 }
 
 //========== Set profile pic ==========//
@@ -70,7 +80,7 @@ if($viewerBlockOwner == true){
 
 //========== Showing up to 6 friends of the current profile ==========//
 $friend_count = sizeof($current_user->getFriends());
-$friends_view_all_link = '';
+$friends_view_all_link = "";
 $friendsHTML = '';
 if($friend_count < 1){
     $friendsHTML = '<span class="style2">'.$current_user->rlname.' has no friends';

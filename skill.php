@@ -88,6 +88,18 @@ function triggerUpload(event,elem){
 	document.getElementById(elem).click();	
 }
 </script>
+<style>
+	.data_section{
+		border-top: 1px solid #E0E0E0;
+		background-color: #F7F7F7;
+		padding: 0px 10px 1px 10px;
+	}
+
+	.section_header{
+		font-weight:bold;
+		font-size: 1.2em;
+	}
+</style>
 </head>
 
 <body>
@@ -143,19 +155,53 @@ else {
           <?php include_once("includes/prof_nav.php"); ?>
           <div id="main_cont"> <?php echo $skill_edit_btn; ?> <?php echo $skill_delete_btn; ?> <br />
             <br />
-            <b>Restoration Project</b>
-            <p>Type of automobile: <?php echo $skillset->automobiletype; ?></p>
-            City + state or location: <?php echo $skillset->location; ?>
-            <p>Restored from: <?php echo $skillset->restoredfrom; ?> - <?php echo $skillset->restoredto; ?></p>
-            Award
-            <p><b>Specific Skills</b></p>
-			  <?php echo $skillset->skills; ?>
-            <p><b>Education & Training</b></p>
-            Name of school
-            <p>City + state or location</p>
-            Attended from: 01/01/1998 - 01/01/2000
-            <p>Degree</p>
-            Awards </div>
+            <p class="section_header">Restoration Project</p>
+		    <div class="data_section">
+				<p>Type of automobile: <?php echo $skillset->automobiletype; ?></p>
+				City + state or location: <?php echo $skillset->location; ?>
+				<p>Restored from: <?php echo $skillset->restoredfrom; ?> - <?php echo $skillset->restoredto; ?></p>
+				<?php if($skillset->hasAwards()){ ?>
+				<p>Awards:
+					<ul>
+						<?php if($skillset->award1 != null) echo "<li>".$skillset->award1."</li>"; ?>
+						<?php if($skillset->award2 != null) echo "<li>".$skillset->award2."</li>"; ?>
+						<?php if($skillset->award3 != null) echo "<li>".$skillset->award3."</li>"; ?>
+						<?php if($skillset->award4 != null) echo "<li>".$skillset->award4."</li>"; ?>
+					</ul>
+				</p>
+				<?php } ?>
+			</div>
+            <p class="section_header">Specific Skills</p>
+			  <div class="data_section">
+			  	<p><?php echo $skillset->skills; ?></p>
+			  </div>
+			  <p class="section_header"> Education & Training</p>
+			  <?php
+				foreach($skillset->getSchools() as $school){ ?>
+					<div class="data_section">
+						<p><b>Name of School:</b> <?php echo $school->name; ?></p>
+						<?php if($school->location != null) echo "<p>Location: ". $school->location."</p>"; ?>
+						<?php if($school->attendedfrom != null || $school->attendedto != null)
+							echo "<p>Attended: ". $school->attendedfrom." - ".$school->attendedto."</p>"; ?>
+
+						<?php if($school->hasDegrees()){ ?>
+							<p>Degrees:
+							<ul>
+								<?php if($school->degree1 != null) echo "<li>".$school->degree1."</li>"; ?>
+								<?php if($school->degree2 != null) echo "<li>".$school->degree2."</li>"; ?>
+								<?php if($school->degree3 != null) echo "<li>".$school->degree3."</li>"; ?>
+								<?php if($school->degree4 != null) echo "<li>".$school->degree4."</li>"; ?>
+							</ul>
+							</p>
+						<?php } ?>
+
+						<?php if($school->awards != null) echo "<p>Awards: ". $school->awards."</p>"; ?>
+
+					</div>
+			  <?php } if(sizeof($skillset->getSchools()) == 0){
+				  echo '<div class="data_section"><p>This skillset has no connected schools</p></div>';
+			  } ?>
+		  </div>
           <hr />
           <div align="center">
             <div id="section_header"> <span class="style2"> Friends <?php echo "(".$friend_count.")"; ?>&nbsp;&nbsp;<?php echo $friends_view_all_link; ?> </span>
