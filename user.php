@@ -45,6 +45,7 @@ if(isset($_POST["oper"])) {
 
 		try {
 			$createdSkillset = Skillset::createNew($newSkillset);
+			$returnData["newSkillset"] = $createdSkillset;
 			foreach($schools as $school){
 				$degrees = $school->degrees;
 				$newSchool = array(
@@ -73,11 +74,15 @@ if(isset($_POST["oper"])) {
 include_once("includes/user_wrapper.php");
 
 //HTML STARTS HERE!
-include_once("includes/header.php");
-?>
+include_once("includes/header.php"); ?>
+	<meta name="Description" content="This is <?php echo $current_user->rlname; ?>'s Mechlink profile.">
+	<title><?php echo $current_user->rlname; ?> • MechLink"</title>
+	<script src="js/user.js"></script>
+</head>
+
+<body>
 <script type="text/javascript">
 	$(function(){
-		document.title = "<?php echo $current_user->rlname; ?> • MechLink";
 		<? if($log_username == $current_user->username){?>
 		if($("#user_about").attr("descriptionprovided") == 'false') {
 			UserConfigureInitialProfileSetup();

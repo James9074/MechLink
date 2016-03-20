@@ -13,26 +13,7 @@ if(isset($_POST["oper"])) {
 	$database = new Database();
 	header('Content-Type: application/json');
 	if ($oper == "AddSkillset") {
-		$awards = json_decode($_POST["awards"], true);
-		$newSkillset = array(
-			"automobiletype" => $_POST["automobiletype"],
-			"location" => $_POST["location"],
-			"restoredfrom" => $_POST["restoredfrom"],
-			"restoredto" => $_POST["restoredto"],
-			"award1" => $awards[0],
-			"award2" => $awards[1],
-			"award3" => $awards[2],
-			"award4" => $awards[3],
-			"skills" => $_POST["automobiletype"],
-			"username" => $_SESSION["username"],
-		);
-		try {
-			$createdSkillset = Skillset::createNew($newSkillset);
-			print json_encode($createdSkillset);
-		}catch (PDOException $e) {
-			header('HTTP/1.1 500 Internal Server Error');
-			die(json_encode(array('status' => 'DB Error', 'error' => $e)));
-		}
+
 	}
 	exit();
 }
@@ -48,35 +29,17 @@ foreach($current_user->getSkillsets() as $skillset){
 
 	$skillsetHTML .=  '<hr />';
 }
+if($skillsetHTML == ""){
+	$skillsetHTML = "<p style='text-align:center;font-weight:bold'>Sorry, this user has no uploaded skillsets.</p>";
+}
 include_once("includes/headerphpcode.php");
-?>
-<!doctype html>
-<!--[if lt IE 7]> <html class="ie6 oldie"> <![endif]-->
-<!--[if IE 7]>    <html class="ie7 oldie"> <![endif]-->
-<!--[if IE 8]>    <html class="ie8 oldie"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="">
-<!--<![endif]-->
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow, noarchive" />
-<meta name="Description" content="This is <?php echo $rlname; ?>'s Mechlink profile.">
-<title><?php echo $current_user->rlname; ?> • Mechlink</title>
-<link href="http://www.mechlink.org/styles/boilerplate.css" rel="stylesheet" type="text/css">
-<link href="http://www.mechlink.org/styles/common.css" rel="stylesheet" type="text/css">
-<link href="http://www.mechlink.org/styles/mainuser.css" rel="stylesheet" type="text/css">
-<link href="http://www.mechlink.org/styles/textusr.css" rel="stylesheet" type="text/css">
-<link rel="shortcut icon" href="http://www.mechlink.org/images/favicon.ico?v=2" type="image/x-icon">
-<link rel="icon" href="http://www.mechlink.org/images/favicon.ico" type="image/x-icon">
-<script type="text/javascript" src="https://ws.sharethis.com/button/buttons.js"></script>
-<script type="text/javascript">stLight.options({publisher: "d7ff69d9-2897-4dc9-ac03-f66f1c76496f", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
-<script src="respond.min.js"></script>
-<script language="javascript" type="text/javascript">
-var dateObject=new Date();
-</script>
-<script src="http://www.mechlink.org/js/main.js"></script>
-<script src="http://www.mechlink.org/js/ajax.js"></script>
+
+//HTML STARTS HERE!
+include_once("includes/header.php"); ?>
+	<meta name="Description" content="This is <?php echo $current_user->rlname; ?>'s Mechlink profile.">
+	<title><?php echo $current_user->rlname; ?> • MechLink"</title>
+	<script src="js/user.js"></script>
+</head>
 <script type="text/javascript">
 function friendToggle(type,user,elem){
 	var conf = confirm("Press OK to "+type+" <?php echo $current_user->rlname; ?>.");

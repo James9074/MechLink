@@ -19,3 +19,4 @@ function ShowLoading(aObj){
 function HideLoading(aObj){
 	aObj.find(".Loader").remove();
 }
+
