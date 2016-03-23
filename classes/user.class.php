@@ -25,6 +25,7 @@ class User
     public $activated;
     private $friends;
     private $skillsets;
+    private $projects;
     private $blockedUsers;
     private $database;
 
@@ -131,6 +132,27 @@ class User
             //Error..
         }
         return $this->skillsets;
+    }
+
+    public function getProjects(){
+        if (isset($this->projects))
+            return $this->projects;
+        $this->database->query('SELECT id FROM projects WHERE username = :username');
+        $this->database->bind(':username',$this->username);
+        try {
+            $rows = $this->database->resultset();
+            if($this->database->rowCount() > 0) {
+                $this->projects = [];
+                foreach ($rows as $row) {
+                    array_push($this->projects, Project::withID($row['id']));
+                }
+            }
+            else
+                $this->projects = [];
+        }catch (PDOException $e) {
+            //Error..
+        }
+        return $this->projects;
     }
 
     protected function fill( array $row ) {
