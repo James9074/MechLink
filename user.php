@@ -1,8 +1,8 @@
 <?
 session_start();
-include_once("includes/check_login_status.php");
-include_once("includes/db_conn.php");
-include_once("includes/headerphpcode.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/check_login_status.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/db_conn.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/headerphpcode.php");
 
 
 // AJAX CALLS
@@ -37,19 +37,50 @@ if(isset($_POST["oper"])) {
 			header('HTTP/1.1 500 Internal Server Error');
 			die(json_encode(array('status' => 'DB Error', 'error' => $e)));
 		}
-	} else if ($oper == "AddProject") {
+	} else if ($oper == "AddOrEditProject") {
 		CheckSession();
 		$newProject = array(
+			"id" => $_POST["id"],
 			"automobiletype" => $_POST["automobiletype"],
 			"location" => $_POST["location"],
 			"details" => $_POST["details"],
 			"skills" => $_POST["skills"],
 			"username" => $_SESSION["username"]
 		);
-
 		try {
-			$createdProject = Project::createNew($newProject);
-			$returnData["newProject"] = $createdProject;
+			if($newProject['id'] != null) {
+				$createdProject = Project::withID($newProject['id']);
+				$createdProject->update($newProject);
+			}
+			else
+				$createdProject = Project::createNew($newProject);
+
+			$returnData["project"] = $createdProject;
+			print json_encode($returnData);
+		}catch (PDOException $e) {
+			header('HTTP/1.1 500 Internal Server Error');
+			die(json_encode(array('status' => 'DB Error', 'error' => $e)));
+		}
+	} else if ($oper == "GetProject") {
+		try {
+			$project = Project::withID($_POST["id"]);
+			$returnData["project"] = $project;
+			print json_encode($returnData);
+		}catch (PDOException $e) {
+			header('HTTP/1.1 500 Internal Server Error');
+			die(json_encode(array('status' => 'DB Error', 'error' => $e)));
+		}
+	} else if ($oper == "DeleteProject") {
+		CheckSession();
+		try {
+			$project = Project::withID($_POST["id"]);
+			if($_SESSION["username"] != $project->username){
+				header('HTTP/1.1 500 Internal Server Error');
+				die(json_encode(array('status' => 'Authorization Error', 'error' => 'You do not own this skillset!')));
+			} else {
+				$returnData["username"] = $project->username;
+				$project->delete();
+			}
 			print json_encode($returnData);
 		}catch (PDOException $e) {
 			header('HTTP/1.1 500 Internal Server Error');
@@ -75,8 +106,8 @@ if(isset($_POST["oper"])) {
 			);
 
 		try {
-			if(isset($newSkillset->id)) {
-				$createdSkillset = Skillset::withID($newSkillset->id);
+			if($newSkillset['id'] != null) {
+				$createdSkillset = Skillset::withID($newSkillset['id']);
 				$createdSkillset->update($newSkillset);
 			}
 			else
@@ -97,8 +128,8 @@ if(isset($_POST["oper"])) {
 					"degree4" => $degrees[3],
 					"skillset" => $createdSkillset->id
 				);
-				if(isset($newSchool->id)) {
-					$createdSchool = School::withID($newSchool->id);
+				if($newSchool['id'] != null) {
+					$createdSchool = School::withID($newSchool['id']);
 					$createdSchool->update($newSchool);
 				}
 				else
@@ -134,6 +165,22 @@ if(isset($_POST["oper"])) {
 			header('HTTP/1.1 500 Internal Server Error');
 			die(json_encode(array('status' => 'DB Error', 'error' => $e)));
 		}
+	} else if ($oper == "AddProjectPictures"){
+		CheckSession();
+		try {
+			$newPictures = array(
+				"galleryID" => $_POST['galleryID'],
+				"files" => $_POST['files']
+			);
+			$returnData['files'] = $newPictures;
+			print json_encode($returnData);
+		}catch (PDOException $e) {
+			header('HTTP/1.1 500 Internal Server Error');
+			die(json_encode(array('status' => 'DB Error', 'error' => $e)));
+		}
+	} else{
+		header('HTTP/1.1 500 Internal Server Error: Oper Not Found');
+		die(json_encode(array('status' => 'Oper not found', 'error' => $e)));
 	}
 	exit();
 }
@@ -145,7 +192,7 @@ function CheckSession(){
 	}
 }
 
-include_once("includes/user_wrapper.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/user_wrapper.php");
 
 ?>
 
@@ -161,7 +208,7 @@ include_once("includes/user_wrapper.php");
             </div>
           </div>
           <hr />
-          <?php include_once("includes/footer.php"); ?>
+          <?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/footer.php"); ?>
         </div>
         <!--contentInner2-->
 
@@ -178,7 +225,7 @@ include_once("includes/user_wrapper.php");
 <br />
 <br />
 <br />
-<?php include_once("includes/footer_over.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/footer_over.php"); ?>
 </body>
 </html>
 

@@ -1,8 +1,8 @@
 <?php
 session_start();
-include_once("includes/check_login_status.php");
-include_once("includes/db_conn.php");
-include_once("includes/headerphpcode.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/check_login_status.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/db_conn.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/headerphpcode.php");
 
 // AJAX CALLS
 if(isset($_POST["oper"])) {
@@ -32,7 +32,12 @@ else{
 	exit();
 }
 
-include_once("includes/user_wrapper.php");
+if($project->username != $_GET['u']) {
+	header("location: http://www.mechlink.org/project.php?u=".$project->username."&id=".$project->id);
+	exit();
+}
+
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/user_wrapper.php");
 ?>
           
           <div style="float:left;"><?php echo $project_edit_btn; ?></div>
@@ -45,7 +50,7 @@ include_once("includes/user_wrapper.php");
 				  <img src="/images/<?php echo $picture->filename; ?>" style="max-height:101px; max-width:180px; display:inline-block; vertical-align:middle; margin-bottom:5px;"/>
 			  <?php } ?>
 			  <br/>
-			  <button tabindex="5" onclick = "document.getElementById('lightupload_pics').style.display='block';document.getElementById('fade').style.display='block'">Add photos</button>
+			  <button tabindex="5" onclick = "PrepPicsUpload();">Add photos</button>
 		  </div>
 
 		  <p class="section_header">Restoration Project</p>
@@ -78,7 +83,7 @@ include_once("includes/user_wrapper.php");
             </div>
           </div>
           <hr />
-          <?php include_once("includes/footer.php"); ?>
+          <?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/footer.php"); ?>
         </div>
         <!--contentInner2--> 
         
@@ -95,6 +100,6 @@ include_once("includes/user_wrapper.php");
 <br />
 <br />
 <br />
-<?php include_once("includes/footer_over.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/footer_over.php"); ?>
 </body>
 </html>

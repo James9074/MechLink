@@ -1,5 +1,5 @@
 <?php
-include_once("includes/check_login_status.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/check_login_status.php");
 // If user is already logged in, header that person away
 if($user_ok == true){
 	header("location: user.php?u=".$_SESSION["username"]);
@@ -7,7 +7,7 @@ if($user_ok == true){
 }
 ?>
 <?php
-include_once("includes/headerphpcode.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/headerphpcode.php");
 ?>
 <?php
 // AJAX CALLS THIS CODE TO EXECUTE
@@ -129,7 +129,7 @@ function forgotpass(){
 </head>
 
 <body>
-<?php include_once("includes/navbar.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/navbar.php"); ?>
 <div id="container">
   <div class="gridHeader clearfix">
     <div align="center">
@@ -161,6 +161,6 @@ function forgotpass(){
 
 <br />
 <br />
-<?php include_once("includes/footer.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/footer.php"); ?>
 </body>
 </html>

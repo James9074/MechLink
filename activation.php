@@ -1,7 +1,7 @@
 <?php
 if (isset($_GET['id']) && isset($_GET['u']) && isset($_GET['e']) && isset($_GET['p'])) {
 	// Connect to database and sanitize incoming $_GET variables
-    include_once("includes/db_conx.php");
+    include_once($_SERVER['DOCUMENT_ROOT']."/includes/db_conx.php");
     $id = preg_replace('#[^0-9]#i', '', $_GET['id']); 
 	$u = preg_replace('#[^a-z0-9]#i', '', $_GET['u']);
 	$e = mysqli_real_escape_string($db_conx, $_GET['e']);

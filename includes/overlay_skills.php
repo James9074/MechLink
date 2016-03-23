@@ -12,6 +12,12 @@
     }
   }
 
+  function HideSchools(){
+    for(var i=0; i < 5; i++){
+      $("#school_"+i).hide();
+    }
+  }
+
   function AddSchool(){
     for(var i=0; i < 5; i++){
       if ($("#school_"+i).css("display") == "none"){
@@ -67,7 +73,6 @@
     });
   }
 
-
   function EditSkill(){
     var id = "<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>";
     if(id != "") {
@@ -118,6 +123,7 @@
 
         $("#skillset_skills").val(data['skillset'].skills);
 
+        HideSchools();
         for(var i=1; i <= data['skillset'].schools.length;i++){
           AddSchool();
           var schoolData = data['skillset'].schools[i-1];

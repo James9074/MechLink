@@ -1,8 +1,8 @@
 <?php
 session_start();
-include_once("includes/check_login_status.php");
-include_once("includes/db_conn.php");
-include_once("includes/headerphpcode.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/check_login_status.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/db_conn.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/headerphpcode.php");
 
 // AJAX CALLS
 if(isset($_POST["oper"])) {
@@ -37,7 +37,7 @@ if($skillset->username != $_GET['u']) {
 	exit();
 }
 
-include_once("includes/user_wrapper.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/user_wrapper.php");
 
 
 ?>
@@ -104,7 +104,7 @@ include_once("includes/user_wrapper.php");
             </div>
           </div>
           <hr />
-          <?php include_once("includes/footer.php"); ?>
+          <?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/footer.php"); ?>
         </div>
         <!--contentInner2-->
 
@@ -121,6 +121,6 @@ include_once("includes/user_wrapper.php");
 <br />
 <br />
 <br />
-<?php include_once("includes/footer_over.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/footer_over.php"); ?>
 </body>
 </html>/html>

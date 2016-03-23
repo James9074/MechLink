@@ -1,8 +1,77 @@
 <script>
+
+  function EditProject(){
+    var id = "<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>";
+    if(id != "") {
+      PrepProjectEdit(id);
+      ModalOpen("Project");
+    }
+  }
+
+  function PrepProjectEdit(aID){
+    if(typeof aID == "undefined") aID = -1;
+    $.ajax({
+      url : "user.php",
+      type: "POST",
+      dataType: 'json',
+      data : {"oper":"GetProject",id:aID},
+      success: function(data, textStatus, jqXHR){
+        console.dir(data);
+        if(data['project'].id == null){
+          $("#project_id").val("");
+          return;
+        }
+
+        $("#project_id").val(aID);
+        $("#project_type").val(data['project'].automobiletype);
+        $("#project_location").val(data['project'].location);
+        $("#project_details").val(data['project'].details);
+        $("#project_skills").val(data['project'].skills);
+      },
+      error: function (jqXHR, textStatus, errorThrown){
+        if(DEBUG) {
+          console.log(errorThrown + ": ");
+          console.log(JSON.parse(jqXHR.responseText));
+        }
+      }
+    });
+  }
+
+
+
+  function PromptDeleteProject(){
+    var id = "<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>";
+    if(id != "") {
+      ModalOpen("Warning");
+      $("#light_warning").find("#warning_question").html("Are you sure you want to delete this project?");
+      $("#light_warning").find("#yesButton").attr("onclick","DeleteProject("+id+");");
+    }
+  }
+
+  function DeleteProject(aID){
+    $.ajax({
+      url : "user.php",
+      type: "POST",
+      dataType: 'json',
+      data : {"oper":"DeleteProject",id:aID},
+      success: function(data, textStatus, jqXHR) {
+        var newLoc = "http://www.mechlink.org/projects.php?u="+data['username'];
+        window.location.href = newLoc;
+      },
+      error: function (jqXHR, textStatus, errorThrown){
+        if(DEBUG) {
+          console.log(errorThrown + ": ");
+          console.log(JSON.parse(jqXHR.responseText));
+        }
+      }
+    });
+  }
+
   function UploadNewProject(){
     var formError = false;
     $("#project_error_message").html("");
 
+    var id = $("#project_id").val();
     var type = $("#project_type").val();
     var projectLocation = $("#project_location").val();
     var details = $("#project_details").val();
@@ -40,9 +109,9 @@
         url : "user.php",
         type: "POST",
         dataType: 'json',
-        data : {"oper":"AddProject",automobiletype:type,location:projectLocation, details:details, skills:skills},
+        data : {"oper":"AddOrEditProject",id:id,automobiletype:type,location:projectLocation, details:details, skills:skills},
         success: function(data, textStatus, jqXHR){
-          var newLoc = "http://www.mechlink.org/project.php?u="+data['newProject'].username+"&id="+data['newProject'].id;
+          var newLoc = "http://www.mechlink.org/project.php?u="+data['project'].username+"&id="+data['project'].id;
           window.location.href = newLoc;
           return;
           //ModalOpen("None");
@@ -62,6 +131,7 @@
   <div align="center">
     <div id="boxform">
       <div id="form"> <br />
+        <input id="project_id" type="hidden">
         <span id="project_title"><b>Describe your project</b></span> <br />
         <br />
         <div>

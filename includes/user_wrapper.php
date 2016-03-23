@@ -125,19 +125,19 @@ if($friend_count < 1){
     }
 }
 //HTML STARTS HERE!
-include_once("includes/header.php"); ?>
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/header.php"); ?>
 
-<?php include_once("includes/navbar.php"); ?>
-<?php include_once("includes/overlay_edit_name.php"); ?>
-<?php include_once("includes/overlay_edit_location.php"); ?>
-<?php include_once("includes/overlay_edit_status.php"); ?>
-<?php include_once("includes/overlaysshare.php"); ?>
-<?php include_once("includes/overlay_edit_about.php"); ?>
-<?php include_once("includes/overlay_first.php"); ?>
-<?php include_once("includes/overlay_skills.php"); ?>
-<?php include_once("includes/overlay_project.php"); ?>
-<?php include_once("includes/overlay_upload_pics.php"); ?>
-<?php include_once("includes/overlay_post.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/navbar.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_edit_name.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_edit_location.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_edit_status.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlaysshare.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_edit_about.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_first.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_skills.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_project.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_upload_pics.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_post.php"); ?>
 
 
 <div id="container">
@@ -171,5 +171,5 @@ include_once("includes/header.php"); ?>
                 </div>
                 <div id="contentInner2">
                     <hr />
-                    <?php include_once("includes/prof_nav.php"); ?>
+                    <?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/prof_nav.php"); ?>
                     <div id="main_cont">

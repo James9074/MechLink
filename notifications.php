@@ -1,5 +1,5 @@
 <?php
-include_once("includes/check_login_status.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/check_login_status.php");
 // If the page requestor is not logged in, usher them away
 if($user_ok != true || $log_username == ""){
 	header("location: http://www.mechlink.org");
@@ -55,7 +55,7 @@ if($numrows < 1){
 }
 ?>
 <?php
-include_once("includes/headerphpcode.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/headerphpcode.php");
 ?>
 <!doctype html>
 <!--[if lt IE 7]> <html class="ie6 oldie"> <![endif]-->
@@ -106,10 +106,10 @@ function friendReqHandler(action,reqid,user1,elem){
 </head>
 
 <body>
-<?php include_once("includes/navbar.php"); ?>
-<?php include_once("includes/overlay_skills.php"); ?>
-<?php include_once("includes/overlay_project.php"); ?>
-<?php include_once("includes/overlay_post.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/navbar.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_skills.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_project.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_post.php"); ?>
 <div id="container">
   <div class="gridHeader clearfix">
     <div id="contentNotes">

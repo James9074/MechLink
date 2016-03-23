@@ -1,5 +1,5 @@
 <?php
-include_once("includes/check_login_status.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/check_login_status.php");
 // If user is already logged in, header them away
 if($user_ok == true){
 	header("location: user.php?u=".$_SESSION["username"]);
@@ -75,7 +75,7 @@ var dateObject=new Date();
 </head>
 
 <body>
-<?php include_once("includes/headeractivation.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/headeractivation.php"); ?>
 <div align="center">
   <div id="container">
     <div class="gridHeader clearfix">

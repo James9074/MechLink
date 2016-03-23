@@ -1,5 +1,5 @@
 <?php
-include_once("includes/db_conn.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/db_conn.php");
 
 class Photo
 {

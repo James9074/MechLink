@@ -1,5 +1,5 @@
 <?php
-include_once("includes/check_login_status.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/check_login_status.php");
 // Initialize any variables that the page might echo
 $rlname = "";
 $category = "";
@@ -158,7 +158,7 @@ if($friend_count < 1){
 }
 ?>
 <?php
-include_once("includes/headerphpcode.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/headerphpcode.php");
 ?>
 <!doctype html>
 <!--[if lt IE 7]> <html class="ie6 oldie"> <![endif]-->
@@ -241,17 +241,17 @@ function triggerUpload(event,elem){
 </head>
 
 <body>
-<?php include_once("includes/navbar.php"); ?>
-<?php include_once("includes/overlay_edit_name.php"); ?>
-<?php include_once("includes/overlay_edit_location.php"); ?>
-<?php include_once("includes/overlay_edit_status.php"); ?>
-<?php include_once("includes/overlaysshare.php"); ?>
-<?php include_once("includes/overlay_edit_about.php"); ?>
-<?php include_once("includes/overlay_skills.php"); ?>
-<?php include_once("includes/overlay_project.php"); ?>
-<?php include_once("includes/overlay_upload_pics.php"); ?>
-<?php include_once("includes/overlay_delete_project.php"); ?>
-<?php include_once("includes/overlay_post.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/navbar.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_edit_name.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_edit_location.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_edit_status.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlaysshare.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_edit_about.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_skills.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_project.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_upload_pics.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_delete_project.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_post.php"); ?>
 <div id="container">
   <div class="gridHeader clearfix">
     <div id="content">
@@ -291,7 +291,7 @@ else {
         </div>
         <div id="contentInner2">
           <hr />
-          <?php include_once("includes/prof_nav.php"); ?>
+          <?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/prof_nav.php"); ?>
           <div id="main_cont"> 
           
           <?php echo $project_edit_btn; ?>
@@ -341,7 +341,7 @@ else {
             </div>
           </div>
           <hr />
-          <?php include_once("includes/footer.php"); ?>
+          <?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/footer.php"); ?>
         </div>
         <!--contentInner2--> 
         
@@ -358,6 +358,6 @@ else {
 <br />
 <br />
 <br />
-<?php include_once("includes/footer_over.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/footer_over.php"); ?>
 </body>
 </html>

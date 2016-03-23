@@ -9,7 +9,7 @@ error_reporting(-1);
 
 spl_autoload_register(function($className)
 {
-	$class="classes/".strtolower($className).".class.php";
+	$class=$_SERVER['DOCUMENT_ROOT']."/classes/".strtolower($className).".class.php";
 	include_once($class);
 });
 

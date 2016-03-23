@@ -7,5 +7,7 @@
         <div id="prof_nav_item"><a class="a3" href="friends.php?u=<?php echo $u; ?>">Friends</a></div>
 
         <div id="prof_nav_item"><a class="a3" href="skills.php?u=<?php echo $u; ?>">Skillsets</a></div>
+
+        <div id="prof_nav_item"><a class="a3" href="projects.php?u=<?php echo $u; ?>">Projects</a></div>
     </div>
 </div>

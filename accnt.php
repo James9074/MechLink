@@ -1,5 +1,5 @@
 <?php
-include_once("includes/check_login_status.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/check_login_status.php");
 // Initialize any variables that the page might echo
 $rlname = "";
 $location = "";
@@ -66,7 +66,7 @@ if($avatar == NULL){
 }
 ?>
 <?php
-include_once("includes/headerphpcode.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/headerphpcode.php");
 ?>
 <!doctype html>
 <!--[if lt IE 7]> <html class="ie6 oldie"> <![endif]-->
@@ -125,10 +125,10 @@ var dateObject=new Date();
 </head>
 
 <body>
-<?php include_once("includes/navbar.php"); ?>
-<?php include_once("includes/overlay_skills.php"); ?>
-<?php include_once("includes/overlay_project.php"); ?>
-<?php include_once("includes/overlay_post.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/navbar.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_skills.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_project.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_post.php"); ?>
 <div id="container">
   <div class="gridHeader clearfix">
     <div id="contentAccnt">
@@ -234,6 +234,6 @@ var dateObject=new Date();
 <br />
 <br />
 <br />
-<?php include_once("includes/footer_over.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/footer_over.php"); ?>
 </body>
 </html>

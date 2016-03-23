@@ -1,5 +1,5 @@
 <?php
-include_once("includes/db_conn.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/db_conn.php");
 
 class Project
 {
@@ -41,6 +41,37 @@ class Project
         $instance = new self();
         $instance->loadByID( $id );
         return $instance;
+    }
+
+    public function update($updateData){
+        $this->database->query('UPDATE projects SET automobiletype = :automobiletype, location = :location, details = :details, skills = :skills, gallery = :gallery WHERE id = :id');
+        $this->database->bind(':id', $this->id);
+        $this->database->bind(':automobiletype',isset($updateData["automobiletype"]) ? $updateData["automobiletype"] : $this->automobiletype);
+        $this->database->bind(':location',isset($updateData["location"]) ? $updateData["location"] : $this->location);
+        $this->database->bind(':details',isset($updateData["details"]) ? $updateData["details"] : $this->details);
+        $this->database->bind(':skills',isset($updateData["skills"]) ? $updateData["skills"] : $this->skills);
+        $this->database->bind(':gallery',isset($updateData["gallery"]) ? $updateData["gallery"] : $this->gallery);
+
+        try {
+            $result = $this->database->execute();
+            $this->loadByID($this->id);
+        }catch (PDOException $e) {
+            //Error...
+            return $e;
+        }
+    }
+
+    public function delete(){
+        $this->database->query('DELETE from projects WHERE id = :id');
+        $this->database->bind(':id',$this->id);
+
+        try {
+            $result = $this->database->execute();
+            return true;
+        }catch (PDOException $e) {
+            //Error...
+            return $e;
+        }
     }
 
     protected function loadByID( $id ) {

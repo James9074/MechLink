@@ -1,5 +1,5 @@
 <?php
-include_once("includes/db_conn.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/db_conn.php");
 
 class School
 {
@@ -66,7 +66,7 @@ class School
 
         try {
             $result = $this->database->execute();
-            loadByID($this->id);
+            $this->loadByID($this->id);
         }catch (PDOException $e) {
             //Error...
             return $e;

@@ -1,5 +1,9 @@
 <?php
-include_once("../includes/check_login_status.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/check_login_status.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/db_conn.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/headerphpcode.php");
+
+
 ?><?php
 if (isset($_POST["show"]) && $_POST["show"] == "galpics"){
 	$picstring = "";
@@ -22,6 +26,12 @@ if (isset($_POST["show"]) && $_POST["show"] == "galpics"){
 ?><?php
 if($user_ok != true || $log_username == "") {
 	exit();
+}else{
+	$current_user = User::withUsername(issetor($log_username,true));
+	if(!(bool)$current_user->activated){
+		header("location: http://www.mechlink.org/404");
+		exit();
+	}
 }
 ?><?php 
 if (isset($_FILES["avatar"]["name"]) && $_FILES["avatar"]["tmp_name"] != ""){
@@ -122,6 +132,7 @@ if (isset($_FILES["photo"]["name"]) && isset($_POST["gallery"])){
 	$sql = "INSERT INTO photos(user, gallery, filename, uploaddate) VALUES ('$log_username','$gallery','$db_file_name',now())";
 	$query = mysqli_query($db_conx, $sql);
 	mysqli_close($db_conx);
+
 	header("location: ../photos.php?u=$log_username");
 	exit();
 }

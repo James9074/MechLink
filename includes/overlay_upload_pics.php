@@ -1,23 +1,92 @@
+<script>
+
+  $(function(){
+    if (window.FormData) {
+      formdata = new FormData();
+      //
+    }
+  });
+  function PrepPicsUpload() {
+    var id = "<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>";
+    if (id != "") {
+      $("#galleryID").val(id);
+      ModalOpen("Pics");
+    }
+  }
+
+  function showUploadedItem (source) {
+    var list = document.getElementById("previewPictures"),
+        li   = document.createElement("li"),
+        img  = document.createElement("img");
+    img.src = source;
+    li.appendChild(img);
+    list.appendChild(li);
+  }
+
+  function UploadProjectPictures(){
+    $("#uploadImg").hide();
+
+    var files = new FormData($('#picsForm'));
+    //append files
+    var file = document.getElementById('photo').files[0];
+    if (file) {
+      files.append('upload-image', file);
+    }
+    var galleryID = 1;
+    $("#previewPictures").html();
+    ShowLoading($("#pic_upload_loading"));
+    $.ajax({
+      url : "pictures.php",
+      type: "POST",
+      dataType: 'json',
+      contentType: false,
+      processData: false,
+      cache: false,
+      data : {files},
+      success: function(data, textStatus, jqXHR){
+        console.dir(data);
+        HideLoading($("#pic_upload_loading"));
+        return;
+        //ModalOpen("None");
+
+      },
+      error: function (jqXHR, textStatus, errorThrown){
+        if(DEBUG) {
+          console.log(errorThrown + ": ");
+          console.log(JSON.parse(jqXHR.responseText));
+        }
+        HideLoading($("#pic_upload_loading"));
+      }
+    });
+  }
+</script>
+
 <div id="lightupload_pics" class="white_content_upload">
   <div align="center">
     <div id="boxform">
-      <div id="form_upload_overlay"> <a href = "javascript:void(0)" onclick = "document.getElementById('lightupload_pics').style.display='none';document.getElementById('fade').style.display='none'"><img src="images/x.png" style="height: auto; width: 100%; max-height: 30px; max-width: 30px;"/></a> <br />
+      <div id="form_upload_overlay"> <a href = "javascript:void(0)" onclick = "ModalOpen('None');"><img src="images/x.png" style="height: auto; width: 100%; max-height: 30px; max-width: 30px;"/></a> <br />
         <br />
         <br />
-        <img src="http://www.mechlink.org/images/upload_img.png" style="cursor:pointer; height:auto; width:auto; max-height:113px; max-width:113px;" onclick="triggerUpload(event, 'FileUploadpics')" title="Select a photo to upload" alt="Select a photo to upload"/>
+        <div id="previewPictures"></div>
+        <img id="uploadImg" src="http://www.mechlink.org/images/upload_img.png" style="cursor:pointer; height:auto; width:auto; max-height:113px; max-width:113px;" onclick="triggerUpload(event, 'FileUploadpics')" title="Select a photo to upload" alt="Select a photo to upload"/>
         <div id="standardUpload">
-          <form id="form" enctype="multipart/form-data"  action="">
-            <input type="file" name="FileUploadpics" required id="FileUploadpics" onChange="form.submit()">
+
+          <form id="picsForm" enctype="multipart/form-data" method="post" action="php_parsers/photo_system.php">
+            <input type="hidden" name="gallery" id="galleryID">
+            <input type="file" name="photo" required id="FileUploadpics" multiple accept="image/x-png, image/gif, image/jpeg, image/jpg" onChange="form.submit()">
           </form>
         </div>
         <p onclick="triggerUpload(event, 'FileUploadpics')" style="cursor:pointer;">Select photos to upload.</p>
         Each photo must be jpeg, png, gif, or tiff and 2MB or smaller.
         <p>You can upload up to 4 photos.</p>
+        <div id="pic_upload_loading"></div>
         <br />
         <br />
       </div>
     </div>
   </div>
 </div>
+
+
 <!--lightupload_pics--> 
 

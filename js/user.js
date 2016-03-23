@@ -14,6 +14,8 @@ function ModalOpen(type){
     $("#light_edit_about").hide();
     $("#light_select").hide();
     $("#light_skills").hide();
+    $("#light_project").hide();
+    $("#lightupload_pics").hide();
     $("#light_edit_name").hide();
     $("#light_edit_status").hide();
     $("#light_edit_location").hide();
@@ -45,8 +47,14 @@ function ModalOpen(type){
         case "Skillset":
             $("#light_skills").show();
             break;
+        case "Project":
+            $("#light_project").show();
+            break;
         case "Select":
             $("#light_select").show();
+            break;
+        case "Pics":
+            $("#lightupload_pics").show();
             break;
         case "Share":
             $("#lightshare").show();
