@@ -47,7 +47,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/includes/user_wrapper.php");
 		  <p class="section_header" style="clear:both;">Restoration Pictures</p>
 		  <div class="data_section" style="padding:10px">
 			  <?php foreach($project->getPhotos() as $picture){ ?>
-				  <img src="/images/<?php echo $picture->filename; ?>" style="max-height:101px; max-width:180px; display:inline-block; vertical-align:middle; margin-bottom:5px;"/>
+				  <img src="<?php echo "user/".$picture->username."/".$picture->filename; ?>" style="max-height:101px; max-width:180px; display:inline-block; vertical-align:middle; margin-bottom:5px;"/>
 			  <?php } ?>
 			  <br/>
 			  <button tabindex="5" onclick = "PrepPicsUpload();">Add photos</button>

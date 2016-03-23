@@ -1,5 +1,5 @@
 <?php
-include_once("../includes/check_login_status.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/includes/check_login_status.php");
 if($user_ok != true || $log_username == "") {
 	exit();
 }

@@ -69,7 +69,7 @@ if (isset($_FILES["avatar"]["name"]) && $_FILES["avatar"]["tmp_name"] != ""){
 		header("location: ../message.php?msg=ERROR: File upload failed");
 		exit();
 	}
-	include_once("../includes/image_resize.php");
+	include_once($_SERVER['DOCUMENT_ROOT']."/includes/image_resize.php");
 	$target_file = "../user/$log_username/$db_file_name";
 	$resized_file = "../user/$log_username/$db_file_name";
 	$wmax = 200;
@@ -116,7 +116,7 @@ if (isset($_FILES["photo"]["name"]) && isset($_POST["gallery"])){
 		header("location: ../message.php?msg=ERROR: File upload failed");
 		exit();
 	}
-	include_once("../includes/image_resize.php");
+	include_once($_SERVER['DOCUMENT_ROOT']."/includes/image_resize.php");
 	$wmax = 800;
 	$hmax = 600;
 	if($width > $wmax || $height > $hmax){
