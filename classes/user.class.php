@@ -26,6 +26,7 @@ class User
     private $friends;
     private $skillsets;
     private $projects;
+    private $photos;
     private $blockedUsers;
     private $database;
 
@@ -153,6 +154,27 @@ class User
             //Error..
         }
         return $this->projects;
+    }
+
+    public function getPhotos(){
+        if (isset($this->photos))
+            return $this->photos;
+        $this->database->query('SELECT id FROM photos WHERE username = :username');
+        $this->database->bind(':username',$this->username);
+        try {
+            $rows = $this->database->resultset();
+            if($this->database->rowCount() > 0) {
+                $this->photos = [];
+                foreach ($rows as $row) {
+                    array_push($this->photos, Photo::withID($row['id']));
+                }
+            }
+            else
+                $this->photos = [];
+        }catch (PDOException $e) {
+            //Error..
+        }
+        return $this->photos;
     }
 
     protected function fill( array $row ) {

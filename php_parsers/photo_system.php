@@ -23,7 +23,6 @@ if (isset($_POST["show"]) && $_POST["show"] == "galpics"){
 	echo $picstring;
 	exit();
 }
-?><?php
 if($user_ok != true || $log_username == "") {
 	exit();
 }else{
@@ -33,7 +32,6 @@ if($user_ok != true || $log_username == "") {
 		exit();
 	}
 }
-?><?php 
 if (isset($_FILES["avatar"]["name"]) && $_FILES["avatar"]["tmp_name"] != ""){
 	$fileName = $_FILES["avatar"]["name"];
     $fileTmpLoc = $_FILES["avatar"]["tmp_name"];
@@ -85,10 +83,7 @@ if (isset($_FILES["avatar"]["name"]) && $_FILES["avatar"]["tmp_name"] != ""){
 }
 ?><?php 
 if (isset($_FILES["photo"]["name"]) && isset($_POST["gallery"])){
-	$sql = "SELECT COUNT(id) FROM photos WHERE user='$log_username'";
-	$query = mysqli_query($db_conx, $sql);
-	$row = mysqli_fetch_row($query);
-	if($row[0] > 14){
+	if(sizeof($current_user->getPhotos()) > 14){
 		header("location: ../message.php?msg=The demo system allows only 15 pictures total");
         exit();	
 	}
@@ -129,11 +124,16 @@ if (isset($_FILES["photo"]["name"]) && isset($_POST["gallery"])){
 	    $resized_file = "../user/$log_username/$db_file_name";
 		img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
 	}
-	$sql = "INSERT INTO photos(user, gallery, filename, uploaddate) VALUES ('$log_username','$gallery','$db_file_name',now())";
-	$query = mysqli_query($db_conx, $sql);
-	mysqli_close($db_conx);
+	$newPhoto = array(
+		"username" => $current_user->username,
+		"gallery" => $_POST['gallery'],
+		"filename" => $db_file_name,
+		"description" => ""
+	);
 
-	header("location: ../photos.php?u=$log_username");
+	$createdPhoto = Photo::createNew($newPhoto);
+
+	header("location: ../projects.php?u=$log_username");
 	exit();
 }
 ?><?php 
