@@ -6,58 +6,12 @@
       //
     }
   });
-  function PrepPicsUpload() {
+  function PrepPicsUpload(aID) {
     var id = "<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>";
     if (id != "") {
-      $("#galleryID").val(id);
+      $("#galleryID").val(aID);
       ModalOpen("Pics");
     }
-  }
-
-  function showUploadedItem (source) {
-    var list = document.getElementById("previewPictures"),
-        li   = document.createElement("li"),
-        img  = document.createElement("img");
-    img.src = source;
-    li.appendChild(img);
-    list.appendChild(li);
-  }
-
-  function UploadProjectPictures(){
-    $("#uploadImg").hide();
-
-    var files = new FormData($('#picsForm'));
-    //append files
-    var file = document.getElementById('photo').files[0];
-    if (file) {
-      files.append('upload-image', file);
-    }
-    var galleryID = 1;
-    $("#previewPictures").html();
-    ShowLoading($("#pic_upload_loading"));
-    $.ajax({
-      url : "pictures.php",
-      type: "POST",
-      dataType: 'json',
-      contentType: false,
-      processData: false,
-      cache: false,
-      data : {files},
-      success: function(data, textStatus, jqXHR){
-        console.dir(data);
-        HideLoading($("#pic_upload_loading"));
-        return;
-        //ModalOpen("None");
-
-      },
-      error: function (jqXHR, textStatus, errorThrown){
-        if(DEBUG) {
-          console.log(errorThrown + ": ");
-          console.log(JSON.parse(jqXHR.responseText));
-        }
-        HideLoading($("#pic_upload_loading"));
-      }
-    });
   }
 </script>
 

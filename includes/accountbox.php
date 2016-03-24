@@ -7,7 +7,7 @@
       <a href="http://www.mechlink.org/user.php" class="a100" "javascript:void(0)" onclick = "document.getElementById('light3').style.display='none';document.getElementById('fade').style.display='none'">My Profile</a> 
       <br />
       <br />
-      <a href="http://www.mechlink.org/accnt.php?u=<?php echo $u; ?>" class="a100" "javascript:void(0)" onclick = "document.getElementById('light3').style.display='none';document.getElementById('fade').style.display='none'">My Account</a> 
+      <a href="http://www.mechlink.org/accnt.php?u=<?php echo $page_user; ?>" class="a100" "javascript:void(0)" onclick = "document.getElementById('light3').style.display='none';document.getElementById('fade').style.display='none'">My Account</a>
       <br />
       <br />
       <a href="http://www.mechlink.org/logout.php" class="a100" "javascript:void(0)" onclick = "document.getElementById('light3').style.display='none';document.getElementById('fade').style.display='none'">Sign Out</a> 

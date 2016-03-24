@@ -51,6 +51,19 @@ class Photo
         }
     }
 
+    public function delete(){
+        $this->database->query('DELETE from photos WHERE id = :id');
+        $this->database->bind(':id',$this->id);
+
+        try {
+            $result = $this->database->execute();
+            return true;
+        }catch (PDOException $e) {
+            //Error...
+            return $e;
+        }
+    }
+
     protected function fill( array $row ) {
         $this->id = $row['id'];
         $this->username = $row["username"];

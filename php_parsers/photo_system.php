@@ -138,21 +138,21 @@ if (isset($_FILES["photo"]["name"]) && isset($_POST["gallery"])){
 }
 ?><?php 
 if (isset($_POST["delete"]) && $_POST["id"] != ""){
+
+
 	$id = preg_replace('#[^0-9]#', '', $_POST["id"]);
-	$query = mysqli_query($db_conx, "SELECT user, filename FROM photos WHERE id='$id' LIMIT 1");
-	$row = mysqli_fetch_row($query);
-    $user = $row[0];
-	$filename = $row[1];
-	if($user == $log_username){
-		$picurl = "../user/$log_username/$filename"; 
-	    if (file_exists($picurl)) {
-			unlink($picurl);
-			$sql = "DELETE FROM photos WHERE id='$id' LIMIT 1";
-	        $query = mysqli_query($db_conx, $sql);
+	$photo = Photo::withID($id);
+	if($photo->id != null) {
+		if ($photo->username == $log_username) {
+			$picurl = "../user/$log_username/$photo->filename";
+			if (file_exists($picurl)) {
+				unlink($picurl);
+				$photo->delete();
+			}
 		}
+		echo "Photo deleted";
 	}
-	mysqli_close($db_conx);
-	echo "deleted_ok";
+	echo "Photo not found";
 	exit();
 }
 ?>

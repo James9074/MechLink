@@ -178,6 +178,34 @@ if(isset($_POST["oper"])) {
 			header('HTTP/1.1 500 Internal Server Error');
 			die(json_encode(array('status' => 'DB Error', 'error' => $e)));
 		}
+	} else if ($oper == "DeletePhoto"){
+		CheckSession();
+		try {
+			$id = preg_replace('#[^0-9]#', '', $_POST["id"]);
+			$photo = Photo::withID($id);
+			if($photo->id != null) {
+				if ($photo->username == $_SESSION["username"]) {
+					$picurl = "user/$log_username/$photo->filename";
+					if (file_exists($picurl)) {
+						unlink($picurl);
+						$photo->delete();
+					}
+					else{
+						header('HTTP/1.1 500 Internal Server Error');
+						die(json_encode(array('status' => 'Error', 'error' => 'This photo does not exist in the filesystem!')));
+					}
+				}
+				else{
+					header('HTTP/1.1 500 Internal Server Error');
+					die(json_encode(array('status' => 'Authorization Error', 'error' => 'You do not own this photo!')));
+				}
+			}
+			$returnData['username'] = $photo->username;
+			print json_encode($returnData);
+		}catch (PDOException $e) {
+			header('HTTP/1.1 500 Internal Server Error');
+			die(json_encode(array('status' => 'DB Error', 'error' => $e)));
+		}
 	} else{
 		header('HTTP/1.1 500 Internal Server Error: Oper Not Found');
 		die(json_encode(array('status' => 'Oper not found', 'error' => $e)));

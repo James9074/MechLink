@@ -39,7 +39,40 @@ if($project->username != $_GET['u']) {
 
 include_once($_SERVER['DOCUMENT_ROOT']."/includes/user_wrapper.php");
 ?>
-          
+          <script>
+
+			  function PromptDeletePhoto(aID){
+				  var id = "<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>";
+				  if(id != "") {
+					  ModalOpen("Warning");
+					  $("#light_warning").find("#warning_question").html("Are you sure you want to delete this photo?");
+					  $("#light_warning").find("#yesButton").attr("onclick","DeletePhoto("+aID+");");
+				  }
+			  }
+
+			  function DeletePhoto(aID){
+				  ShowLoading($("#form_long"));
+				  $.ajax({
+					  url : "user.php",
+					  type: "POST",
+					  dataType: 'json',
+					  data : {"oper":"DeletePhoto",id:aID},
+					  success: function(data, textStatus, jqXHR){
+						  window.location.reload();
+						  return;
+						  HideLoading($("#form_long"));
+						  //ModalOpen("None");
+					  },
+					  error: function (jqXHR, textStatus, errorThrown){
+						  if(DEBUG) {
+							  console.log(errorThrown + ": ");
+							  console.log(JSON.parse(jqXHR.responseText));
+						  }
+						  HideLoading($("#form_long"));
+					  }
+				  });
+			  }
+		  </script>
           <div style="float:left;"><?php echo $project_edit_btn; ?></div>
 
 		  <div style="float:right;"><?php echo $project_delete_btn; ?></div>
@@ -47,7 +80,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/includes/user_wrapper.php");
 		  <p class="section_header" style="clear:both;">Restoration Pictures</p>
 		  <div class="data_section" style="padding:10px">
 			  <?php foreach($project->getPhotos() as $picture){ ?>
-				  <img src="<?php echo "user/".$picture->username."/".$picture->filename; ?>" style="max-height:101px; max-width:180px; display:inline-block; vertical-align:middle; margin-bottom:5px;"/>
+				  <img onclick="PromptDeletePhoto(<?php echo $picture->id; ?>)" src="<?php echo "user/".$picture->username."/".$picture->filename; ?>" style="max-height:101px; max-width:180px; display:inline-block; vertical-align:middle; margin-bottom:5px;"/>
 			  <?php } ?>
 			  <br/>
 			  <button tabindex="5" onclick = "PrepPicsUpload();">Add photos</button>
