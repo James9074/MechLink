@@ -47,12 +47,16 @@ class Gallery
     }
 
     public function delete(){
-        $this->database->query('DELETE from galleries WHERE id = :id');
-        $this->database->bind(':id',$this->id);
-
         try {
-            $result = $this->database->execute();
-            return true;
+            $photos = [];
+            foreach($this->getPhotos() as $photo) {
+                array_push($photos, $photo->delete());
+            }
+
+            $this->database->query('DELETE from galleries WHERE id = :id');
+            $this->database->bind(':id',$this->id);
+            $galleryResult = $this->database->execute();
+            return array("Gallery Deletion"=>$galleryResult,"Photos Deletion"=>$photos);
         }catch (PDOException $e) {
             //Error...
             return $e;

@@ -55,13 +55,19 @@ class Photo
         $this->database->query('DELETE from photos WHERE id = :id');
         $this->database->bind(':id',$this->id);
 
-        try {
-            $result = $this->database->execute();
-            return true;
-        }catch (PDOException $e) {
-            //Error...
-            return $e;
+        $picurl = "user/$this->username/$this->filename";
+        if (file_exists($picurl)) {
+            unlink($picurl);
+            try {
+                $result = $this->database->execute();
+                return $result;
+            } catch (PDOException $e) {
+                //Error...
+                return $e;
+            }
         }
+        else
+            return "File Not Found";
     }
 
     protected function fill( array $row ) {

@@ -70,10 +70,11 @@ class Project
         try {
             $galleryDelete = $this->getGallery()->delete();
 
+            $projectDelete = "";
             if($galleryDelete == true){
                 $projectDelete = $this->database->execute();
             }
-            return array("Project Deletion"=>$projectDelete, "Gallery Deletion"=>$galleryDelete);
+            return array("Project Deletion"=>$projectDelete, "Gallery Deletion"=>$galleryDelete, "Gallery"=>$this->getGallery());
         }catch (PDOException $e) {
             //Error...
             return $e;

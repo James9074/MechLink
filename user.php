@@ -199,10 +199,9 @@ if(isset($_POST["oper"])) {
 			$photo = Photo::withID($id);
 			if($photo->id != null) {
 				if ($photo->username == $_SESSION["username"]) {
-					$picurl = "user/$log_username/$photo->filename";
-					if (file_exists($picurl)) {
-						unlink($picurl);
-						$photo->delete();
+					$result = $photo->delete();
+					if ($result == true) {
+						$returnData['photoDelete'] = $result;
 					}
 					else{
 						header('HTTP/1.1 500 Internal Server Error');
