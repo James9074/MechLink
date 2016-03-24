@@ -4,21 +4,6 @@ include_once($_SERVER['DOCUMENT_ROOT']."/includes/check_login_status.php");
 include_once($_SERVER['DOCUMENT_ROOT']."/includes/db_conn.php");
 include_once($_SERVER['DOCUMENT_ROOT']."/includes/headerphpcode.php");
 
-// AJAX CALLS
-if(isset($_POST["oper"])) {
-	$oper = $_POST["oper"];
-	$returnData = array();
-	$returnData["oper"] = $_POST["oper"];
-	$returnData["postData"] = $_POST;
-	$database = new Database();
-	header('Content-Type: application/json');
-	if ($oper == "AddSkillset") {
-
-	}
-	exit();
-}
-
-
 include_once($_SERVER['DOCUMENT_ROOT']."/includes/user_wrapper.php");
 
 $skillsetHTML = "";

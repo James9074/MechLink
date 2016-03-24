@@ -1,12 +1,15 @@
 <?php
 include_once($_SERVER['DOCUMENT_ROOT']."/includes/check_login_status.php");
 // If user is already logged in, header them away
-if($user_ok == true){
-	header("location: user.php?u=".$_SESSION["username"]);
-    exit();
+$button = "";
+if($user_ok != true){
+	//header("location: user.php?u=".$_SESSION["username"]);
+    //exit();
+	$button = "<button onclick = \"document.getElementById('light2').style.display='block';document.getElementById('fade').style.display='block'\" class=\"loginitbtn\"> Click here to sign in</button><br/><br/>";
 }
-?>
-<?php
+else{
+	$button = "<a href='http://mechlink.org'>Return to MechLink</a><br/><br/>";
+}
 $message = "";
 $msg = preg_replace('#[^a-z 0-9.:_()]#i', '', $_GET['msg']);
 if($msg == "activation_failure"){
@@ -83,14 +86,12 @@ var dateObject=new Date();
         <div id="contentInner">
           <div id="contentInner2">
             <div id="main_cont"> <br />
-              <div><?php echo $message; ?></div>
+              <div><b><?php echo $message; ?></b></div>
               <br />
               <div align="center">
-                <button onclick = "document.getElementById('light2').style.display='block';document.getElementById('fade').style.display='block'" class="loginitbtn"> Click here to sign in</button>
+                <?php echo $button; ?>
               </div>
             </div>
-            <br />
-            <br />
           </div>
           <!--contentInner2--> 
           

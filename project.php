@@ -4,22 +4,6 @@ include_once($_SERVER['DOCUMENT_ROOT']."/includes/check_login_status.php");
 include_once($_SERVER['DOCUMENT_ROOT']."/includes/db_conn.php");
 include_once($_SERVER['DOCUMENT_ROOT']."/includes/headerphpcode.php");
 
-// AJAX CALLS
-if(isset($_POST["oper"])) {
-	$oper = $_POST["oper"];
-	$returnData = array();
-	$returnData["oper"] = $_POST["oper"];
-	$returnData["postData"] = $_POST;
-	$database = new Database();
-	header('Content-Type: application/json');
-	if ($oper == "DeleteProject") {
-
-	} else if ($oper == "EditProject") {
-
-	}
-	exit();
-}
-
 if(isset($_GET['id'])) {
 	$project = Project::withID($_GET['id']);
 	if ($project->id == null) {
@@ -39,39 +23,6 @@ if($project->username != $_GET['u']) {
 
 include_once($_SERVER['DOCUMENT_ROOT']."/includes/user_wrapper.php");
 ?>
-          <script>
-			  function PromptDeletePhoto(aID){
-				  var id = "<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>";
-				  if(id != "") {
-					  ModalOpen("Warning");
-					  $("#light_warning").find("#warning_question").html("Are you sure you want to delete this photo?");
-					  $("#light_warning").find("#yesButton").attr("onclick","DeletePhoto("+aID+");");
-				  }
-			  }
-
-			  function DeletePhoto(aID){
-				  ShowLoading($("#form_long"));
-				  $.ajax({
-					  url : "user.php",
-					  type: "POST",
-					  dataType: 'json',
-					  data : {"oper":"DeletePhoto",id:aID},
-					  success: function(data, textStatus, jqXHR){
-						  window.location.reload();
-						  return;
-						  HideLoading($("#form_long"));
-						  //ModalOpen("None");
-					  },
-					  error: function (jqXHR, textStatus, errorThrown){
-						  if(DEBUG) {
-							  console.log(errorThrown + ": ");
-							  console.log(JSON.parse(jqXHR.responseText));
-						  }
-						  HideLoading($("#form_long"));
-					  }
-				  });
-			  }
-		  </script>
           <div style="float:left;"><?php echo $project_edit_btn; ?></div>
 
 		  <div style="float:right;"><?php echo $project_delete_btn; ?></div>
@@ -79,12 +30,12 @@ include_once($_SERVER['DOCUMENT_ROOT']."/includes/user_wrapper.php");
 		  <p class="section_header" style="clear:both;">Restoration Pictures</p>
 		  <div class="data_section" style="padding:10px">
 			  <?php foreach($project->getGallery()->getPhotos() as $picture){ ?>
-				  <img onclick="PromptDeletePhoto(<?php echo $picture->id; ?>)" src="<?php echo "user/".$picture->username."/".$picture->filename; ?>" style="max-height:101px; max-width:180px; display:inline-block; vertical-align:middle; margin-bottom:5px;"/>
+				  <img onclick="DisplayPic(<?php echo $picture->id; ?>)" src="<?php echo "user/".$picture->username."/".$picture->filename; ?>" style="max-height:101px; max-width:180px; display:inline-block; vertical-align:middle; margin-bottom:5px;"/>
 			  <?php } if(sizeof($project->getGallery()->getPhotos()) == 0){
 				  echo "<b>No pictures uploaded. Why not add some?</b><br/>";
 			  } ?>
 			  <br/>
-			  <button tabindex="5" onclick = "PrepPicsUpload(<?php echo $project->gallery; ?>);">Add photos</button>
+			  <button tabindex="5" onclick = "PrepPicsUpload(<?php echo $project->gallery.",".$project->id; ?>);">Add photos</button>
 		  </div>
 
 		  <p class="section_header">Restoration Project</p>

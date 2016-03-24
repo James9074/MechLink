@@ -192,6 +192,22 @@ if(isset($_POST["oper"])) {
 			header('HTTP/1.1 500 Internal Server Error');
 			die(json_encode(array('status' => 'DB Error', 'error' => $e)));
 		}
+	} else if ($oper == "GetPhoto"){
+		try {
+			$id = preg_replace('#[^0-9]#', '', $_POST["id"]);
+			$photo = Photo::withID($id);
+			if($photo->id != null) {
+				$returnData['photo'] = $photo;
+			}
+			else{
+				header('HTTP/1.1 500 Internal Server Error: Photo Not Found');
+				die(json_encode(array('status' => 'DB Error', 'error' => $e)));
+			}
+			print json_encode($returnData);
+		}catch (PDOException $e) {
+			header('HTTP/1.1 500 Internal Server Error');
+			die(json_encode(array('status' => 'DB Error', 'error' => $e)));
+		}
 	} else if ($oper == "DeletePhoto"){
 		CheckSession();
 		try {

@@ -4,22 +4,6 @@ include_once($_SERVER['DOCUMENT_ROOT']."/includes/check_login_status.php");
 include_once($_SERVER['DOCUMENT_ROOT']."/includes/db_conn.php");
 include_once($_SERVER['DOCUMENT_ROOT']."/includes/headerphpcode.php");
 
-// AJAX CALLS
-if(isset($_POST["oper"])) {
-	$oper = $_POST["oper"];
-	$returnData = array();
-	$returnData["oper"] = $_POST["oper"];
-	$returnData["postData"] = $_POST;
-	$database = new Database();
-	header('Content-Type: application/json');
-	if ($oper == "DeleteSkillset") {
-
-	} else if ($oper == "EditSkillset") {
-
-	}
-	exit();
-}
-
 if(isset($_GET['id'])) {
 	$skillset = Skillset::withID($_GET['id']);
 	if($skillset->id == null) {

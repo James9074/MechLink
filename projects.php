@@ -4,45 +4,15 @@ include_once($_SERVER['DOCUMENT_ROOT']."/includes/check_login_status.php");
 include_once($_SERVER['DOCUMENT_ROOT']."/includes/db_conn.php");
 include_once($_SERVER['DOCUMENT_ROOT']."/includes/headerphpcode.php");
 
-// AJAX CALLS
-if(isset($_POST["oper"])) {
-	$oper = $_POST["oper"];
-	$returnData = array();
-	$returnData["oper"] = $_POST["oper"];
-	$returnData["postData"] = $_POST;
-	$database = new Database();
-	header('Content-Type: application/json');
-	if ($oper == "DeleteSkillset") {
-
-	} else if ($oper == "EditSkillset") {
-
-	}
-	exit();
-}
-/*
-if(isset($_GET['id'])) {
-	$project = Skillset::withID($_GET['id']);
-	if($project->id == null) {
-		header("location: http://www.mechlink.org/404");
-		exit();
-	}
-}
-else{
-	header("location: http://www.mechlink.org/404");
-	exit();
-}
-*/
 
 include_once($_SERVER['DOCUMENT_ROOT']."/includes/user_wrapper.php");
-
 
 $projectHTML = "";
 foreach($current_user->getProjects() as $project){
 	$projectHTML .= "<div class='projects-container'>";
 	$imgSrc = (sizeof($project->getGallery()->getPhotos()) > 0) ? 'user/'.array_values($project->getGallery()->getPhotos())[0]->username.'/'.array_values($project->getGallery()->getPhotos())[0]->filename : 'images/nocar.png';
 
-	$projectHTML .= '<img class="project-thumbnail" src="'.$imgSrc.'">';
-
+	$projectHTML .= '<a href="project.php?u='.$u.'&id='.$project->id.'"> <img class="project-thumbnail" src="'.$imgSrc.'"></a>';
 
 	$projectHTML .= '<a style="clear:both;" href="project.php?u='.$u.'&id='.$project->id.'">'.$project->automobiletype.'</a>';
 

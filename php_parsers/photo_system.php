@@ -133,7 +133,12 @@ if (isset($_FILES["photo"]["name"]) && isset($_POST["gallery"])){
 
 	$createdPhoto = Photo::createNew($newPhoto);
 
-	header("location: ../projects.php?u=$log_username");
+	if(isset($_POST['project']) && $_POST['project'] != null)
+		header("location: ../project.php?u=$log_username&id=".$_POST['project']);
+	else
+		header("location: ../projects.php?u=$log_username");
+
+
 	exit();
 }
 ?><?php 

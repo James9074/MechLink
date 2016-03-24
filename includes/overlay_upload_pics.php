@@ -6,8 +6,11 @@
       //
     }
   });
-  function PrepPicsUpload(aGalleryID) {
+  function PrepPicsUpload(aGalleryID, aProjectID) {
       $("#galleryID").val(aGalleryID);
+    if(typeof(aProjectID) != "undefined"){
+      $("#projectID").val(aProjectID);
+    }
       ModalOpen("Pics");
   }
 </script>
@@ -24,7 +27,8 @@
 
           <form id="picsForm" enctype="multipart/form-data" method="post" action="php_parsers/photo_system.php">
             <input type="hidden" name="gallery" id="galleryID">
-            <input type="file" name="photo" required id="FileUploadpics" multiple accept="image/x-png, image/png,  image/gif, image/jpeg, image/jpg" onChange="form.submit()">
+            <input type="hidden" name="project" id="projectID">
+            <input type="file" name="photo" required id="FileUploadpics" accept="image/x-png, image/png,  image/gif, image/jpeg, image/jpg" onChange="form.submit()">
           </form>
         </div>
         <p onclick="triggerUpload(event, 'FileUploadpics')" style="cursor:pointer;">Select photos to upload.</p>

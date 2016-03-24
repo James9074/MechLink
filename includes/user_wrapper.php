@@ -137,6 +137,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/includes/header.php"); ?>
 <?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_skills.php"); ?>
 <?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_project.php"); ?>
 <?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_upload_pics.php"); ?>
+<?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_pic.php"); ?>
 <?php include_once($_SERVER['DOCUMENT_ROOT']."/includes/overlay_post.php"); ?>
 
 
