@@ -12,7 +12,7 @@ foreach($current_user->getProjects() as $project){
 	$projectHTML .= "<div class='projects-container'>";
 	$imgSrc = (sizeof($project->getGallery()->getPhotos()) > 0) ? 'user/'.array_values($project->getGallery()->getPhotos())[0]->username.'/'.array_values($project->getGallery()->getPhotos())[0]->filename : 'images/nocar.png';
 
-	$projectHTML .= '<a href="project.php?u='.$u.'&id='.$project->id.'"> <img class="project-thumbnail" src="'.$imgSrc.'"></a>';
+	$projectHTML .= '<div class="project-thumbnail-container"><a href="project.php?u='.$u.'&id='.$project->id.'"> <img class="project-thumbnail" src="'.$imgSrc.'"></a></div>';
 
 	$projectHTML .= '<a style="clear:both;" href="project.php?u='.$u.'&id='.$project->id.'">'.$project->automobiletype.'</a>';
 
@@ -31,9 +31,16 @@ echo $projectHTML; ?>
 		height: 85px;
 	}
 	.project-thumbnail {
+		height: 80px;
+	}
+	.project-thumbnail-container {
 		float: left;
 		height: 80px;
-		margin-right:5px;
+		margin-right:10px;
+		text-align: center;
+		overflow: hidden;
+		width:150px;
+		background-color: #232323;
 	}
 </style>
           </div>
