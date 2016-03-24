@@ -93,7 +93,7 @@
                 <br />
                 <div>
                     <button id="yesButton" tabindex="20">Delete</button>
-                    <button onclick = "ModalOpen('None');" tabindex="21">Cancel</button>
+                    <button id="noButton" onclick = "ModalOpen('None');" tabindex="21">Cancel</button>
                     <br />
                     <br />
                 </div>
