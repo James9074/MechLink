@@ -22,6 +22,7 @@ class User
     public $joindate;
     public $lastsession;
     public $description;
+    public $status;
     public $activated;
     private $friends;
     private $skillsets;
@@ -41,7 +42,7 @@ class User
     }
 
     public function update($updateData){
-        $this->database->query('UPDATE users SET rlname = :rlname, category = :category, location = :location, email = :email, gender = :gender, website = :website, country = :country, userlevel = :userlevel, avatar = :avatar, ip = :ip, signup = :signup, lastlogin = :lastlogin,notescheck = :notescheck,activated = :activated, description = :description WHERE username = :username');
+        $this->database->query('UPDATE users SET rlname = :rlname, category = :category, location = :location, email = :email, gender = :gender, website = :website, country = :country, userlevel = :userlevel, avatar = :avatar, ip = :ip, signup = :signup, lastlogin = :lastlogin,notescheck = :notescheck,activated = :activated, description = :description, status = :status WHERE username = :username');
         $this->database->bind(':rlname',isset($updateData["rlname"]) ? $updateData["rlname"] : $this->rlname);
         $this->database->bind(':category',isset($updateData["category"]) ? $updateData["category"] : $this->category);
         $this->database->bind(':location',isset($updateData["location"]) ? $updateData["location"] : $this->location);
@@ -58,6 +59,7 @@ class User
         $this->database->bind(':notescheck',isset($updateData["notescheck"]) ? $updateData["notescheck"] : $this->notescheck);
         $this->database->bind(':activated',isset($updateData["activated"]) ? $updateData["activated"] : $this->activated);
         $this->database->bind(':description',isset($updateData["description"]) ? $updateData["description"] : $this->description);
+        $this->database->bind(':status',isset($updateData["status"]) ? $updateData["status"] : $this->status);
 
         try {
             $result = $this->database->execute();
@@ -197,6 +199,7 @@ class User
         $this->joindate = $row["signup"];
         $this->lastsession = $row["lastlogin"];
         $this->description = $row["description"];
+        $this->status = $row["status"];
         $this->activated = $row["activated"];
     }
 }

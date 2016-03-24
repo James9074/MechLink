@@ -26,7 +26,7 @@ if($log_username == $current_user->username && $user_ok == true){
     $rlname_edit_btn = '<button class="edit_btn" style="display:inline-block; margin-top:3px;" onclick = "document.getElementById(\'light_edit_name\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
     $category_edit_btn = '<button class="edit_btn" style="display:inline-block; margin-top:1px;"></button>';
     $location_edit_btn = '<button class="edit_btn" style="display:inline-block; margin-top:1px;" onclick = "document.getElementById(\'light_edit_location\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
-    $status_edit_btn = '<button class="edit_btn" style="display:inline-block; margin-top:1px;" onclick = "document.getElementById(\'light_edit_status\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'"></button>';
+    $status_edit_btn = '<button class="edit_btn" style="display:inline-block; margin-top:1px;" onclick = "OpenStatus()"></button>';
     $about_edit_btn = '<button class="edit_btn" style="display:block;" onclick = "ModalOpen(\'EditAbout\');"></button>';
     $skill_edit_btn = '<button class="edit_btn" onclick="EditSkill();"></button>';
     $skill_delete_btn = '<button class="delete_btn" onclick="PromptDeleteSkill();"></button>';
@@ -162,7 +162,15 @@ include_once($_SERVER['DOCUMENT_ROOT']."/includes/header.php"); ?>
                     echo "Where are you?";
                 } ?>
                 <?php echo issetor($location_edit_btn); ?></span><br />
-                        <span class="style4">Status:<?php echo issetor($status_edit_btn); ?></span> </div>
+                        <span  class="style4">Status: <span class="style4" id="userStatus">
+
+                            <?php if($current_user->status == 0)
+                                    echo "Looking for mechanics";
+                                else
+                                    echo "Looking for projects"; ?>
+                            </span>
+
+                            <?php echo issetor($status_edit_btn); ?></span> </div>
                     <div id="info_box2">
                         <?php $show = $isOwner ? 'none' : 'visible'; ?>
                         <div id="prof_links" style="display:visible;"><a href = "javascript:void(0)" onclick = "ModalOpen('Share');" class="a4">Share&nbsp;<img src="http://www.mechlink.org/images/sharebutton.png" alt="Share" style="margin-top:-5px;"/></a></div>

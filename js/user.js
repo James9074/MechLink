@@ -35,6 +35,7 @@ function ModalOpen(type, closeAll){
         $("#light_edit_location").hide();
         $("#lightshare").hide();
         $("#light_warning").hide();
+
     }
     $("#fade").show();
 
@@ -76,6 +77,9 @@ function ModalOpen(type, closeAll){
             break;
         case "Share":
             $("#lightshare").show();
+            break;
+        case "Status":
+            $("#light_edit_status").show();
             break;
         case "Warning":
             $("#light_warning").show();
