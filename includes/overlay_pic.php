@@ -74,7 +74,7 @@
 
           <br/>
           <br />
-          <button id="deletePhoto" onclick = "" tabindex="6">Delete</button>
+          <?php if($log_username == $current_user->username && $user_ok == true) echo '<button id="deletePhoto" onclick = "" tabindex="6">Delete</button>'; ?>
           <button onclick = "ModalOpen('None')" tabindex="7">Cancel</button>
           <br />
           <br />
