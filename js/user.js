@@ -9,18 +9,33 @@ function UserConfigureInitialProfileSetup(){
     $("#fade").show();
 }
 
-function ModalOpen(type){
+function ModalClose(type, hideFade){
+    if(typeof hideFade == "undefined" || hideFade == true){
+        $("#fade").hide();
+    }
+
+    switch (type){
+        case "Warning":
+            $("#light_warning").hide();
+            break;
+    }
+}
+
+function ModalOpen(type, closeAll){
     //Close all modals, prep for new modal
-    $("#light_edit_about").hide();
-    $("#light_select").hide();
-    $("#light_skills").hide();
-    $("#light_project").hide();
-    $("#lightupload_pics").hide();
-    $("#light_edit_name").hide();
-    $("#light_edit_status").hide();
-    $("#light_edit_location").hide();
-    $("#lightshare").hide();
-    $("#light_warning").hide();
+    if(typeof closeAll == "undefined" || closeAll == true) {
+        $("#light_edit_about").hide();
+        $("#light_select").hide();
+        $("#light_skills").hide();
+        $("#light_project").hide();
+        $("#lightupload_pics").hide();
+        $("#light_pic").hide();
+        $("#light_edit_name").hide();
+        $("#light_edit_status").hide();
+        $("#light_edit_location").hide();
+        $("#lightshare").hide();
+        $("#light_warning").hide();
+    }
     $("#fade").show();
 
     //Open desired Modal
@@ -55,6 +70,9 @@ function ModalOpen(type){
             break;
         case "Pics":
             $("#lightupload_pics").show();
+            break;
+        case "Pic":
+            $("#light_pic").show();
             break;
         case "Share":
             $("#lightshare").show();
