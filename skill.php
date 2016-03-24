@@ -48,7 +48,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/includes/user_wrapper.php");
             <br />
             <p class="section_header" style="clear:both;">Restoration Project</p>
 		    <div class="data_section">
-				<p>Type of automobile: <?php echo $skillset->automobiletype; ?></p>
+				<p>Automobile Type: <?php echo $skillset->automobiletype; ?></p>
 				Location: <?php echo $skillset->location; ?>
 				<p>Restored from: <?php echo $skillset->restoredfrom; ?> - <?php echo $skillset->restoredto; ?></p>
 				<?php if($skillset->hasAwards()){ ?>

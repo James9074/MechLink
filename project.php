@@ -40,7 +40,6 @@ if($project->username != $_GET['u']) {
 include_once($_SERVER['DOCUMENT_ROOT']."/includes/user_wrapper.php");
 ?>
           <script>
-
 			  function PromptDeletePhoto(aID){
 				  var id = "<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>";
 				  if(id != "") {
@@ -79,16 +78,18 @@ include_once($_SERVER['DOCUMENT_ROOT']."/includes/user_wrapper.php");
 
 		  <p class="section_header" style="clear:both;">Restoration Pictures</p>
 		  <div class="data_section" style="padding:10px">
-			  <?php foreach($project->getPhotos() as $picture){ ?>
+			  <?php foreach($project->getGallery()->getPhotos() as $picture){ ?>
 				  <img onclick="PromptDeletePhoto(<?php echo $picture->id; ?>)" src="<?php echo "user/".$picture->username."/".$picture->filename; ?>" style="max-height:101px; max-width:180px; display:inline-block; vertical-align:middle; margin-bottom:5px;"/>
-			  <?php } ?>
+			  <?php } if(sizeof($project->getGallery()->getPhotos()) == 0){
+				  echo "<b>No pictures uploaded. Why not add some?</b><br/>";
+			  } ?>
 			  <br/>
-			  <button tabindex="5" onclick = "PrepPicsUpload();">Add photos</button>
+			  <button tabindex="5" onclick = "PrepPicsUpload(<?php echo $project->gallery; ?>);">Add photos</button>
 		  </div>
 
 		  <p class="section_header">Restoration Project</p>
 		  <div class="data_section">
-			  <p>Type of automobile: <?php echo $project->automobiletype; ?></p>
+			  <p>Automobile Type: <?php echo $project->automobiletype; ?></p>
 			  Location: <?php echo $project->location; ?>
 		  </div>
 

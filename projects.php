@@ -39,7 +39,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/includes/user_wrapper.php");
 $projectHTML = "";
 foreach($current_user->getProjects() as $project){
 	$projectHTML .= "<div class='projects-container'>";
-	$imgSrc = (sizeof($project->getPhotos()) > 0) ? 'user/'.array_values($project->getPhotos())[0]->username.'/'.array_values($project->getPhotos())[0]->filename : 'images/nocar.png';
+	$imgSrc = (sizeof($project->getGallery()->getPhotos()) > 0) ? 'user/'.array_values($project->getGallery()->getPhotos())[0]->username.'/'.array_values($project->getGallery()->getPhotos())[0]->filename : 'images/nocar.png';
 
 	$projectHTML .= '<img class="project-thumbnail" src="'.$imgSrc.'">';
 

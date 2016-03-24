@@ -12,6 +12,7 @@ class Project
     public $dateposted;
     public $gallery;
     public $photos;
+    private $galleryObject;
     private $database;
 
     function __construct() {
@@ -20,12 +21,13 @@ class Project
 
     public static function createNew($newProject){
         $database = new Database();
-        $database->query('INSERT INTO projects (automobiletype, location, details, skills, username, dateposted) VALUES (:automobiletype, :location, :details, :skills, :username, :dateposted)');
+        $database->query('INSERT INTO projects (automobiletype, location, details, skills, username, gallery, dateposted) VALUES (:automobiletype, :location, :details, :skills, :username, :gallery, :dateposted)');
         $database->bind(':automobiletype',$newProject["automobiletype"]);
         $database->bind(':location',$newProject["location"]);
         $database->bind(':details',$newProject["details"]);
         $database->bind(':skills',$newProject["skills"]);
         $database->bind(':username',$newProject["username"]);
+        $database->bind(':gallery',$newProject["gallery"]);
         $database->bind(':dateposted',date("Y-m-d"));
 
         try {
@@ -66,8 +68,12 @@ class Project
         $this->database->bind(':id',$this->id);
 
         try {
-            $result = $this->database->execute();
-            return true;
+            $galleryDelete = $this->getGallery()->delete();
+
+            if($galleryDelete == true){
+                $projectDelete = $this->database->execute();
+            }
+            return array("Project Deletion"=>$projectDelete, "Gallery Deletion"=>$galleryDelete);
         }catch (PDOException $e) {
             //Error...
             return $e;
@@ -86,29 +92,16 @@ class Project
         }
     }
 
-    public function getPhotos(){
-        if (isset($this->photos))
-            return $this->photos;
-
-        if($this->gallery == null)
-            return [];
-
-        $this->database->query('SELECT id FROM photos WHERE gallery = :gallery');
-        $this->database->bind(':gallery',$this->gallery);
+    public function getGallery(){
+        if (isset($this->galleryObject))
+            return $this->galleryObject;
         try {
-            $rows = $this->database->resultset();
-            if($this->database->rowCount() > 0) {
-                $this->photos = [];
-                foreach ($rows as $row) {
-                    array_push($this->photos, Photo::withID($row['id']));
-                }
-            }
-            else
-                $this->photos = [];
+            $this->galleryObject = Gallery::withID($this->gallery);
+
         }catch (PDOException $e) {
             //Error..
         }
-        return $this->photos;
+        return $this->galleryObject;
     }
 
     protected function fill( array $row ) {

@@ -52,8 +52,22 @@ if(isset($_POST["oper"])) {
 				$createdProject = Project::withID($newProject['id']);
 				$createdProject->update($newProject);
 			}
-			else
-				$createdProject = Project::createNew($newProject);
+			else {
+				$gallery = array(
+					"owner" => 	$_SESSION["username"],
+					"description" => "Gallery for ".$newProject['automobiletype']
+				);
+				$newGallery = Gallery::createNew($gallery);
+				$returnData["gallery"] = $newGallery;
+				if($newGallery->id != null) {
+					$newProject["gallery"] = $newGallery->id;
+					$createdProject = Project::createNew($newProject);
+				}
+				else{
+					header('HTTP/1.1 500 Internal Server Error: Error Adding New Gallery');
+					die(json_encode(array('status' => 'DB Error', 'error' => $e)));
+				}
+			}
 
 			$returnData["project"] = $createdProject;
 			print json_encode($returnData);
@@ -79,7 +93,7 @@ if(isset($_POST["oper"])) {
 				die(json_encode(array('status' => 'Authorization Error', 'error' => 'You do not own this skillset!')));
 			} else {
 				$returnData["username"] = $project->username;
-				$project->delete();
+				$returnData['result'] = $project->delete();
 			}
 			print json_encode($returnData);
 		}catch (PDOException $e) {
